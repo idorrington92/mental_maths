@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import time
 
 
-class Game:
+class Game(ABC):
     def __init__(self, number_of_rounds):
         self.player_answer = 0
         self.score = 0
