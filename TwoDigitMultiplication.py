@@ -3,7 +3,7 @@ import numpy.random as rand
 from Game import Game
 
 
-class TwoDigitAddition(Game):
+class TwoDigitMultiplication(Game):
     def __init__(self, number_of_rounds):
         super().__init__(number_of_rounds)
         self.number1 = 0
@@ -13,10 +13,10 @@ class TwoDigitAddition(Game):
         self.play_game()
 
     def game_round(self):
-        self.number1 = rand.randint(10, 1000)
+        self.number1 = rand.randint(10, 100)
         self.number2 = rand.randint(10, 100)
-        self.prompt = f"{self.number1} + {self.number2} = "
+        self.prompt = f"{self.number1} x {self.number2} = "
         return self.player_input()
 
     def correct_answer(self):
-        return self.number1 + self.number2
+        return self.number1 * self.number2

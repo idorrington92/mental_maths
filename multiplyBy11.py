@@ -15,7 +15,7 @@ class MultiplyBy11(Game):
         self.play_game()
 
     def game_round(self):
-        self.number = rand.randint(10, 99)
+        self.number = rand.randint(10, 100)
         self.prompt = f"{self.number} x 11 = "
         return self.player_input()
 
