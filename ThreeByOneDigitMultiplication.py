@@ -13,8 +13,8 @@ class ThreeByOneDigitMultiplication(Game):
         self.play_game()
 
     def game_round(self):
-        self.number1 = rand.randint(10, 1000)
-        self.number2 = rand.randint(1, 10)
+        self.number1 = rand.randint(11, 1000)
+        self.number2 = rand.randint(2, 10)
         self.prompt = f"{self.number1} x {self.number2} = "
         return self.player_input()
 
