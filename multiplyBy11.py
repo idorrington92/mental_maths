@@ -4,7 +4,7 @@ from Game import Game
 
 
 class MultiplyBy11(Game):
-    def __init__(self, number_of_rounds):
+    def __init__(self, number_of_rounds, inst):
         super().__init__(number_of_rounds)
         self.number = 0
         self.help = "To multiply a two digit number by 11, add the two digits together and put the result between \n" \
