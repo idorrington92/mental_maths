@@ -11,8 +11,6 @@ class Game(ABC):
         self.help = ""
         self.prompt = ""
 
-        # self.play_game()
-
     def play_game(self):
         self.startTime = time.time()
         for g_round in range(1, self.number_of_rounds + 1):

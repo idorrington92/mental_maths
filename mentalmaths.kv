@@ -1,0 +1,85 @@
+<ContentNavigationDrawer>:
+
+    ScrollView:
+
+        MDList:
+
+            OneLineListItem:
+                text: 'Home'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+                text_color: app.theme_cls.primary_dark
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "Menu"
+                    app.set_game("None")
+            OneLineListItem:
+                text: 'Multiply by 11'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+                text_color: app.theme_cls.primary_dark
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "scr 2"
+                    app.set_game("MultiplyBy11")
+
+            OneLineListItem:
+                text: 'Two digit addition'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                text_color: app.theme_cls.primary_dark
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "scr 2"
+                    app.set_game("TwoDigitAddition")
+
+            OneLineListItem:
+                text: 'Three by one digit multiplication'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+                text_color: app.theme_cls.primary_dark
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "scr 2"
+                    app.set_game("ThreeByOneDigitMultiplication")
+
+            OneLineListItem:
+                text: 'Two digit multiplication'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                text_color: app.theme_cls.primary_dark
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "scr 2"
+                    app.set_game("TwoDigitMultiplication")
+
+
+MDScreen:
+
+    MDToolbar:
+        id: toolbar
+        pos_hint: {"top": 1}
+        elevation: 10
+        title: "Maths Dojo"
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+
+    MDNavigationLayout:
+        x: toolbar.height
+
+        ScreenManager:
+            id: screen_manager
+
+            MDScreen:
+                name: "Menu"
+
+            MDScreen:
+                name: "scr 2"
+
+                MDRoundFlatButton:
+                    text: 'Start Game'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+                    text_color: app.theme_cls.primary_dark
+                    on_press:
+                        app.launch_game()
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer

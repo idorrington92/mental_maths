@@ -4,7 +4,7 @@ from Game import Game
 
 
 class ThreeByOneDigitMultiplication(Game):
-    def __init__(self, number_of_rounds, inst):
+    def __init__(self, number_of_rounds):
         super().__init__(number_of_rounds)
         self.number1 = 0
         self.number2 = 0
