@@ -14,21 +14,19 @@ class MentalMathsApp(MDApp):
         self.theme_cls.primary_palette = "Cyan"
         self.game = None
         self.nrounds = 3
+        self.game_dict = {"Maths Dojo": None,
+                          "Multiply By 11": MultiplyBy11,
+                          "Two Digit Addition": TwoDigitAddition,
+                          "Three By One Digit Multiplication": ThreeByOneDigitMultiplication,
+                          "Two Digit Multiplication": TwoDigitMultiplication,
+                          }
 
     def printIDs(self):
         print(self.root.ids)
 
     def set_game(self, game_name):
-        if game_name == "MultiplyBy11":
-            self.game = MultiplyBy11
-        elif game_name == "TwoDigitAddition":
-            self.game = TwoDigitAddition
-        elif game_name == "ThreeByOneDigitMultiplication":
-            self.game = ThreeByOneDigitMultiplication
-        elif game_name == "TwoDigitMultiplication":
-            self.game = TwoDigitMultiplication
-        else:
-            self.game = None
+        self.game =self.game_dict[game_name]
+
 
     def launch_game(self):
         self.game(self.nrounds)
