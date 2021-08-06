@@ -1,32 +1,39 @@
 from abc import ABC, abstractmethod
 import time
 
+from kivymd.app import MDApp
+
 
 class Game(ABC):
     def __init__(self, number_of_rounds):
-        self.player_answer = 0
+        self.player_answer = None
         self.score = 0
         self.startTime = 0
         self.number_of_rounds = number_of_rounds
+        self.g_round = 0
         self.help = ""
         self.prompt = ""
 
     def play_game(self):
         self.startTime = time.time()
-        for g_round in range(1, self.number_of_rounds + 1):
-            print(f"Round {g_round}")
-            if not self.game_round():  # game_round returns false when player quits
-                break
+        self.start_round()
+
+    def start_round(self):
+        MDApp.get_running_app().root.ids.PlayerInput.text = self.player_answer = ''
+        self.g_round += 1
+        if self.g_round <= self.number_of_rounds:
+            print(f"Round {self.g_round}")
+            self.game_round()
+            MDApp.get_running_app().root.ids.prompt.text = self.prompt
+
         else:
             self.end_game()  # Player reaches end of game without quiting
 
     def game_round(self):
         """
         Set up game prerequisites. For example, generating random numbers and assigning the prompt for the player
-        :return: Boolean:
-            False if player has quit, True otherwise.
+        :return: None:
         """
-        return self.player_input()
 
     def player_input(self):
         """
@@ -34,9 +41,13 @@ class Game(ABC):
         :return: Boolean
             Returns False if player quits, True otherwise.
         """
-        while not self.handle_player_input():
-            if self.player_answer in ('q', 'Q'):  # Player quits
-                return False
+        self.player_answer = MDApp.get_running_app().root.ids.PlayerInput.text
+        self.handle_player_input()
+        if self.player_answer in ('q', 'Q'):  # Player quits
+            return False
+
+        # Start next round
+        self.start_round()
         return True
 
     def end_game(self):
@@ -56,8 +67,6 @@ class Game(ABC):
             help to be displayed, or the player quit. True indicates the game player entered a valid answer and the game
             should move on to the next round.
         """
-        self.player_answer = input(self.prompt)
-
         if not self.is_valid_input():
             print("Invalid input. Please enter numeric value to play or Q to quit\n")
             return False
@@ -70,11 +79,11 @@ class Game(ABC):
             print("Exiting program")
             return False
 
-        if self.is_player_correct():
-            self.player_is_correct()
+        if not self.is_player_correct():
+            print(f"Unlucky. The correct answer is {self.correct_answer()}")
             return True
 
-        print(f"Unlucky. The correct answer is {self.correct_answer()}")
+        self.player_is_correct()
         return True
 
     def player_is_correct(self):

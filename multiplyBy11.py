@@ -1,4 +1,5 @@
 import numpy.random as rand
+from kivymd.app import MDApp
 
 from Game import Game
 
@@ -17,7 +18,6 @@ class MultiplyBy11(Game):
     def game_round(self):
         self.number = rand.randint(10, 100)
         self.prompt = f"{self.number} x 11 = "
-        return self.player_input()
 
     def correct_answer(self):
         return self.number * 11

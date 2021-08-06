@@ -9,11 +9,15 @@ from TwoDigitMultiplication import TwoDigitMultiplication
 
 
 class MentalMathsApp(MDApp):
-    def build(self):
+    def __init__(self):
+        super().__init__()
+        self.prompt = "Nothing yet"
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Cyan"
         self.game = None
+        self.game_type = None
         self.nrounds = 3
+        self.game_name = None
         self.game_dict = {"Maths Dojo": None,
                           "Multiply By 11": MultiplyBy11,
                           "Two Digit Addition": TwoDigitAddition,
@@ -25,11 +29,12 @@ class MentalMathsApp(MDApp):
         print(self.root.ids)
 
     def set_game(self, game_name):
-        self.game =self.game_dict[game_name]
+        self.game_name = game_name
+        self.game_type =self.game_dict[game_name]
 
 
     def launch_game(self):
-        self.game(self.nrounds)
+        self.game = self.game_type(self.nrounds)
 
 
 class ContentNavigationDrawer(MDBoxLayout):
