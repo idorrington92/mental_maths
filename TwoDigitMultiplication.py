@@ -5,13 +5,14 @@ from Game import Game
 
 class TwoDigitMultiplication(Game):
     def __init__(self, number_of_rounds):
+        # NOTE Short description must go before super
+        self.short_description = "Multiply the two digit numbers together"
+        super().__init__(number_of_rounds)
         self.game_id = "TwoDigitMultiplication"
         self.number1 = 0
         self.number2 = 0
         self.help = "..."
-        self.short_description = "Multiply the two digit numbers together"
-        super().__init__(number_of_rounds)
-        self.PopUp.open()
+
 
     def game_round(self):
         self.number1 = rand.randint(11, 100)

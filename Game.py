@@ -17,7 +17,9 @@ class Game(ABC):
         self.prompt = ""
         self.EndGamePopUpTitle = ""
         self.PopUp = None
+        self.HelpPopUp = None
         self.generate_start_game_pop_up()
+        self.PopUp.open()
 
     def generate_start_game_pop_up(self):
         self.PopUp = MDDialog(title=MDApp.get_running_app().game_name,
@@ -47,8 +49,21 @@ class Game(ABC):
                               auto_dismiss=False,
                               )
 
+    def generate_help_pop_up(self):
+        self.HelpPopUp = MDDialog(title="Help",
+                                  text=self.help,
+                                  size_hint=[.8, .8],
+                                  #background_color=MDApp.get_running_app().theme_cls.bg_darkest,
+                                  buttons=[
+                                      CloseButton(),
+                                  ],
+                                  md_bg_color=MDApp.get_running_app().theme_cls.bg_dark,
+                                  auto_dismiss=False,
+                                  )
+
     def display_help(self):
-        print(self.help)
+        self.generate_help_pop_up()
+        self.HelpPopUp.open()
 
     def play_game(self):
         self.startTime = time.time()
@@ -161,4 +176,7 @@ class StartGameButton(MDFlatButton):
     pass
 
 class HelpButton(MDFlatButton):
+    pass
+
+class CloseButton(MDFlatButton):
     pass

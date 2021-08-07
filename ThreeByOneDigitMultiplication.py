@@ -5,13 +5,13 @@ from Game import Game
 
 class ThreeByOneDigitMultiplication(Game):
     def __init__(self, number_of_rounds):
+        # NOTE Short description must go before super
+        self.short_description = "Multiply a three digit number by a single digit number"
+        super().__init__(number_of_rounds)
         self.game_id = "ThreeByOneDigitMultiplication"
         self.number1 = 0
         self.number2 = 0
         self.help = "..."
-        self.short_description = "Multiply a three digit number by a single digit number"
-        super().__init__(number_of_rounds)
-        self.PopUp.open()
 
     def game_round(self):
         self.number1 = rand.randint(101, 1000)

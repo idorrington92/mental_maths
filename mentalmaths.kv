@@ -131,7 +131,15 @@ MDScreen:
     text: "Help"
     text_color: app.theme_cls.primary_color
     on_release:
+        app.game.PopUp.dismiss()
         app.game.display_help()
+
+<CloseButton>
+    text: "Close"
+    text_color: app.theme_cls.primary_color
+    on_release:
+        app.game.HelpPopUp.dismiss()
+        app.game.PopUp.open()
 
 <StartGameButton>
     text: "Start Game"
