@@ -1,6 +1,7 @@
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.properties import ObjectProperty
+from kivymd.uix.screen import MDScreen
 
 from multiplyBy11 import MultiplyBy11
 from TwoDigitAddition import TwoDigitAddition
@@ -30,7 +31,7 @@ class MentalMathsApp(MDApp):
 
     def set_game(self, game_name):
         self.game_name = game_name
-        self.game_type =self.game_dict[game_name]
+        self.game_type = self.game_dict[game_name]
 
 
     def launch_game(self):
@@ -40,6 +41,9 @@ class MentalMathsApp(MDApp):
 class ContentNavigationDrawer(MDBoxLayout):
     screen_manager = ObjectProperty()
     nav_drawer = ObjectProperty()
+
+class GameScreen(MDScreen):
+    pass
 
 
 if __name__ == '__main__':

@@ -16,34 +16,54 @@ class Game(ABC):
         self.help = ""
         self.prompt = ""
         self.EndGamePopUpTitle = ""
-        self.EndGamePopUp = None
+        self.PopUp = None
+        self.generate_start_game_pop_up()
+
+    def generate_start_game_pop_up(self):
+        self.PopUp = MDDialog(title=MDApp.get_running_app().game_name,
+                              text=self.short_description,
+                              size_hint=[.8, .8],
+                              # background_color=MDApp.get_running_app().theme_cls.bg_darkest,
+                              md_bg_color=MDApp.get_running_app().theme_cls.bg_dark,
+                              buttons=[
+                                  StartGameButton(),
+                                  MenuButton(),
+                                  HelpButton(),
+                              ],
+                              auto_dismiss=False,
+                              )
 
     def generate_end_game_pop_up(self):
-        self.EndGamePopUp = MDDialog(title=self.EndGamePopUpTitle,
-                                     text=f"\nScore: {100 * self.score / self.number_of_rounds:.2f}%\n"
-                                          f"Time taken: {time.time() - self.startTime:.2f}s",
-                                     size_hint=[.8, .8],
-                                     #background_color=MDApp.get_running_app().theme_cls.bg_darkest,
-                                     md_bg_color=MDApp.get_running_app().theme_cls.bg_dark,
-                                     buttons=[
-                                         PlayAgainButton(),
-                                         MenuButton(),
-                                         ],
-                                     auto_dismiss=False,
-                                     )
+        self.PopUp = MDDialog(title=self.EndGamePopUpTitle,
+                              text=f"\nScore: {100 * self.score / self.number_of_rounds:.2f}%\n"
+                                   f"Time taken: {time.time() - self.startTime:.2f}s",
+                              size_hint=[.8, .8],
+                              #background_color=MDApp.get_running_app().theme_cls.bg_darkest,
+                              md_bg_color=MDApp.get_running_app().theme_cls.bg_dark,
+                              buttons=[
+                                  PlayAgainButton(),
+                                  MenuButton(),
+                                  ],
+                              auto_dismiss=False,
+                              )
+
+    def display_help(self):
+        print(self.help)
 
     def play_game(self):
         self.startTime = time.time()
+        self.g_round = 0
+        self.score = 0
         self.start_round()
 
     def start_round(self):
-        MDApp.get_running_app().root.ids.PlayerInput.focus = True
-        MDApp.get_running_app().root.ids.PlayerInput.text = self.player_answer = ''
+        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = True
+        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text = self.player_answer = ''
         self.g_round += 1
         if self.g_round <= self.number_of_rounds:
             print(f"Round {self.g_round}")
             self.game_round()
-            MDApp.get_running_app().root.ids.prompt.text = self.prompt
+            MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
         else:
             self.end_game()  # Player reaches end of game without quiting
 
@@ -59,7 +79,7 @@ class Game(ABC):
         :return: Boolean
             Returns False if player quits, True otherwise.
         """
-        self.player_answer = MDApp.get_running_app().root.ids.PlayerInput.text
+        self.player_answer = MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text
         self.handle_player_input()
         if self.player_answer in ('q', 'Q'):  # Player quits
             return False
@@ -73,13 +93,13 @@ class Game(ABC):
         End game display
         :return:
         """
-        MDApp.get_running_app().root.ids.PlayerInput.focus = False
+        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = False
         if self.score / self.number_of_rounds < 0.7:
             self.EndGamePopUpTitle = "Practice makes perfect"
         else:
             self.EndGamePopUpTitle = "Congratulations"
         self.generate_end_game_pop_up()
-        self.EndGamePopUp.open()
+        self.PopUp.open()
 
 
     def handle_player_input(self):
@@ -135,4 +155,10 @@ class MenuButton(MDFlatButton):
     pass
 
 class PlayAgainButton(MDFlatButton):
+    pass
+
+class StartGameButton(MDFlatButton):
+    pass
+
+class HelpButton(MDFlatButton):
     pass

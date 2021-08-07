@@ -19,6 +19,7 @@
                     root.nav_drawer.set_state("close")
                     root.screen_manager.current = 'Multiply By 11'
                     app.set_game("Multiply By 11")
+                    app.launch_game()
 
             OneLineListItem:
                 text: 'Two digit addition'
@@ -26,8 +27,9 @@
                 text_color: app.theme_cls.primary_dark
                 on_press:
                     root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "scr 2"
+                    root.screen_manager.current = "Two Digit Addition"
                     app.set_game("Two Digit Addition")
+                    app.launch_game()
 
             OneLineListItem:
                 text: 'Three by one digit multiplication'
@@ -35,8 +37,9 @@
                 text_color: app.theme_cls.primary_dark
                 on_press:
                     root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "scr 2"
+                    root.screen_manager.current = "Three By One Digit Multiplication"
                     app.set_game("Three By One Digit Multiplication")
+                    app.launch_game()
 
             OneLineListItem:
                 text: 'Two digit multiplication'
@@ -44,8 +47,9 @@
                 text_color: app.theme_cls.primary_dark
                 on_press:
                     root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "scr 2"
+                    root.screen_manager.current = "Two Digit Multiplication"
                     app.set_game("Two Digit Multiplication")
+                    app.launch_game()
 
 
 MDScreen:
@@ -66,43 +70,21 @@ MDScreen:
             MDScreen:
                 name: "Menu"
 
-            MDScreen:
+            GameScreen:
+                id: MultiplyBy11
                 name: "Multiply By 11"
-                MDRoundFlatButton:
-                    text: 'Start Game'
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.8}
-                    text_color: app.theme_cls.primary_dark
-                    on_release:
-                        screen_manager.current = app.game_name
-                        app.launch_game()
 
-                MDLabel:
-                    id: prompt
-                    text: ""
-                    halign: "center"
-                    text_color: app.theme_cls.primary_dark
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            GameScreen:
+                id: TwoDigitAddition
+                name: "Two Digit Addition"
 
-                MDTextField:
-                    id: PlayerInput
-                    hint_text: "Helper text on focus"
-                    helper_text: "This will disappear when you click off"
-                    helper_text_mode: "on_focus"
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-                    text_validate_unfocus: False
-                    on_text_validate:
-                        app.game.player_input()
+            GameScreen:
+                id: ThreeByOneDigitMultiplication
+                name: "Three By One Digit Multiplication"
 
-            MDScreen:
-                name: "scr 2"
-
-                MDRoundFlatButton:
-                    text: 'Start Game'
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.8}
-                    text_color: app.theme_cls.primary_dark
-                    on_press:
-                        screen_manager.current = app.game_name
-                        app.launch_game()
+            GameScreen:
+                id: TwoDigitMultiplication
+                name: "Two Digit Multiplication"
 
         MDNavigationDrawer:
             id: nav_drawer
@@ -112,11 +94,29 @@ MDScreen:
                 screen_manager: screen_manager
                 nav_drawer: nav_drawer
 
+<GameScreen>
+    MDLabel:
+        id: prompt
+        text: ""
+        halign: "center"
+        text_color: app.theme_cls.primary_dark
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+
+    MDTextField:
+        id: PlayerInput
+        hint_text: "Helper text on focus"
+        helper_text: "This will disappear when you click off"
+        helper_text_mode: "on_focus"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+        text_validate_unfocus: False
+        on_text_validate:
+            app.game.player_input()
+
 <MenuButton>
     text: "Menu"
     text_color: app.theme_cls.primary_color
     on_release:
-        app.game.EndGamePopUp.dismiss()
+        app.game.PopUp.dismiss()
         app.root.ids.nav.screen_manager.current = "Menu"
         app.set_game("Maths Dojo")
 
@@ -124,5 +124,18 @@ MDScreen:
     text: "Play Again"
     text_color: app.theme_cls.primary_color
     on_release:
-        app.game.EndGamePopUp.dismiss()
-        app.launch_game()
+        app.game.PopUp.dismiss()
+        app.game.play_game()
+
+<HelpButton>
+    text: "Help"
+    text_color: app.theme_cls.primary_color
+    on_release:
+        app.game.display_help()
+
+<StartGameButton>
+    text: "Start Game"
+    text_color: app.theme_cls.primary_color
+    on_release:
+        app.game.PopUp.dismiss()
+        app.game.play_game()
