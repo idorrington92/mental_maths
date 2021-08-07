@@ -1,5 +1,4 @@
 <ContentNavigationDrawer>:
-
     ScrollView:
 
         MDList:
@@ -73,7 +72,7 @@ MDScreen:
                     text: 'Start Game'
                     pos_hint: {'center_x': 0.5, 'center_y': 0.8}
                     text_color: app.theme_cls.primary_dark
-                    on_press:
+                    on_release:
                         screen_manager.current = app.game_name
                         app.launch_game()
 
@@ -90,8 +89,9 @@ MDScreen:
                     helper_text: "This will disappear when you click off"
                     helper_text_mode: "on_focus"
                     pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-                    on_text_validate: app.game.player_input()
-
+                    text_validate_unfocus: False
+                    on_text_validate:
+                        app.game.player_input()
 
             MDScreen:
                 name: "scr 2"
@@ -108,5 +108,21 @@ MDScreen:
             id: nav_drawer
 
             ContentNavigationDrawer:
+                id:nav
                 screen_manager: screen_manager
                 nav_drawer: nav_drawer
+
+<MenuButton>
+    text: "Menu"
+    text_color: app.theme_cls.primary_color
+    on_release:
+        app.game.EndGamePopUp.dismiss()
+        app.root.ids.nav.screen_manager.current = "Menu"
+        app.set_game("Maths Dojo")
+
+<PlayAgainButton>
+    text: "Play Again"
+    text_color: app.theme_cls.primary_color
+    on_release:
+        app.game.EndGamePopUp.dismiss()
+        app.launch_game()

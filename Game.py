@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 import time
 
 from kivymd.app import MDApp
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
 
 
 class Game(ABC):
@@ -13,19 +15,35 @@ class Game(ABC):
         self.g_round = 0
         self.help = ""
         self.prompt = ""
+        self.EndGamePopUpTitle = ""
+        self.EndGamePopUp = None
+
+    def generate_end_game_pop_up(self):
+        self.EndGamePopUp = MDDialog(title=self.EndGamePopUpTitle,
+                                     text=f"\nScore: {100 * self.score / self.number_of_rounds:.2f}%\n"
+                                          f"Time taken: {time.time() - self.startTime:.2f}s",
+                                     size_hint=[.8, .8],
+                                     #background_color=MDApp.get_running_app().theme_cls.bg_darkest,
+                                     md_bg_color=MDApp.get_running_app().theme_cls.bg_dark,
+                                     buttons=[
+                                         PlayAgainButton(),
+                                         MenuButton(),
+                                         ],
+                                     auto_dismiss=False,
+                                     )
 
     def play_game(self):
         self.startTime = time.time()
         self.start_round()
 
     def start_round(self):
+        MDApp.get_running_app().root.ids.PlayerInput.focus = True
         MDApp.get_running_app().root.ids.PlayerInput.text = self.player_answer = ''
         self.g_round += 1
         if self.g_round <= self.number_of_rounds:
             print(f"Round {self.g_round}")
             self.game_round()
             MDApp.get_running_app().root.ids.prompt.text = self.prompt
-
         else:
             self.end_game()  # Player reaches end of game without quiting
 
@@ -55,8 +73,14 @@ class Game(ABC):
         End game display
         :return:
         """
-        print(f"\nScore: {100 * self.score / self.number_of_rounds:.2f}%")
-        print(f"Time taken: {time.time() - self.startTime:.2f}s")
+        MDApp.get_running_app().root.ids.PlayerInput.focus = False
+        if self.score / self.number_of_rounds < 0.7:
+            self.EndGamePopUpTitle = "Practice makes perfect"
+        else:
+            self.EndGamePopUpTitle = "Congratulations"
+        self.generate_end_game_pop_up()
+        self.EndGamePopUp.open()
+
 
     def handle_player_input(self):
         """
@@ -106,3 +130,9 @@ class Game(ABC):
 
     def is_valid_input(self):
         return self.player_answer in ("q", "Q", "h", "H") or self.player_answer.isnumeric()
+
+class MenuButton(MDFlatButton):
+    pass
+
+class PlayAgainButton(MDFlatButton):
+    pass
