@@ -1,22 +1,16 @@
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+
 <ContentNavigationDrawer>:
     ScrollView:
-
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        size_hint: (1, 0.8)
         MDList:
 
-            OneLineListItem:
-                text: 'Home'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
-                text_color: app.theme_cls.primary_dark
-                on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "Menu"
-                    app.set_game("Maths Dojo")
             OneLineListItem:
                 text: 'Multiply By 11'
                 pos_hint: {'center_x': 0.5, 'center_y': 0.8}
                 text_color: app.theme_cls.primary_dark
                 on_press:
-                    root.nav_drawer.set_state("close")
                     root.screen_manager.current = 'Multiply By 11'
                     app.set_game("Multiply By 11")
                     app.launch_game()
@@ -26,7 +20,6 @@
                 pos_hint: {'center_x': 0.5, 'center_y': 0.6}
                 text_color: app.theme_cls.primary_dark
                 on_press:
-                    root.nav_drawer.set_state("close")
                     root.screen_manager.current = "Two Digit Addition"
                     app.set_game("Two Digit Addition")
                     app.launch_game()
@@ -36,7 +29,6 @@
                 pos_hint: {'center_x': 0.5, 'center_y': 0.4}
                 text_color: app.theme_cls.primary_dark
                 on_press:
-                    root.nav_drawer.set_state("close")
                     root.screen_manager.current = "Three By One Digit Multiplication"
                     app.set_game("Three By One Digit Multiplication")
                     app.launch_game()
@@ -46,53 +38,79 @@
                 pos_hint: {'center_x': 0.5, 'center_y': 0.2}
                 text_color: app.theme_cls.primary_dark
                 on_press:
-                    root.nav_drawer.set_state("close")
                     root.screen_manager.current = "Two Digit Multiplication"
                     app.set_game("Two Digit Multiplication")
                     app.launch_game()
 
 
 MDScreen:
-
-    MDToolbar:
+    name: "Menu"
+    ToolBar:
         id: toolbar
-        pos_hint: {"top": 1}
-        elevation: 10
-        title: "Maths Dojo"
-        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        screen_manager: screen_manager
 
-    MDNavigationLayout:
-        x: toolbar.height
 
-        ScreenManager:
-            id: screen_manager
+    SM:
+        id: screen_manager
 
-            MDScreen:
-                name: "Menu"
 
-            GameScreen:
-                id: MultiplyBy11
-                name: "Multiply By 11"
 
-            GameScreen:
-                id: TwoDigitAddition
-                name: "Two Digit Addition"
+<SM>
+    transition: NoTransition()
 
-            GameScreen:
-                id: ThreeByOneDigitMultiplication
-                name: "Three By One Digit Multiplication"
+    MDScreen:
+        name: "Menu"
+        MDLabel:
+            text: "Welcome to Maths Dojo"
+            halign: "center"
+            valign: "center"
 
-            GameScreen:
-                id: TwoDigitMultiplication
-                name: "Two Digit Multiplication"
+    MDScreen:
+        name: "Library"
+        ContentNavigationDrawer:
+            id:nav
+            screen_manager: root
 
-        MDNavigationDrawer:
-            id: nav_drawer
+    MDScreen:
+        name: "Settings"
+        MDLabel:
+            text: "Settings"
+            halign: "center"
+            valign: "center"
 
-            ContentNavigationDrawer:
-                id:nav
-                screen_manager: screen_manager
-                nav_drawer: nav_drawer
+    GameScreen:
+        id: MultiplyBy11
+        name: "Multiply By 11"
+
+    GameScreen:
+        id: TwoDigitAddition
+        name: "Two Digit Addition"
+
+    GameScreen:
+        id: ThreeByOneDigitMultiplication
+        name: "Three By One Digit Multiplication"
+
+    GameScreen:
+        id: TwoDigitMultiplication
+        name: "Two Digit Multiplication"
+
+<ToolBar>
+    panel_color: app.theme_cls.bg_light
+
+    MDIconButton:
+        icon: "home"
+        on_touch_up:
+            root.screen_manager.current = "Menu"
+
+    MDIconButton:
+        icon: "library"
+        on_touch_up:
+            root.screen_manager.current = "Library"
+
+    MDIconButton:
+        icon: "cog"
+        on_touch_up:
+            root.screen_manager.current = "Settings"
 
 <GameScreen>
     MDLabel:

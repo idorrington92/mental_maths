@@ -72,13 +72,13 @@ class Game(ABC):
         self.start_round()
 
     def start_round(self):
-        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = True
-        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text = self.player_answer = ''
+        MDApp.get_running_app().root.ids.screen_manager.ids[self.game_id].ids.PlayerInput.focus = True
+        MDApp.get_running_app().root.ids.screen_manager.ids[self.game_id].ids.PlayerInput.text = self.player_answer = ''
         self.g_round += 1
         if self.g_round <= self.number_of_rounds:
             print(f"Round {self.g_round}")
             self.game_round()
-            MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
+            MDApp.get_running_app().root.ids.screen_manager.ids[self.game_id].ids.prompt.text = self.prompt
         else:
             self.end_game()  # Player reaches end of game without quiting
 
@@ -94,7 +94,7 @@ class Game(ABC):
         :return: Boolean
             Returns False if player quits, True otherwise.
         """
-        self.player_answer = MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text
+        self.player_answer = MDApp.get_running_app().root.ids.screen_manager.ids[self.game_id].ids.PlayerInput.text
         self.handle_player_input()
         if self.player_answer in ('q', 'Q'):  # Player quits
             return False
@@ -108,7 +108,7 @@ class Game(ABC):
         End game display
         :return:
         """
-        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = False
+        MDApp.get_running_app().root.ids.screen_manager.ids[self.game_id].ids.PlayerInput.focus = False
         if self.score / self.number_of_rounds < 0.7:
             self.EndGamePopUpTitle = "Practice makes perfect"
         else:

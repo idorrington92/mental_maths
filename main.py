@@ -2,6 +2,8 @@ from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.properties import ObjectProperty
 from kivymd.uix.screen import MDScreen
+from kivymd.uix.toolbar import MDToolbar
+from kivy.uix.screenmanager import ScreenManager, FadeTransition
 
 from multiplyBy11 import MultiplyBy11
 from TwoDigitAddition import TwoDigitAddition
@@ -43,6 +45,16 @@ class ContentNavigationDrawer(MDBoxLayout):
     nav_drawer = ObjectProperty()
 
 class GameScreen(MDScreen):
+    pass
+
+class SM(ScreenManager):
+    pass
+
+
+class HomePage(MDScreen):
+    pass
+
+class ToolBar(MDToolbar):
     pass
 
 
