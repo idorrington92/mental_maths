@@ -1,13 +1,14 @@
 import numpy.random as rand
 
-from Game import Game
+from TimeAttack import TimeAttack
+from TimedQuiz import Game
 
 
 class MultiplyBy11(Game):
-    def __init__(self, number_of_rounds):
+    def __init__(self):
         # NOTE Short description must go before super
         self.short_description = "Each problem involves multiplying by 11. Solve as many as you can"
-        super().__init__(number_of_rounds)
+        super().__init__()
         self.game_id = "MultiplyBy11"
         self.number = 0
         self.help = "To multiply a two digit number by 11, add the two digits together and put the result between \n" \

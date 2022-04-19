@@ -1,6 +1,5 @@
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivy.properties import ObjectProperty
 from kivymd.uix.screen import MDScreen
 
 from multiplyBy11 import MultiplyBy11
@@ -10,11 +9,10 @@ from TwoDigitMultiplication import TwoDigitMultiplication
 
 
 class MentalMathsApp(MDApp):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.toolbar = "close"
         self.prompt = "Nothing yet"
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Cyan"
         self.game = None
         self.game_type = None
         self.nrounds = 3
@@ -26,6 +24,13 @@ class MentalMathsApp(MDApp):
                           "Two Digit Multiplication": TwoDigitMultiplication,
                           }
 
+    def build(self):
+        self.theme_cls.theme_style = "Light"
+        self.theme_cls.primary_palette = "Cyan"
+
+    def light_dark_switch(self):
+        self.theme_cls.theme_style = "Dark" if self.theme_cls.theme_style == "Light" else "Light"
+
     def printIDs(self):
         print(self.root.ids)
 
@@ -35,14 +40,21 @@ class MentalMathsApp(MDApp):
 
 
     def launch_game(self):
-        self.game = self.game_type(self.nrounds)
+        self.game = self.game_type()
+        # TODO not all game modes will have rounds now
+        # self.game = self.game_type(self.nrounds)
+
+    def open_close_toolbar(self):
+        self.toolbar = "open" if self.toolbar == "close" else "close"
+        return self.toolbar
 
 
-class ContentNavigationDrawer(MDBoxLayout):
-    screen_manager = ObjectProperty()
-    nav_drawer = ObjectProperty()
 
 class GameScreen(MDScreen):
+    pass
+
+
+class MenuList(MDBoxLayout):
     pass
 
 

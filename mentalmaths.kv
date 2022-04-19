@@ -1,98 +1,98 @@
-<ContentNavigationDrawer>:
-    ScrollView:
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
 
+<MenuList>
+    id: "MenuList"
+    name: "menulist"
+    ScrollView:
         MDList:
+            do_scroll_x: False
 
             OneLineListItem:
-                text: 'Home'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
-                text_color: app.theme_cls.primary_dark
-                on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "Menu"
-                    app.set_game("Maths Dojo")
+                ripple_scale: 0
+
             OneLineListItem:
                 text: 'Multiply By 11'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
-                text_color: app.theme_cls.primary_dark
                 on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = 'Multiply By 11'
+                    app.root.ids.screen_manager.current = 'Multiply By 11'
                     app.set_game("Multiply By 11")
                     app.launch_game()
 
             OneLineListItem:
                 text: 'Two digit addition'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-                text_color: app.theme_cls.primary_dark
                 on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "Two Digit Addition"
+                    app.root.ids.screen_manager.current = "Two Digit Addition"
                     app.set_game("Two Digit Addition")
                     app.launch_game()
 
             OneLineListItem:
                 text: 'Three by one digit multiplication'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.4}
-                text_color: app.theme_cls.primary_dark
                 on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "Three By One Digit Multiplication"
+                    app.root.ids.screen_manager.current = "Three By One Digit Multiplication"
                     app.set_game("Three By One Digit Multiplication")
                     app.launch_game()
 
             OneLineListItem:
                 text: 'Two digit multiplication'
-                pos_hint: {'center_x': 0.5, 'center_y': 0.2}
-                text_color: app.theme_cls.primary_dark
                 on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "Two Digit Multiplication"
+                    app.root.ids.screen_manager.current = "Two Digit Multiplication"
                     app.set_game("Two Digit Multiplication")
                     app.launch_game()
 
 
-MDScreen:
+MDBoxLayout:
 
-    MDToolbar:
-        id: toolbar
-        pos_hint: {"top": 1}
-        elevation: 10
-        title: "Maths Dojo"
-        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+    ScreenManager:
+        id: screen_manager
+        transition: FadeTransition(duration=.2, clearcolor=app.theme_cls.bg_dark)
 
-    MDNavigationLayout:
-        x: toolbar.height
+        MDScreen:
+            id: home
+            name: "home"
 
-        ScreenManager:
-            id: screen_manager
+            MenuList:
 
-            MDScreen:
-                name: "Menu"
+            MDNavigationDrawer:
+                id: nav_drawer
 
-            GameScreen:
-                id: MultiplyBy11
-                name: "Multiply By 11"
+                size_hint: (0.3, 1)
 
-            GameScreen:
-                id: TwoDigitAddition
-                name: "Two Digit Addition"
+                FloatLayout:
+                    pos_hint: {"top": 1}
+                    orientation: "vertical"
 
-            GameScreen:
-                id: ThreeByOneDigitMultiplication
-                name: "Three By One Digit Multiplication"
+                    MDLabel:
+                        pos_hint: {"center_x": .6, "center_y": .8}
+                        text: "Dark Mode"
 
-            GameScreen:
-                id: TwoDigitMultiplication
-                name: "Two Digit Multiplication"
+                    MDSwitch:
+                        pos_hint: {"center_x": .75, "center_y": .8}
+                        active: False
+                        on_touch_up: app.light_dark_switch()
 
-        MDNavigationDrawer:
-            id: nav_drawer
+            MDToolbar:
+                id: toolbar
+                pos_hint: {"top": 1}
+                elevation: 10
+                title: "Maths Dojo"
+                left_action_items: [["menu", lambda x: nav_drawer.set_state(app.open_close_toolbar())]]
 
-            ContentNavigationDrawer:
-                id:nav
-                screen_manager: screen_manager
-                nav_drawer: nav_drawer
+        GameScreen:
+            id: MultiplyBy11
+            name: "Multiply By 11"
+
+        GameScreen:
+            id: TwoDigitAddition
+            name: "Two Digit Addition"
+
+        GameScreen:
+            id: ThreeByOneDigitMultiplication
+            name: "Three By One Digit Multiplication"
+
+        GameScreen:
+            id: TwoDigitMultiplication
+            name: "Two Digit Multiplication"
+
+
 
 <GameScreen>
     MDLabel:
@@ -117,7 +117,7 @@ MDScreen:
     text_color: app.theme_cls.primary_color
     on_release:
         app.game.PopUp.dismiss()
-        app.root.ids.nav.screen_manager.current = "Menu"
+        app.root.ids.screen_manager.current = "home"
         app.set_game("Maths Dojo")
 
 <PlayAgainButton>
