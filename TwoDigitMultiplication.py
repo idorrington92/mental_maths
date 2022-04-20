@@ -1,13 +1,13 @@
 import numpy.random as rand
 
-from Game import Game
+from Game import QuizLogic
+from TimedQuiz import TimedQuiz
 
-
-class TwoDigitMultiplication(Game):
-    def __init__(self, number_of_rounds):
+class TwoDigitMultiplication(QuizLogic, TimedQuiz):
+    def __init__(self):
         # NOTE Short description must go before super
         self.short_description = "Multiply the two digit numbers together"
-        super().__init__(number_of_rounds)
+        super().__init__()
         self.game_id = "TwoDigitMultiplication"
         self.number1 = 0
         self.number2 = 0

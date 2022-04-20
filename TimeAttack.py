@@ -1,10 +1,10 @@
 from kivymd.app import MDApp
 from kivy.clock import Clock
 
-from Game import Game
+from Game import GameLogic
 
 
-class TimeAttack(Game):
+class TimeAttack(GameLogic):
     def __init__(self):
         super().__init__()
         self.clock = None
