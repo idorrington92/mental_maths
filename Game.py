@@ -6,7 +6,7 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 
 
-class QuizLogic(ABC):
+class QuizLogic:
     """This abstract class is for the logic of the questions that get asked,
     i.e. calculating the correct answer and generating the question prompt"""
 
@@ -19,7 +19,7 @@ class QuizLogic(ABC):
         pass
 
 
-class GameLogic(ABC):
+class GameLogic:
     """This class is for all the game logic apart from the questions.
     e.g. how to set up a new round, how the game starts and ends, etc."""
 
@@ -176,6 +176,9 @@ class GameLogic(ABC):
     def is_valid_input(self):
         return self.player_answer in ("q", "Q", "h", "H") or self.player_answer.isnumeric()
 
+
+class Game(ABC, QuizLogic, GameLogic):
+    pass
 
 class MenuButton(MDFlatButton):
     pass

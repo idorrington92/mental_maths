@@ -6,6 +6,9 @@ from multiplyBy11 import MultiplyBy11
 from TwoDigitAddition import TwoDigitAddition
 from ThreeByOneDigitMultiplication import ThreeByOneDigitMultiplication
 from TwoDigitMultiplication import TwoDigitMultiplication
+from TimedQuiz import TimedQuiz
+from TimeAttack import TimeAttack
+from Game import QuizLogic, GameLogic, Game
 
 
 class MentalMathsApp(MDApp):
@@ -17,12 +20,14 @@ class MentalMathsApp(MDApp):
         self.game_type = None
         self.nrounds = 3
         self.game_name = None
-        self.game_dict = {"Maths Dojo": None,
+        self.quiz_dict = {"Maths Dojo": None,
                           "Multiply By 11": MultiplyBy11,
                           "Two Digit Addition": TwoDigitAddition,
                           "Three By One Digit Multiplication": ThreeByOneDigitMultiplication,
                           "Two Digit Multiplication": TwoDigitMultiplication,
                           }
+        self.game_dict = {"Time Attack": TimeAttack,
+                          "Timed Quiz": TimedQuiz}
 
     def build(self):
         self.theme_cls.theme_style = "Light"
@@ -35,8 +40,16 @@ class MentalMathsApp(MDApp):
         print(self.root.ids)
 
     def set_game(self, game_name):
+        print(self.quiz_dict[game_name])
+        quiz = self.quiz_dict[game_name]
         self.game_name = game_name
-        self.game_type = self.game_dict[game_name]
+        self.game_type = None
+
+        if quiz is not None:
+            class Game(quiz, TimeAttack):
+                pass
+
+            self.game_type = Game
 
 
     def launch_game(self):

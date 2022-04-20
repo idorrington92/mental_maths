@@ -4,7 +4,7 @@ from Game import QuizLogic
 from TimedQuiz import TimedQuiz
 
 
-class ThreeByOneDigitMultiplication(QuizLogic, TimedQuiz):
+class ThreeByOneDigitMultiplication(QuizLogic):
     def __init__(self):
         # NOTE Short description must go before super
         self.short_description = "Multiply a three digit number by a single digit number"

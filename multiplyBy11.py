@@ -5,7 +5,7 @@ from TimedQuiz import TimedQuiz
 from Game import QuizLogic
 
 
-class MultiplyBy11(TimedQuiz, QuizLogic):
+class MultiplyBy11(QuizLogic):
     def __init__(self):
         # NOTE Short description must go before super
         self.short_description = "Each problem involves multiplying by 11. Solve as many as you can"

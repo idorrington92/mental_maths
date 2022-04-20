@@ -3,7 +3,7 @@ import numpy.random as rand
 from Game import QuizLogic
 from TimedQuiz import TimedQuiz
 
-class TwoDigitMultiplication(QuizLogic, TimedQuiz):
+class TwoDigitMultiplication(QuizLogic):
     def __init__(self):
         # NOTE Short description must go before super
         self.short_description = "Multiply the two digit numbers together"

@@ -4,7 +4,7 @@ from Game import QuizLogic
 from TimedQuiz import TimedQuiz
 
 
-class TwoDigitAddition(QuizLogic, TimedQuiz):
+class TwoDigitAddition(QuizLogic):
     def __init__(self):
         # NOTE Short description must go before super
         self.short_description = "Add the two digit numbers together. Solve as many as you can"
