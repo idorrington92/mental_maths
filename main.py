@@ -8,7 +8,6 @@ from ThreeByOneDigitMultiplication import ThreeByOneDigitMultiplication
 from TwoDigitMultiplication import TwoDigitMultiplication
 from TimedQuiz import TimedQuiz
 from TimeAttack import TimeAttack
-from Game import QuizLogic, GameLogic, Game
 
 
 class MentalMathsApp(MDApp):

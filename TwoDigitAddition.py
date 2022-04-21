@@ -1,7 +1,6 @@
 import numpy.random as rand
 
 from Game import QuizLogic
-from TimedQuiz import TimedQuiz
 
 
 class TwoDigitAddition(QuizLogic):

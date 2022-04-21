@@ -1,7 +1,5 @@
 import numpy.random as rand
 
-from TimeAttack import TimeAttack
-from TimedQuiz import TimedQuiz
 from Game import QuizLogic
 
 

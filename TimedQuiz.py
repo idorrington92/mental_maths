@@ -1,9 +1,6 @@
-from abc import ABC, abstractmethod
 import time
 
 from kivymd.app import MDApp
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFlatButton
 
 from Game import GameLogic
 

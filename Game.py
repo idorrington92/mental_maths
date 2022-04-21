@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-import time
 
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
