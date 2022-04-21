@@ -149,11 +149,14 @@ class GameLogic:
             return False
 
         if not self.is_player_correct():
-            print(f"Unlucky. The correct answer is {self.correct_answer()}")
+            self.incorrect_answer_action()
             return True
 
         self.player_is_correct()
         return True
+
+    def incorrect_answer_action(self):
+        print(f"Unlucky. The correct answer is {self.correct_answer()}")
 
     def player_is_correct(self):
         """

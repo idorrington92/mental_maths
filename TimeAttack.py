@@ -9,7 +9,7 @@ class TimeAttack(GameLogic):
         super().__init__()
         self.clock = None
         self.timestep_size = 0.01
-        self.time_limit = 3
+        self.time_limit = 30
         self.timestep = self.time_limit
 
     def start_round(self):
@@ -36,3 +36,7 @@ class TimeAttack(GameLogic):
 
     def end_game_text(self):
         return f"Score: {self.score}"
+
+    def incorrect_answer_action(self):
+        self.timestep -= 10
+        super().incorrect_answer_action()
