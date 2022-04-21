@@ -19,14 +19,17 @@ class MentalMathsApp(MDApp):
         self.game_type = None
         self.nrounds = 3
         self.game_name = None
+        self.quiz_name = None
         self.quiz_dict = {"Maths Dojo": None,
                           "Multiply By 11": MultiplyBy11,
                           "Two Digit Addition": TwoDigitAddition,
                           "Three By One Digit Multiplication": ThreeByOneDigitMultiplication,
                           "Two Digit Multiplication": TwoDigitMultiplication,
                           }
-        self.game_dict = {"Time Attack": TimeAttack,
-                          "Timed Quiz": TimedQuiz}
+        self.game_dict = {"Maths Dojo": None,
+                          "Time Attack": TimeAttack,
+                          "Timed Quiz": TimedQuiz
+                          }
 
     def build(self):
         self.theme_cls.theme_style = "Light"
@@ -38,14 +41,15 @@ class MentalMathsApp(MDApp):
     def printIDs(self):
         print(self.root.ids)
 
-    def set_game(self, game_name):
-        print(self.quiz_dict[game_name])
-        quiz = self.quiz_dict[game_name]
+    def set_game(self, quiz_name, game_name):
+        quiz = self.quiz_dict[quiz_name]
+        game = self.game_dict[game_name]
         self.game_name = game_name
+        self.quiz_name = quiz_name
         self.game_type = None
 
         if quiz is not None:
-            class Game(quiz, TimeAttack):
+            class Game(quiz, game):
                 pass
 
             self.game_type = Game

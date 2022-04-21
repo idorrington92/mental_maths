@@ -4,39 +4,111 @@
     id: "MenuList"
     name: "menulist"
     ScrollView:
-        MDList:
-            do_scroll_x: False
+        pos_hint: {"center_x": 0.5}
+        bar_width: 0
+        MDBoxLayout:
+            adaptive_height: True
+            orientation: "vertical"
+            pos_hint: {"center_x": 0.5}
 
-            OneLineListItem:
-                ripple_scale: 0
+            MDBoxLayout:
+                padding: "10dp"
+                adaptive_size: True
+                spacing: "10dp"
+                orientation: "vertical"
+                pos_hint: {"center_x": 0.5}
 
-            OneLineListItem:
-                text: 'Multiply By 11'
-                on_press:
-                    app.root.ids.screen_manager.current = 'Multiply By 11'
-                    app.set_game("Multiply By 11")
-                    app.launch_game()
+                MDBoxLayout:
+                    adaptive_width: True
+                    size_hint_y: None
+                    height: "56dp"
+                    spacing: "10dp"
+                    pos_hint: {"center_x": .5}
 
-            OneLineListItem:
-                text: 'Two digit addition'
-                on_press:
-                    app.root.ids.screen_manager.current = "Two Digit Addition"
-                    app.set_game("Two Digit Addition")
-                    app.launch_game()
+                    MDRaisedButton:
+                        text: 'Time Attack: Multiply By 11'
+                        pos_hint: {"center_x": 0.5}
+                        on_press:
+                            app.root.ids.screen_manager.current = 'Multiply By 11'
+                            app.set_game("Multiply By 11", "Time Attack")
+                            app.launch_game()
 
-            OneLineListItem:
-                text: 'Three by one digit multiplication'
-                on_press:
-                    app.root.ids.screen_manager.current = "Three By One Digit Multiplication"
-                    app.set_game("Three By One Digit Multiplication")
-                    app.launch_game()
+                    MDRaisedButton:
+                        text: 'Quiz: Multiply By 11'
+                        pos_hint: {"center_x": 0.5}
+                        on_press:
+                            app.root.ids.screen_manager.current = 'Multiply By 11'
+                            app.set_game("Multiply By 11", "Timed Quiz")
+                            app.launch_game()
 
-            OneLineListItem:
-                text: 'Two digit multiplication'
-                on_press:
-                    app.root.ids.screen_manager.current = "Two Digit Multiplication"
-                    app.set_game("Two Digit Multiplication")
-                    app.launch_game()
+                MDBoxLayout:
+                    adaptive_width: True
+                    size_hint_y: None
+                    height: "56dp"
+                    spacing: "10dp"
+                    pos_hint: {"center_x": .5}
+
+                    MDRaisedButton:
+                        text: 'Time Attack: Two digit addition'
+                        pos_hint: {"center_x": 0.5}
+                        on_press:
+                            app.root.ids.screen_manager.current = "Two Digit Addition"
+                            app.set_game("Two Digit Addition", "Time Attack")
+                            app.launch_game()
+
+                    MDRaisedButton:
+                        text: 'Quiz: Two digit addition'
+                        pos_hint: {"center_x": 0.5}
+                        on_press:
+                            app.root.ids.screen_manager.current = "Two Digit Addition"
+                            app.set_game("Two Digit Addition", "Timed Quiz")
+                            app.launch_game()
+
+                MDBoxLayout:
+                    adaptive_width: True
+                    size_hint_y: None
+                    height: "56dp"
+                    spacing: "10dp"
+                    pos_hint: {"center_x": .5}
+
+                    MDRaisedButton:
+                        text: 'Time Attack: Three by one digit multiplication'
+                        pos_hint: {"center_x": 0.5}
+                        on_press:
+                            app.root.ids.screen_manager.current = "Three By One Digit Multiplication"
+                            app.set_game("Three By One Digit Multiplication", "Time Attack")
+                            app.launch_game()
+
+                    MDRaisedButton:
+                        text: 'Quiz: Three by one digit multiplication'
+                        pos_hint: {"center_x": 0.5}
+                        on_press:
+                            app.root.ids.screen_manager.current = "Three By One Digit Multiplication"
+                            app.set_game("Three By One Digit Multiplication", "Timed Quiz")
+                            app.launch_game()
+
+                MDBoxLayout:
+                    adaptive_width: True
+                    size_hint_y: None
+                    height: "56dp"
+                    spacing: "10dp"
+                    pos_hint: {"center_x": .5}
+
+                    MDRaisedButton:
+                        text: 'Time Attack: Two digit multiplication'
+                        pos_hint: {"center_x": 0.5}
+                        on_press:
+                            app.root.ids.screen_manager.current = "Two Digit Multiplication"
+                            app.set_game("Two Digit Multiplication", "Time Attack")
+                            app.launch_game()
+
+                    MDRaisedButton:
+                        text: 'Quiz: Two digit multiplication'
+                        pos_hint: {"center_x": 0.5}
+                        on_press:
+                            app.root.ids.screen_manager.current = "Two Digit Multiplication"
+                            app.set_game("Two Digit Multiplication", "Timed Quiz")
+                            app.launch_game()
 
 
 MDBoxLayout:
@@ -71,7 +143,7 @@ MDBoxLayout:
 
             MDToolbar:
                 id: toolbar
-                pos_hint: {"top": 1}
+                pos_hint: {"Bottom": 1}
                 elevation: 10
                 title: "Maths Dojo"
                 left_action_items: [["menu", lambda x: nav_drawer.set_state(app.open_close_toolbar())]]
@@ -118,7 +190,7 @@ MDBoxLayout:
     on_release:
         app.game.PopUp.dismiss()
         app.root.ids.screen_manager.current = "home"
-        app.set_game("Maths Dojo")
+        app.set_game("Maths Dojo", "Maths Dojo")
 
 <PlayAgainButton>
     text: "Play Again"
