@@ -9,8 +9,6 @@ class TimeAttack(GameLogic):
         super().__init__()
         self.clock = None
         self.time_limit = 30
-        self.timestep_size = 0.01
-        self.timestep = 0
         self.timestep = self.time_limit
 
     def start_round(self, *args):
@@ -20,14 +18,15 @@ class TimeAttack(GameLogic):
         MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
 
     def play_game(self):
-        self.clock = Clock.schedule_interval(self.update, self.timestep_size)
         self.timestep = self.time_limit
+        self.clock = Clock.schedule_interval(self.update, self.timestep_size)
         self.start_round()
 
     def update(self, *args):
         print(self.timestep)
         if self.timestep > 0:
             self.timestep -= self.timestep_size
+            MDApp.get_running_app().root.ids[self.game_id].ids['clock_label'].text = f"{self.timestep:.3f}"
         else:
             self.end_game()
 
