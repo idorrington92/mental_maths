@@ -17,7 +17,6 @@ from Game import Game
 class MentalMathsApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.toolbar = "close"
         self.prompt = "Nothing yet"
         self.game = Game()
         self.game_type = None
@@ -58,16 +57,11 @@ class MentalMathsApp(MDApp):
 
             self.game_type = Game
 
-
     def launch_game(self):
         self.game = self.game_type()
-        # TODO not all game modes will have rounds now
-        # self.game = self.game_type(self.nrounds)
 
-    def open_close_toolbar(self):
-        self.toolbar = "open" if self.toolbar == "close" else "close"
-        return self.toolbar
-
+    def change_screen(self, screen_name):
+        self.root.ids.screen_manager.current = screen_name
 
 
 class GameScreen(MDScreen):
@@ -95,7 +89,6 @@ class AnswerBoxHighlight(MDWidget):
             self.colour = [0.67, 1.0, 0.2, 1.0]
         else:
             self.colour = [1, 0, 0, 1]
-        print(f"{self.size=}")
         anim = Animation(animated_color=self.colour,
                          blink_size=(1200.0, 94.5),
                          opacity=0.75,
@@ -104,7 +97,6 @@ class AnswerBoxHighlight(MDWidget):
         anim.start(self)
 
     def reset(self, *args):
-        print(f"{self.size=}")
         anim = Animation(animated_color=self.colour,
                          opacity=0.0,
                          duration=self.duration)
