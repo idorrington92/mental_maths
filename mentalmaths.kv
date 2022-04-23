@@ -4,7 +4,8 @@
     id: "MenuList"
     name: "menulist"
     ScrollView:
-        pos_hint: {"center_x": 0.5}
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        size_hint: (1, 0.9)
         bar_width: 0
         MDBoxLayout:
             adaptive_height: True
@@ -52,7 +53,7 @@
                         text: 'Time Attack: Two digit addition'
                         pos_hint: {"center_x": 0.5}
                         on_press:
-                            app.root.ids.screen_manager.current = "Two Digit Addition"
+                            app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Two Digit Addition", "Time Attack")
                             app.launch_game()
 
@@ -60,7 +61,7 @@
                         text: 'Quiz: Two digit addition'
                         pos_hint: {"center_x": 0.5}
                         on_press:
-                            app.root.ids.screen_manager.current = "Two Digit Addition"
+                            app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Two Digit Addition", "Timed Quiz")
                             app.launch_game()
 
@@ -75,7 +76,7 @@
                         text: 'Time Attack: Three by one digit multiplication'
                         pos_hint: {"center_x": 0.5}
                         on_press:
-                            app.root.ids.screen_manager.current = "Three By One Digit Multiplication"
+                            app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Three By One Digit Multiplication", "Time Attack")
                             app.launch_game()
 
@@ -83,7 +84,7 @@
                         text: 'Quiz: Three by one digit multiplication'
                         pos_hint: {"center_x": 0.5}
                         on_press:
-                            app.root.ids.screen_manager.current = "Three By One Digit Multiplication"
+                            app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Three By One Digit Multiplication", "Timed Quiz")
                             app.launch_game()
 
@@ -98,7 +99,7 @@
                         text: 'Time Attack: Two digit multiplication'
                         pos_hint: {"center_x": 0.5}
                         on_press:
-                            app.root.ids.screen_manager.current = "Two Digit Multiplication"
+                            app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Two Digit Multiplication", "Time Attack")
                             app.launch_game()
 
@@ -106,36 +107,20 @@
                         text: 'Quiz: Two digit multiplication'
                         pos_hint: {"center_x": 0.5}
                         on_press:
-                            app.root.ids.screen_manager.current = "Two Digit Multiplication"
+                            app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Two Digit Multiplication", "Timed Quiz")
                             app.launch_game()
 
 
 <BasicScreen>
-    MDNavigationDrawer:
-        id: nav_drawer
-
-        size_hint: (0.3, 1)
-
-        FloatLayout:
-            pos_hint: {"top": 1}
-            orientation: "vertical"
-
-            MDLabel:
-                pos_hint: {"center_x": .6, "center_y": .8}
-                text: "Dark Mode"
-
-            MDSwitch:
-                pos_hint: {"center_x": .75, "center_y": .8}
-                active: False
-                on_touch_up: app.light_dark_switch()
-
     MDToolbar:
         id: toolbar
-        pos_hint: {"Bottom": 1}
+        pos_hint: {"bottom": 1}
         elevation: 10
         title: "Maths Dojo"
-        left_action_items: [["menu", lambda x: nav_drawer.set_state(app.open_close_toolbar())]]
+        right_action_items: [["home", lambda x: app.change_screen("home")], ["cog-outline", lambda x: app.change_screen("settings")]]
+
+
 
 MDBoxLayout:
 
@@ -178,6 +163,19 @@ MDBoxLayout:
             MenuButton:
                 pos_hint: {"center_x": 0.7, "center_y": 0.5}
 
+        BasicScreen:
+            id: settings
+            name: "settings"
+
+            MDLabel:
+                pos_hint: {"center_x": .6, "center_y": .8}
+                text: "Dark Mode"
+
+            MDSwitch:
+                pos_hint: {"center_x": .75, "center_y": .8}
+                active: False
+                on_active: app.light_dark_switch()
+
 
 <GameScreen>
     id: game_screen
@@ -204,7 +202,6 @@ MDBoxLayout:
         text_validate_unfocus: False
         on_text_validate:
             app.game.player_input()
-
 
 <AnswerBoxHighlight>
     animated_color: 0, 0, 0, 0
@@ -254,6 +251,5 @@ MDBoxLayout:
     text: "Start Game"
     text_color: app.theme_cls.primary_color
     on_release:
-        # app.game.PopUp.dismiss()
         app.root.ids.screen_manager.current = app.quiz_name
         app.game.play_game()
