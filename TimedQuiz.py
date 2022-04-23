@@ -7,18 +7,10 @@ from Game import GameLogic
 
 class TimedQuiz(GameLogic):
     def __init__(self):
-        self.player_answer = None
-        self.score = 0
+        super().__init__()
         self.startTime = 0
         self.number_of_rounds = 3
         self.g_round = 0
-        self.help = ""
-        self.prompt = ""
-        self.EndGamePopUpTitle = ""
-        self.PopUp = None
-        self.HelpPopUp = None
-        self.generate_start_game_pop_up()
-        self.PopUp.open()
 
     def play_game(self):
         self.startTime = time.time()
@@ -53,8 +45,7 @@ class TimedQuiz(GameLogic):
             self.EndGamePopUpTitle = "Practice makes perfect"
         else:
             self.EndGamePopUpTitle = "Congratulations"
-        self.generate_end_game_pop_up()
-        self.PopUp.open()
+        super().end_game()
 
     def end_game_text(self):
         return f"\nScore: {self.score / self.number_of_rounds * 100:.2f}%\n" \

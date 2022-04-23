@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
+from kivy.properties import StringProperty
 
 
 class QuizLogic:
@@ -32,9 +33,10 @@ class GameLogic:
         self.EndGamePopUpTitle = ""
         self.PopUp = None
         self.HelpPopUp = None
-        self.generate_start_game_pop_up()
-        self.PopUp.open()
+        # self.generate_start_game_pop_up()
+        # self.PopUp.open()
 
+    """
     def generate_start_game_pop_up(self):
         self.PopUp = MDDialog(title=MDApp.get_running_app().game_name,
                               text=self.short_description,
@@ -48,6 +50,7 @@ class GameLogic:
                               ],
                               auto_dismiss=False,
                               )
+    """
 
     def generate_end_game_pop_up(self):
         self.PopUp = MDDialog(title=self.EndGamePopUpTitle,
@@ -57,7 +60,7 @@ class GameLogic:
                               md_bg_color=MDApp.get_running_app().theme_cls.bg_dark,
                               buttons=[
                                   PlayAgainButton(),
-                                  MenuButton(),
+                                  PopUpMenuButton(),
                                   ],
                               auto_dismiss=False,
                               )
@@ -99,6 +102,7 @@ class GameLogic:
         :return: Boolean
             Returns False if player quits, True otherwise.
         """
+        print(self.game_id)
         self.player_answer = MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text
         self.handle_player_input()
         if self.player_answer in ('q', 'Q'):  # Player quits
@@ -108,22 +112,22 @@ class GameLogic:
         self.start_round()
         return True
 
+    @abstractmethod
     def end_game(self):
         """
         End game display
         :return:
         """
-        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = False
-        if self.score < self.goal:
-            self.EndGamePopUpTitle = "Practice makes perfect"
-        else:
-            self.EndGamePopUpTitle = "Congratulations"
+        self.set_end_game_text()
         self.generate_end_game_pop_up()
         self.PopUp.open()
 
     @abstractmethod
-    def end_game_text(self):
+    def set_end_game_text(self):
         pass
+
+    def end_game_text(self):
+        return "End game"
 
 
     def handle_player_input(self):
@@ -151,18 +155,20 @@ class GameLogic:
             self.incorrect_answer_action()
             return True
 
-        self.player_is_correct()
+        self.correct_answer_action()
         return True
 
     def incorrect_answer_action(self):
+        MDApp.get_running_app().root.ids[self.game_id].ids.highlight.run_correct_answer_animation(correct=False)
         print(f"Unlucky. The correct answer is {self.correct_answer()}")
 
-    def player_is_correct(self):
+    def correct_answer_action(self):
         """
         Actions to be carried out when player is correct (e.g. increment score)
         :return:
         """
         self.score += 1
+        MDApp.get_running_app().root.ids[self.game_id].ids.highlight.run_correct_answer_animation(correct=True)
         print("Correct!")
 
     @abstractmethod
@@ -183,6 +189,10 @@ class Game(ABC, QuizLogic, GameLogic):
     pass
 
 class MenuButton(MDFlatButton):
+    pass
+
+
+class PopUpMenuButton(MDFlatButton):
     pass
 
 
