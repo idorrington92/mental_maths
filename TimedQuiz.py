@@ -40,5 +40,5 @@ class TimedQuiz(GameLogic):
 
     def end_game_text(self):
         return f"\nScore: {self.score / self.number_of_rounds * 100:.2f}%\n" \
-               f"Time taken: {self.timestep * self.timestep_size:.2f}s"
+               f"Time taken: {self.timestep:.2f}s"
 
