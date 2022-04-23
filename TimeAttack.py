@@ -23,7 +23,6 @@ class TimeAttack(GameLogic):
         self.start_round()
 
     def update(self, *args):
-        print(self.timestep)
         if self.timestep > 0:
             self.timestep -= self.timestep_size
             MDApp.get_running_app().root.ids[self.game_id].ids['clock_label'].text = f"{self.timestep:.3f}"
