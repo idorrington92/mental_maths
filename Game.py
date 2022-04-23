@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
+from kivy.clock import Clock
 
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
-from kivy.properties import StringProperty
 
 
 class QuizLogic:
@@ -33,8 +33,6 @@ class GameLogic:
         self.EndGamePopUpTitle = ""
         self.PopUp = None
         self.HelpPopUp = None
-        # self.generate_start_game_pop_up()
-        # self.PopUp.open()
 
     """
     def generate_start_game_pop_up(self):
@@ -55,9 +53,6 @@ class GameLogic:
     def generate_end_game_pop_up(self):
         self.PopUp = MDDialog(title=self.EndGamePopUpTitle,
                               text=self.end_game_text(),
-                              size_hint=[.8, .8],
-                              #background_color=MDApp.get_running_app().theme_cls.bg_darkest,
-                              md_bg_color=MDApp.get_running_app().theme_cls.bg_dark,
                               buttons=[
                                   PlayAgainButton(),
                                   PopUpMenuButton(),
@@ -68,8 +63,6 @@ class GameLogic:
     def generate_help_pop_up(self):
         self.HelpPopUp = MDDialog(title="Help",
                                   text=self.help,
-                                  size_hint=[.8, .8],
-                                  #background_color=MDApp.get_running_app().theme_cls.bg_darkest,
                                   buttons=[
                                       CloseButton(),
                                   ],
@@ -86,7 +79,7 @@ class GameLogic:
         pass
 
     @abstractmethod
-    def start_round(self):
+    def start_round(self, *args):
         pass
 
     @abstractmethod
@@ -95,22 +88,6 @@ class GameLogic:
         Set up game prerequisites. For example, generating random numbers and assigning the prompt for the player
         :return: None:
         """
-
-    def player_input(self):
-        """
-        Keep looping until player enters a valid (i.e. numeric or 'q') answer.
-        :return: Boolean
-            Returns False if player quits, True otherwise.
-        """
-        print(self.game_id)
-        self.player_answer = MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text
-        self.handle_player_input()
-        if self.player_answer in ('q', 'Q'):  # Player quits
-            return False
-
-        # Start next round
-        self.start_round()
-        return True
 
     @abstractmethod
     def end_game(self):
@@ -129,8 +106,7 @@ class GameLogic:
     def end_game_text(self):
         return "End game"
 
-
-    def handle_player_input(self):
+    def player_input(self):
         """
         Checks player input is valid, then checks if player wants help, quit, or has entered the correct answer.
         Otherwise they must have entered an incorrect answer.
@@ -139,28 +115,17 @@ class GameLogic:
             help to be displayed, or the player quit. True indicates the game player entered a valid answer and the game
             should move on to the next round.
         """
-        if not self.is_valid_input():
-            print("Invalid input. Please enter numeric value to play or Q to quit\n")
-            return False
-
-        if self.player_answer in ("h", "H"):
-            print(self.help)
-            return False
-
-        if self.player_answer in ("q", "Q"):
-            print("Exiting program")
-            return False
-
+        self.player_answer = MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text
         if not self.is_player_correct():
             self.incorrect_answer_action()
-            return True
-
-        self.correct_answer_action()
-        return True
+        else:
+            self.correct_answer_action()
+        Clock.schedule_once(self.start_round, 0.5 if self.is_player_correct() else 1)
 
     def incorrect_answer_action(self):
         MDApp.get_running_app().root.ids[self.game_id].ids.highlight.run_correct_answer_animation(correct=False)
-        print(f"Unlucky. The correct answer is {self.correct_answer()}")
+        self.prompt = f"Unlucky. The correct answer is {self.correct_answer()}"
+        MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
 
     def correct_answer_action(self):
         """
@@ -169,7 +134,8 @@ class GameLogic:
         """
         self.score += 1
         MDApp.get_running_app().root.ids[self.game_id].ids.highlight.run_correct_answer_animation(correct=True)
-        print("Correct!")
+        self.prompt = "Correct!"
+        MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
 
     @abstractmethod
     def correct_answer(self):
@@ -181,12 +147,10 @@ class GameLogic:
     def is_player_correct(self):
         return self.player_answer == str(self.correct_answer())
 
-    def is_valid_input(self):
-        return self.player_answer in ("q", "Q", "h", "H") or self.player_answer.isnumeric()
-
 
 class Game(ABC, QuizLogic, GameLogic):
     pass
+
 
 class MenuButton(MDFlatButton):
     pass

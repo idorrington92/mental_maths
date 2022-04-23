@@ -18,7 +18,7 @@ class TimedQuiz(GameLogic):
         self.score = 0
         self.start_round()
 
-    def start_round(self):
+    def start_round(self, *args):
         MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = True
         MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text = self.player_answer = ''
         self.g_round += 1
@@ -28,12 +28,6 @@ class TimedQuiz(GameLogic):
             MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
         else:
             self.end_game()  # Player reaches end of game without quiting
-
-    def game_round(self):
-        """
-        Set up game prerequisites. For example, generating random numbers and assigning the prompt for the player
-        :return: None:
-        """
 
     def end_game(self):
         """

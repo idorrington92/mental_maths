@@ -8,11 +8,12 @@ class TimeAttack(GameLogic):
     def __init__(self):
         super().__init__()
         self.clock = None
-        self.timestep_size = 0.01
         self.time_limit = 30
+        self.timestep_size = 0.01
+        self.timestep = 0
         self.timestep = self.time_limit
 
-    def start_round(self):
+    def start_round(self, *args):
         MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = True
         MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text = self.player_answer = ''
         self.game_round()
