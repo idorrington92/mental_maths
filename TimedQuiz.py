@@ -1,5 +1,3 @@
-import time
-
 from kivymd.app import MDApp
 
 from Game import GameLogic
@@ -8,13 +6,11 @@ from Game import GameLogic
 class TimedQuiz(GameLogic):
     def __init__(self):
         super().__init__()
-        self.startTime = 0
         self.number_of_rounds = 3
         self.g_round = 0
 
     def play_game(self):
         super().play_game()
-        self.startTime = time.time()
         self.g_round = 0
         self.score = 0
         self.start_round()
@@ -44,5 +40,5 @@ class TimedQuiz(GameLogic):
 
     def end_game_text(self):
         return f"\nScore: {self.score / self.number_of_rounds * 100:.2f}%\n" \
-               f"Time taken: {time.time() - self.startTime:.2f}s"
+               f"Time taken: {self.timestep * self.timestep_size:.2f}s"
 
