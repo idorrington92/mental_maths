@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
-from kivy.clock import Clock
 
+from kivy.clock import Clock
 from kivymd.app import MDApp
+from kivymd.uix.label import MDLabel
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
+from kivy.properties import StringProperty, NumericProperty
 
 
 class QuizLogic:
@@ -25,6 +27,8 @@ class GameLogic:
 
     def __init__(self):
         self.player_answer = None
+        self.timestep = 0
+        self.timestep_size = 0.1
         self.score = 0
         self.goal = 0
         self.startTime = 0
@@ -33,22 +37,6 @@ class GameLogic:
         self.EndGamePopUpTitle = ""
         self.PopUp = None
         self.HelpPopUp = None
-
-    """
-    def generate_start_game_pop_up(self):
-        self.PopUp = MDDialog(title=MDApp.get_running_app().game_name,
-                              text=self.short_description,
-                              size_hint=[.8, .8],
-                              # background_color=MDApp.get_running_app().theme_cls.bg_darkest,
-                              md_bg_color=MDApp.get_running_app().theme_cls.bg_dark,
-                              buttons=[
-                                  StartGameButton(),
-                                  MenuButton(),
-                                  HelpButton(),
-                              ],
-                              auto_dismiss=False,
-                              )
-    """
 
     def generate_end_game_pop_up(self):
         self.PopUp = MDDialog(title=self.EndGamePopUpTitle,
@@ -76,7 +64,13 @@ class GameLogic:
 
     @abstractmethod
     def play_game(self):
-        pass
+        self.timestep = 0
+        Clock.schedule_interval(self.update, self.timestep_size)
+
+    def update(self, *args):
+        print(self.timestep)
+        self.timestep += self.timestep_size
+        MDApp.get_running_app().root.ids[self.game_id].ids['clock_label'].text = f"{self.timestep:.3f}"
 
     @abstractmethod
     def start_round(self, *args):
@@ -95,6 +89,7 @@ class GameLogic:
         End game display
         :return:
         """
+        Clock.unschedule(self.update)
         self.set_end_game_text()
         self.generate_end_game_pop_up()
         self.PopUp.open()
@@ -173,4 +168,8 @@ class HelpButton(MDFlatButton):
 
 
 class CloseButton(MDFlatButton):
+    pass
+
+
+class ClockLabel(MDLabel):
     pass

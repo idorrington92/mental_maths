@@ -13,6 +13,7 @@ class TimedQuiz(GameLogic):
         self.g_round = 0
 
     def play_game(self):
+        super().play_game()
         self.startTime = time.time()
         self.g_round = 0
         self.score = 0

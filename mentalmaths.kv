@@ -180,6 +180,9 @@ MDBoxLayout:
 <GameScreen>
     id: game_screen
 
+    ClockLabel:
+        id: clock_label
+
     AnswerBoxHighlight:
         id: highlight
         animated_color: self.colour
@@ -253,3 +256,10 @@ MDBoxLayout:
     on_release:
         app.root.ids.screen_manager.current = app.quiz_name
         app.game.play_game()
+
+<ClockLabel>
+    text: "This shouldn't be here"
+    pos_hint: {"center_x": 0.9, "center_y": 0.9}
+    size_hint: 0.75,1
+    font_size: 10
+    color: app.theme_cls.primary_color
