@@ -64,11 +64,11 @@ class MentalMathsApp(MDApp):
         self.root.ids.screen_manager.current = screen_name
 
 
-class GameScreen(MDScreen):
+class BasicScreen(MDScreen):
     pass
 
 
-class BasicScreen(MDScreen):
+class GameScreen(BasicScreen):
     pass
 
 
