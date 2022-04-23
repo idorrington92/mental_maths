@@ -5,7 +5,6 @@ from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
-from kivy.properties import StringProperty, NumericProperty
 
 
 class QuizLogic:
@@ -65,10 +64,9 @@ class GameLogic:
     @abstractmethod
     def play_game(self):
         self.timestep = 0
-        Clock.schedule_interval(self.update, self.timestep_size)
+        self.clock = Clock.schedule_interval(self.update, self.timestep_size)
 
     def update(self, *args):
-        print(self.timestep)
         self.timestep += self.timestep_size
         MDApp.get_running_app().root.ids[self.game_id].ids['clock_label'].text = f"{self.timestep:.3f}"
 
@@ -89,7 +87,7 @@ class GameLogic:
         End game display
         :return:
         """
-        Clock.unschedule(self.update)
+        self.clock.cancel()
         self.set_end_game_text()
         self.generate_end_game_pop_up()
         self.PopUp.open()
