@@ -180,8 +180,11 @@ MDBoxLayout:
 <GameScreen>
     id: game_screen
 
-    ClockLabel:
-        id: clock_label
+    MDBoxLayout:
+        pos_hint: {"center_x": 1, "center_y": 0.95}
+        size_hint: 0.3, 0.1
+        ClockLabel:
+            id: clock_label
 
     AnswerBoxHighlight:
         id: highlight
@@ -194,6 +197,7 @@ MDBoxLayout:
         text: ""
         halign: "center"
         text_color: app.theme_cls.primary_dark
+        font_size: 30
         pos_hint: {'center_x': 0.5, 'center_y': 0.6}
 
     MDTextField:
@@ -259,7 +263,7 @@ MDBoxLayout:
 
 <ClockLabel>
     text: "This shouldn't be here"
-    pos_hint: {"center_x": 0.9, "center_y": 0.9}
-    size_hint: 0.75,1
-    font_size: 10
+    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+    size_hint: 1, 1
+    font_size: 25
     color: app.theme_cls.primary_color
