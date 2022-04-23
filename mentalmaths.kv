@@ -29,7 +29,7 @@
                         text: 'Time Attack: Multiply By 11'
                         pos_hint: {"center_x": 0.5}
                         on_press:
-                            app.root.ids.screen_manager.current = 'Multiply By 11'
+                            app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Multiply By 11", "Time Attack")
                             app.launch_game()
 
@@ -37,7 +37,7 @@
                         text: 'Quiz: Multiply By 11'
                         pos_hint: {"center_x": 0.5}
                         on_press:
-                            app.root.ids.screen_manager.current = 'Multiply By 11'
+                            app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Multiply By 11", "Timed Quiz")
                             app.launch_game()
 
@@ -111,42 +111,45 @@
                             app.launch_game()
 
 
+<BasicScreen>
+    MDNavigationDrawer:
+        id: nav_drawer
+
+        size_hint: (0.3, 1)
+
+        FloatLayout:
+            pos_hint: {"top": 1}
+            orientation: "vertical"
+
+            MDLabel:
+                pos_hint: {"center_x": .6, "center_y": .8}
+                text: "Dark Mode"
+
+            MDSwitch:
+                pos_hint: {"center_x": .75, "center_y": .8}
+                active: False
+                on_touch_up: app.light_dark_switch()
+
+    MDToolbar:
+        id: toolbar
+        pos_hint: {"Bottom": 1}
+        elevation: 10
+        title: "Maths Dojo"
+        left_action_items: [["menu", lambda x: nav_drawer.set_state(app.open_close_toolbar())]]
+
 MDBoxLayout:
 
     ScreenManager:
         id: screen_manager
         transition: FadeTransition(duration=.2, clearcolor=app.theme_cls.bg_dark)
 
-        MDScreen:
+        BasicScreen:
             id: home
             name: "home"
 
             MenuList:
 
-            MDNavigationDrawer:
-                id: nav_drawer
 
-                size_hint: (0.3, 1)
-
-                FloatLayout:
-                    pos_hint: {"top": 1}
-                    orientation: "vertical"
-
-                    MDLabel:
-                        pos_hint: {"center_x": .6, "center_y": .8}
-                        text: "Dark Mode"
-
-                    MDSwitch:
-                        pos_hint: {"center_x": .75, "center_y": .8}
-                        active: False
-                        on_touch_up: app.light_dark_switch()
-
-            MDToolbar:
-                id: toolbar
-                pos_hint: {"Bottom": 1}
-                elevation: 10
-                title: "Maths Dojo"
-                left_action_items: [["menu", lambda x: nav_drawer.set_state(app.open_close_toolbar())]]
 
         GameScreen:
             id: MultiplyBy11
@@ -164,9 +167,27 @@ MDBoxLayout:
             id: TwoDigitMultiplication
             name: "Two Digit Multiplication"
 
+        BasicScreen:
+            id: pregame
+            name: "pregame"
+
+            StartGameButton:
+                pos_hint: {"center_x": 0.3, "center_y": 0.5}
+            HelpButton:
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            MenuButton:
+                pos_hint: {"center_x": 0.7, "center_y": 0.5}
 
 
 <GameScreen>
+    id: game_screen
+
+    AnswerBoxHighlight:
+        id: highlight
+        animated_color: self.colour
+        animated_size: (PlayerInput.size[0]*1.5, PlayerInput.size[1]*1.5)
+        pos_hint: PlayerInput.pos_hint
+
     MDLabel:
         id: prompt
         text: ""
@@ -184,7 +205,25 @@ MDBoxLayout:
         on_text_validate:
             app.game.player_input()
 
+
+<AnswerBoxHighlight>
+    animated_color: 0, 0, 0, 0
+    blink_size: (0, 0)
+    canvas.before:
+        Color:
+            rgba: self.animated_color
+        RoundedRectangle: # center
+            size: (root.blink_size[0], root.blink_size[1])
+            pos: self.pos[0] + self.size[0]/2. - self.blink_size[0]/2., self.pos[1] + self.size[1]/2. - self.blink_size[1]/2.
+
 <MenuButton>
+    text: "Menu"
+    text_color: app.theme_cls.primary_color
+    on_release:
+        app.root.ids.screen_manager.current = "home"
+        app.set_game("Maths Dojo", "Maths Dojo")
+
+<PopUpMenuButton>
     text: "Menu"
     text_color: app.theme_cls.primary_color
     on_release:
@@ -203,7 +242,6 @@ MDBoxLayout:
     text: "Help"
     text_color: app.theme_cls.primary_color
     on_release:
-        app.game.PopUp.dismiss()
         app.game.display_help()
 
 <CloseButton>
@@ -211,11 +249,11 @@ MDBoxLayout:
     text_color: app.theme_cls.primary_color
     on_release:
         app.game.HelpPopUp.dismiss()
-        app.game.PopUp.open()
 
 <StartGameButton>
     text: "Start Game"
     text_color: app.theme_cls.primary_color
     on_release:
-        app.game.PopUp.dismiss()
+        # app.game.PopUp.dismiss()
+        app.root.ids.screen_manager.current = app.quiz_name
         app.game.play_game()
