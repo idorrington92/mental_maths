@@ -18,6 +18,8 @@ class TimeAttack(GameLogic):
         MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
 
     def play_game(self):
+        self.score = 0
+        MDApp.get_running_app().root.ids[self.game_id].ids.score.text = f"Score: {self.score}"
         self.timestep = self.time_limit
         self.clock = Clock.schedule_interval(self.update, self.timestep_size)
         self.start_round()

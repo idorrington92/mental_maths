@@ -186,6 +186,14 @@ MDBoxLayout:
         ClockLabel:
             id: clock_label
 
+    MDBoxLayout:
+        MDLabel:
+            id: score
+            pos_hint: {"center_x": 0.05, "center_y": 0.95}
+            size_hint: 0.3, 0.1
+            text: "Score: 0"
+
+
     AnswerBoxHighlight:
         id: highlight
         animated_color: self.colour

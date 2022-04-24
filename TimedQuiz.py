@@ -12,7 +12,6 @@ class TimedQuiz(GameLogic):
     def play_game(self):
         super().play_game()
         self.g_round = 0
-        self.score = 0
         self.start_round()
 
     def start_round(self, *args):
@@ -39,6 +38,7 @@ class TimedQuiz(GameLogic):
         super().end_game()
 
     def end_game_text(self):
-        return f"\nScore: {self.score / self.number_of_rounds * 100:.2f}%\n" \
+        return f"\nScore: {self.score}\n" \
+               f"Percent correct: {self.score / self.number_of_rounds * 100:.2f}%\n" \
                f"Time taken: {self.timestep:.2f}s"
 

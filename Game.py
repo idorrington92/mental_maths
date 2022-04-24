@@ -63,6 +63,8 @@ class GameLogic:
 
     @abstractmethod
     def play_game(self):
+        self.score = 0
+        MDApp.get_running_app().root.ids[self.game_id].ids.score.text = f"Score: {self.score}"
         self.timestep = 0
         self.clock = Clock.schedule_interval(self.update, self.timestep_size)
 
@@ -127,6 +129,7 @@ class GameLogic:
         """
         self.score += 1
         MDApp.get_running_app().root.ids[self.game_id].ids.highlight.run_correct_answer_animation(correct=True)
+        MDApp.get_running_app().root.ids[self.game_id].ids.score.text = f"Score: {self.score}"
         self.prompt = "Correct!"
         MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
 
