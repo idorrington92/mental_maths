@@ -10,6 +10,9 @@ from kivymd.uix.button import MDFlatButton
 class QuizLogic:
     """This abstract class is for the logic of the questions that get asked,
     i.e. calculating the correct answer and generating the question prompt"""
+    def __init__(self):
+        super().__init__()
+        self.prompt = ""
 
     @abstractmethod
     def game_round(self):
@@ -36,6 +39,7 @@ class GameLogic:
         self.EndGamePopUpTitle = ""
         self.PopUp = None
         self.HelpPopUp = None
+        self.count_down = 3
 
     def generate_end_game_pop_up(self):
         self.PopUp = MDDialog(title=self.EndGamePopUpTitle,
@@ -60,6 +64,23 @@ class GameLogic:
     def display_help(self):
         self.generate_help_pop_up()
         self.HelpPopUp.open()
+
+    def reset_countdown(self):
+        self.count_down = 3
+        MDApp.get_running_app().root.ids["count_down_screen"].ids["count_down"].text = f"{self.count_down}"
+
+    def start_game(self):
+        MDApp.get_running_app().change_screen("count_down_screen")
+        Clock.schedule_interval(self.update_count_down, 1)
+
+    def update_count_down(self, *args):
+        self.count_down -= 1
+        MDApp.get_running_app().root.ids["count_down_screen"].ids["count_down"].text = f"{self.count_down}"
+        if self.count_down <= 0:
+            Clock.unschedule(self.update_count_down)
+            self.reset_countdown()
+            MDApp.get_running_app().change_screen(MDApp.get_running_app().quiz_name)
+            self.play_game()
 
     @abstractmethod
     def play_game(self):

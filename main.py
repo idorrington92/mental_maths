@@ -72,6 +72,10 @@ class GameScreen(BasicScreen):
     pass
 
 
+class CountDownScreen(MDScreen):
+    pass
+
+
 class MenuList(MDBoxLayout):
     pass
 

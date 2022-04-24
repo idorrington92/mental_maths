@@ -176,6 +176,10 @@ MDBoxLayout:
                 active: False
                 on_active: app.light_dark_switch()
 
+        CountDownScreen:
+            id: count_down_screen
+            name: "count_down_screen"
+
 
 <GameScreen>
     id: game_screen
@@ -248,7 +252,7 @@ MDBoxLayout:
     text_color: app.theme_cls.primary_color
     on_release:
         app.game.PopUp.dismiss()
-        app.game.play_game()
+        app.game.start_game()
 
 <HelpButton>
     text: "Help"
@@ -266,8 +270,7 @@ MDBoxLayout:
     text: "Start Game"
     text_color: app.theme_cls.primary_color
     on_release:
-        app.root.ids.screen_manager.current = app.quiz_name
-        app.game.play_game()
+        app.game.start_game()
 
 <ClockLabel>
     text: "This shouldn't be here"
@@ -275,3 +278,12 @@ MDBoxLayout:
     size_hint: 1, 1
     font_size: 25
     color: app.theme_cls.primary_color
+
+<CountDownScreen>
+    MDLabel:
+        id: count_down
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        size_hint: 0.1, 0.1
+        font_size: 100
+        color: app.theme_cls.primary_color
+        text: "3"
