@@ -113,6 +113,7 @@ class GameLogic:
         """
         self.clock.cancel()
         self.set_end_game_text()
+        self.set_prompt("")
         self.generate_end_game_pop_up()
         self.PopUp.open()
 
