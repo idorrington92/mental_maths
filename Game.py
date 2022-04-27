@@ -83,7 +83,6 @@ class GameLogic:
             Clock.unschedule(self.update_count_down)
             self.reset_countdown()
 
-
     @abstractmethod
     def play_game(self):
         self.score = 0
@@ -140,10 +139,14 @@ class GameLogic:
             self.correct_answer_action()
         Clock.schedule_once(self.start_round, 0.5 if self.is_player_correct() else 1)
 
+    def set_prompt(self, text):
+        self.prompt = text
+        MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
+
+
     def incorrect_answer_action(self):
         MDApp.get_running_app().root.ids[self.game_id].ids.highlight.run_correct_answer_animation(correct=False)
-        self.prompt = f"Unlucky. The correct answer is {self.correct_answer()}"
-        MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
+        self.set_prompt(f"Unlucky. The correct answer is {self.correct_answer()}")
 
     def correct_answer_action(self):
         """
@@ -153,8 +156,7 @@ class GameLogic:
         self.score += 1
         MDApp.get_running_app().root.ids[self.game_id].ids.highlight.run_correct_answer_animation(correct=True)
         MDApp.get_running_app().root.ids[self.game_id].ids.score.text = f"Score: {self.score}"
-        self.prompt = "Correct!"
-        MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
+        self.set_prompt("Correct!")
 
     @abstractmethod
     def correct_answer(self):

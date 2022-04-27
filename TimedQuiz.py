@@ -21,7 +21,7 @@ class TimedQuiz(GameLogic):
         if self.g_round <= self.number_of_rounds:
             print(f"Round {self.g_round}")
             self.game_round()
-            MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
+            self.set_prompt(self.prompt)
         else:
             self.end_game()  # Player reaches end of game without quiting
 

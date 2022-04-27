@@ -15,7 +15,7 @@ class TimeAttack(GameLogic):
         MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = True
         MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text = self.player_answer = ''
         self.game_round()
-        MDApp.get_running_app().root.ids[self.game_id].ids.prompt.text = self.prompt
+        self.set_prompt(self.prompt)
 
     def play_game(self):
         self.score = 0
