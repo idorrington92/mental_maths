@@ -15,8 +15,8 @@ class TimedQuiz(GameLogic):
         self.start_round()
 
     def start_round(self, *args):
-        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = True
-        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.text = self.player_answer = ''
+        MDApp.get_running_app().root.ids["game_screen"].ids.PlayerInput.focus = True
+        MDApp.get_running_app().root.ids["game_screen"].ids.PlayerInput.text = self.player_answer = ''
         self.g_round += 1
         if self.g_round <= self.number_of_rounds:
             print(f"Round {self.g_round}")
@@ -30,7 +30,7 @@ class TimedQuiz(GameLogic):
         End game display
         :return:
         """
-        MDApp.get_running_app().root.ids[self.game_id].ids.PlayerInput.focus = False
+        MDApp.get_running_app().root.ids["game_screen"].ids.PlayerInput.focus = False
         if self.score / self.number_of_rounds < 0.7:
             self.EndGamePopUpTitle = "Practice makes perfect"
         else:
