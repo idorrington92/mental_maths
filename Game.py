@@ -76,11 +76,13 @@ class GameLogic:
     def update_count_down(self, *args):
         self.count_down -= 1
         MDApp.get_running_app().root.ids["count_down_screen"].ids["count_down"].text = f"{self.count_down}"
-        if self.count_down <= 0:
-            Clock.unschedule(self.update_count_down)
-            self.reset_countdown()
+        if self.count_down == 0:
             MDApp.get_running_app().change_screen(MDApp.get_running_app().quiz_name)
             self.play_game()
+        elif self.count_down < 0:
+            Clock.unschedule(self.update_count_down)
+            self.reset_countdown()
+
 
     @abstractmethod
     def play_game(self):
