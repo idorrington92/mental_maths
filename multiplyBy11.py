@@ -8,7 +8,6 @@ class MultiplyBy11(QuizLogic):
         # NOTE Short description must go before super
         self.short_description = "Each problem involves multiplying by 11. Solve as many as you can"
         super().__init__()
-        self.game_id = "MultiplyBy11"
         self.number = 0
         self.help = "To multiply a two digit number by 11, add the two digits together and put the result between \n" \
                     "the two digits. e.g. 42 x 11 = 462, as 4 + 2 = 6. If the two digits sum to more than 10, then \n" \

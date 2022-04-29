@@ -8,7 +8,6 @@ class ThreeByOneDigitMultiplication(QuizLogic):
         # NOTE Short description must go before super
         self.short_description = "Multiply a three digit number by a single digit number"
         super().__init__()
-        self.game_id = "ThreeByOneDigitMultiplication"
         self.number1 = 0
         self.number2 = 0
         self.help = "..."

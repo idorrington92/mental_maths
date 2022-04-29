@@ -8,7 +8,6 @@ class TwoDigitAddition(QuizLogic):
         # NOTE Short description must go before super
         self.short_description = "Add the two digit numbers together. Solve as many as you can"
         super().__init__()
-        self.game_id = "TwoDigitAddition"
         self.number1 = 0
         self.number2 = 0
         self.help = "..."
