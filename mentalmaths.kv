@@ -29,6 +29,7 @@
                     MDRaisedButton:
                         text: 'Time Attack: Multiply By 11'
                         pos_hint: {"center_x": 0.5}
+                        disabled: app.is_locked_level["Multiply By 11"]
                         on_press:
                             app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Multiply By 11", "Time Attack")
@@ -37,6 +38,7 @@
                     MDRaisedButton:
                         text: 'Quiz: Multiply By 11'
                         pos_hint: {"center_x": 0.5}
+                        disabled: app.is_locked_level["Multiply By 11"]
                         on_press:
                             app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Multiply By 11", "Timed Quiz")
@@ -52,6 +54,7 @@
                     MDRaisedButton:
                         text: 'Time Attack: Two digit addition'
                         pos_hint: {"center_x": 0.5}
+                        disabled: app.is_locked_level["Two Digit Addition"]
                         on_press:
                             app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Two Digit Addition", "Time Attack")
@@ -60,6 +63,7 @@
                     MDRaisedButton:
                         text: 'Quiz: Two digit addition'
                         pos_hint: {"center_x": 0.5}
+                        disabled: app.is_locked_level["Two Digit Addition"]
                         on_press:
                             app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Two Digit Addition", "Timed Quiz")
@@ -75,6 +79,7 @@
                     MDRaisedButton:
                         text: 'Time Attack: Three by one digit multiplication'
                         pos_hint: {"center_x": 0.5}
+                        disabled: app.is_locked_level["Three By One Digit Multiplication"]
                         on_press:
                             app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Three By One Digit Multiplication", "Time Attack")
@@ -83,6 +88,7 @@
                     MDRaisedButton:
                         text: 'Quiz: Three by one digit multiplication'
                         pos_hint: {"center_x": 0.5}
+                        disabled: app.is_locked_level["Three By One Digit Multiplication"]
                         on_press:
                             app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Three By One Digit Multiplication", "Timed Quiz")
@@ -98,6 +104,7 @@
                     MDRaisedButton:
                         text: 'Time Attack: Two digit multiplication'
                         pos_hint: {"center_x": 0.5}
+                        disabled: app.is_locked_level["Two Digit Multiplication"]
                         on_press:
                             app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Two Digit Multiplication", "Time Attack")
@@ -106,6 +113,7 @@
                     MDRaisedButton:
                         text: 'Quiz: Two digit multiplication'
                         pos_hint: {"center_x": 0.5}
+                        disabled: app.is_locked_level["Two Digit Multiplication"]
                         on_press:
                             app.root.ids.screen_manager.current = 'pregame'
                             app.set_game("Two Digit Multiplication", "Timed Quiz")

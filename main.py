@@ -21,8 +21,11 @@ class MentalMathsApp(MDApp):
         self.game = Game()
         self.game_type = None
         self.nrounds = 3
-        self.game_name = None
-        self.quiz_name = None
+        self.is_locked_level = {"Multiply By 11": False,
+                                "Two Digit Addition": False,
+                                "Three By One Digit Multiplication": False,
+                                "Two Digit Multiplication": True,
+                                }
         self.quiz_dict = {"Maths Dojo": None,
                           "Multiply By 11": MultiplyBy11,
                           "Two Digit Addition": TwoDigitAddition,
@@ -47,8 +50,6 @@ class MentalMathsApp(MDApp):
     def set_game(self, quiz_name, game_name):
         quiz = self.quiz_dict[quiz_name]
         game = self.game_dict[game_name]
-        self.game_name = game_name
-        self.quiz_name = quiz_name
         self.game_type = None
 
         if quiz is not None:
