@@ -4,6 +4,8 @@ from kivymd.uix.screen import MDScreen
 from kivy.animation import Animation
 from kivymd.uix.widget import MDWidget
 from kivy.properties import ListProperty
+from kivy.storage.jsonstore import JsonStore
+from kivymd.uix.button import MDRoundFlatIconButton
 
 from multiplyBy11 import MultiplyBy11
 from TwoDigitAddition import TwoDigitAddition
@@ -21,11 +23,10 @@ class MentalMathsApp(MDApp):
         self.game = Game()
         self.game_type = None
         self.nrounds = 3
-        self.is_locked_level = {"Multiply By 11": False,
-                                "Two Digit Addition": False,
-                                "Three By One Digit Multiplication": False,
-                                "Two Digit Multiplication": True,
-                                }
+        self.challenge_text = {"bronze": "", "silver": "", "gold": ""}
+        self.data = JsonStore("mental_maths.json")
+        self.is_locked_level = self.data.get("is_level_locked")
+
         self.quiz_dict = {"Maths Dojo": None,
                           "Multiply By 11": MultiplyBy11,
                           "Two Digit Addition": TwoDigitAddition,
@@ -52,11 +53,17 @@ class MentalMathsApp(MDApp):
         game = self.game_dict[game_name]
         self.game_type = None
 
-        if quiz is not None:
+        if quiz and game:
             class Game(quiz, game):
                 pass
 
             self.game_type = Game
+            self.set_challenge_text(quiz_name, game_name)
+
+    def set_challenge_text(self, quiz_name, game_name):
+        for medal in ("bronze", "silver", "gold"):
+            self.challenge_text[medal] = self.data[quiz_name][game_name]["challenges"][medal]["description"]
+            self.root.ids[medal + "_challenge_label"].text = self.challenge_text[medal]
 
     def launch_game(self):
         self.game = self.game_type()
@@ -107,6 +114,10 @@ class AnswerBoxHighlight(MDWidget):
                          duration=self.duration)
         self.blink_size = (0, 0)
         anim.start(self)
+
+
+class ChallengeLabel(MDRoundFlatIconButton):
+    pass
 
 
 if __name__ == '__main__':

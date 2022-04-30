@@ -152,12 +152,42 @@ MDBoxLayout:
             id: pregame
             name: "pregame"
 
-            StartGameButton:
-                pos_hint: {"center_x": 0.3, "center_y": 0.5}
-            HelpButton:
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            MenuButton:
-                pos_hint: {"center_x": 0.7, "center_y": 0.5}
+            MDBoxLayout:
+                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                orientation: "vertical"
+                spacing: "50dp"
+                adaptive_width: True
+                size_hint_y: None
+
+                MDBoxLayout:
+                    adaptive_width: True
+                    size_hint_y: None
+                    StartGameButton:
+                        pos_hint: {"center_x": 0.3}
+                    HelpButton:
+                        pos_hint: {"center_x": 0.5}
+                    MenuButton:
+                        pos_hint: {"center_x": 0.7}
+
+                MDBoxLayout:
+                    adaptive_width: True
+                    size_hint_y: None
+                    orientation: "vertical"
+                    ChallengeLabel:
+                        text: app.challenge_text["gold"]
+                        id: gold_challenge_label
+                        pos_hint: {"center_x": 0.5}
+                        disabled: True
+
+                    ChallengeLabel:
+                        text: app.challenge_text["silver"]
+                        id: silver_challenge_label
+                        pos_hint: {"center_x": 0.5}
+
+                    ChallengeLabel:
+                        text: app.challenge_text["bronze"]
+                        id: bronze_challenge_label
+                        pos_hint: {"center_x": 0.5}
 
         BasicScreen:
             id: settings
@@ -283,3 +313,9 @@ MDBoxLayout:
         font_size: 100
         color: app.theme_cls.primary_color
         text: "3"
+
+<ChallengeLabel>
+    icon: "medal-outline"
+    line_color_disabled: (0, 0, 0, 0)
+    line_color: (0, 0, 0, 0)
+    ripple_scale: 0
