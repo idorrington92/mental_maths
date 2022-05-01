@@ -175,16 +175,19 @@ MDBoxLayout:
                     orientation: "vertical"
                     ChallengeLabel:
                         id: gold_challenge_label
+                        icon: "trophy"
                         pos_hint: {"center_x": 0.5}
                         icon_color: (100, 100, 0, 1)
 
                     ChallengeLabel:
                         id: silver_challenge_label
+                        icon: "medal-outline"
                         pos_hint: {"center_x": 0.5}
                         icon_color: (150,116,68, 1)
 
                     ChallengeLabel:
                         id: bronze_challenge_label
+                        icon: "medal"
                         pos_hint: {"center_x": 0.5}
                         icon_color: (100,116,150, 1)
 
@@ -259,14 +262,12 @@ MDBoxLayout:
 
 <MenuButton>
     text: "Menu"
-    text_color: app.theme_cls.primary_color
     on_release:
         app.root.ids.screen_manager.current = "home"
         app.set_game("Maths Dojo", "Maths Dojo")
 
 <PopUpMenuButton>
     text: "Menu"
-    text_color: app.theme_cls.primary_color
     on_release:
         app.game.PopUp.dismiss()
         app.root.ids.screen_manager.current = "home"
@@ -274,26 +275,22 @@ MDBoxLayout:
 
 <PlayAgainButton>
     text: "Play Again"
-    text_color: app.theme_cls.primary_color
     on_release:
         app.game.PopUp.dismiss()
         app.game.start_game()
 
 <HelpButton>
     text: "Help"
-    text_color: app.theme_cls.primary_color
     on_release:
         app.game.display_help()
 
 <CloseButton>
     text: "Close"
-    text_color: app.theme_cls.primary_color
     on_release:
         app.game.HelpPopUp.dismiss()
 
 <StartGameButton>
     text: "Start Game"
-    text_color: app.theme_cls.primary_color
     on_release:
         app.game.start_game()
 
@@ -314,7 +311,9 @@ MDBoxLayout:
         text: "3"
 
 <ChallengeLabel>
-    icon: "medal-outline"
+    text: "---------------------------------------------------"
+    halign: "left"
+    text_color: app.theme_cls.text_color
     line_color_disabled: (0, 0, 0, 0)
     line_color: (0, 0, 0, 0)
     ripple_scale: 0
