@@ -23,7 +23,6 @@ class MentalMathsApp(MDApp):
         self.game = Game()
         self.game_type = None
         self.nrounds = 3
-        self.challenge_text = {"bronze": "", "silver": "", "gold": ""}
         self.data = JsonStore("mental_maths.json")
         self.is_locked_level = self.data.get("is_level_locked")
 
@@ -37,6 +36,52 @@ class MentalMathsApp(MDApp):
                           "Time Attack": TimeAttack,
                           "Timed Quiz": TimedQuiz
                           }
+        self.challenge_text = {
+            "Multiply By 11": {
+                "Timed Quiz": {
+                    "bronze": "Get 1 answer correct",
+                    "silver": "Get 2 answers correct",
+                    "gold": "Answer all questions correctly"
+                },
+                "Time Attack": {
+                    "bronze": "Score 5 points",
+                    "silver": "Score 7 points",
+                    "gold": "Score 10 points"},
+                },
+            "Two Digit Addition": {
+                "Timed Quiz": {
+                    "bronze": "Get 1 answer correct",
+                    "silver": "Get 2 answers correct",
+                    "gold": "Answer all questions correctly"
+                },
+                "Time Attack": {
+                    "bronze": "Score 5 points",
+                    "silver": "Score 7 points",
+                    "gold": "Score 10 points"},
+            },
+            "Three By One Digit Multiplication": {
+                "Timed Quiz": {
+                    "bronze": "Get 1 answer correct",
+                    "silver": "Get 2 answers correct",
+                    "gold": "Answer all questions correctly"
+                },
+                "Time Attack": {
+                    "bronze": "Score 5 points",
+                    "silver": "Score 7 points",
+                    "gold": "Score 10 points"},
+            },
+            "Two Digit Multiplication": {
+                "Timed Quiz": {
+                    "bronze": "Get 1 answer correct",
+                    "silver": "Get 2 answers correct",
+                    "gold": "Answer all questions correctly"
+                },
+                "Time Attack": {
+                    "bronze": "Score 5 points",
+                    "silver": "Score 7 points",
+                    "gold": "Score 10 points"},
+            },
+        }
 
     def build(self):
         self.theme_cls.theme_style = "Light"
@@ -62,8 +107,9 @@ class MentalMathsApp(MDApp):
 
     def set_challenge_text(self, quiz_name, game_name):
         for medal in ("bronze", "silver", "gold"):
-            self.challenge_text[medal] = self.data[quiz_name][game_name]["challenges"][medal]["description"]
-            self.root.ids[medal + "_challenge_label"].text = self.challenge_text[medal]
+            self.root.ids[medal + "_challenge_label"].text = self.challenge_text[quiz_name][game_name][medal]
+            self.root.ids[medal + "_challenge_label"].disabled = \
+                not self.data[quiz_name][game_name]["challenges_completed"][medal]
 
     def launch_game(self):
         self.game = self.game_type()
@@ -117,7 +163,8 @@ class AnswerBoxHighlight(MDWidget):
 
 
 class ChallengeLabel(MDRoundFlatIconButton):
-    pass
+    def on_touch_down(self, touch):
+        pass
 
 
 if __name__ == '__main__':

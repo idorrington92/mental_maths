@@ -174,20 +174,19 @@ MDBoxLayout:
                     size_hint_y: None
                     orientation: "vertical"
                     ChallengeLabel:
-                        text: app.challenge_text["gold"]
                         id: gold_challenge_label
                         pos_hint: {"center_x": 0.5}
-                        disabled: True
+                        icon_color: (100, 100, 0, 1)
 
                     ChallengeLabel:
-                        text: app.challenge_text["silver"]
                         id: silver_challenge_label
                         pos_hint: {"center_x": 0.5}
+                        icon_color: (150,116,68, 1)
 
                     ChallengeLabel:
-                        text: app.challenge_text["bronze"]
                         id: bronze_challenge_label
                         pos_hint: {"center_x": 0.5}
+                        icon_color: (100,116,150, 1)
 
         BasicScreen:
             id: settings
