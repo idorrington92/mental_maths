@@ -21,6 +21,8 @@ class MentalMathsApp(MDApp):
         super().__init__(**kwargs)
         self.prompt = "Nothing yet"
         self.game = Game()
+        self.quiz_name = ""
+        self.game_name = ""
         self.game_type = None
         self.nrounds = 3
         self.data = JsonStore("mental_maths.json")
@@ -36,51 +38,55 @@ class MentalMathsApp(MDApp):
                           "Time Attack": TimeAttack,
                           "Timed Quiz": TimedQuiz
                           }
-        self.challenge_text = {
+        self.challenges = {
             "Multiply By 11": {
                 "Timed Quiz": {
-                    "bronze": "Get 1 answer correct",
-                    "silver": "Get 2 answers correct",
-                    "gold": "Answer all questions correctly"
+                    "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
+                    "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
+                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score > 3}
                 },
                 "Time Attack": {
-                    "bronze": "Score 5 points",
-                    "silver": "Score 7 points",
-                    "gold": "Score 10 points"},
+                    "bronze": {"text": "Score 5 points", "condition": lambda score: score >=5},
+                    "silver": {"text": "Score 7 points", "condition": lambda score: score >= 7},
+                    "gold": {"text": "Score 10 points", "condition": lambda score: score >= 10},
                 },
+            },
             "Two Digit Addition": {
                 "Timed Quiz": {
-                    "bronze": "Get 1 answer correct",
-                    "silver": "Get 2 answers correct",
-                    "gold": "Answer all questions correctly"
+                    "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
+                    "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
+                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score > 3}
                 },
                 "Time Attack": {
-                    "bronze": "Score 5 points",
-                    "silver": "Score 7 points",
-                    "gold": "Score 10 points"},
+                    "bronze": {"text": "Score 5 points", "condition": lambda score: score >= 5},
+                    "silver": {"text": "Score 7 points", "condition": lambda score: score >= 7},
+                    "gold": {"text": "Score 10 points", "condition": lambda score: score >= 10},
+                },
             },
             "Three By One Digit Multiplication": {
                 "Timed Quiz": {
-                    "bronze": "Get 1 answer correct",
-                    "silver": "Get 2 answers correct",
-                    "gold": "Answer all questions correctly"
+                    "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
+                    "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
+                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score > 3}
                 },
                 "Time Attack": {
-                    "bronze": "Score 5 points",
-                    "silver": "Score 7 points",
-                    "gold": "Score 10 points"},
+                    "bronze": {"text": "Score 5 points", "condition": lambda score: score >= 5},
+                    "silver": {"text": "Score 7 points", "condition": lambda score: score >= 7},
+                    "gold": {"text": "Score 10 points", "condition": lambda score: score >= 10},
+                },
             },
             "Two Digit Multiplication": {
                 "Timed Quiz": {
-                    "bronze": "Get 1 answer correct",
-                    "silver": "Get 2 answers correct",
-                    "gold": "Answer all questions correctly"
+                    "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
+                    "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
+                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score > 3}
                 },
                 "Time Attack": {
-                    "bronze": "Score 5 points",
-                    "silver": "Score 7 points",
-                    "gold": "Score 10 points"},
-            },
+                    "bronze": {"text": "Score 5 points", "condition": lambda score: score >= 5},
+                    "silver": {"text": "Score 7 points", "condition": lambda score: score >= 7},
+                    "gold": {"text": "Score 10 points", "condition": lambda score: score >= 10},
+                },
+            }
         }
 
     def build(self):
@@ -94,6 +100,8 @@ class MentalMathsApp(MDApp):
         print(self.root.ids)
 
     def set_game(self, quiz_name, game_name):
+        self.quiz_name= quiz_name
+        self.game_name = game_name
         quiz = self.quiz_dict[quiz_name]
         game = self.game_dict[game_name]
         self.game_type = None
@@ -107,7 +115,7 @@ class MentalMathsApp(MDApp):
 
     def set_challenge_text(self, quiz_name, game_name):
         for medal in ("bronze", "silver", "gold"):
-            self.root.ids[medal + "_challenge_label"].text = self.challenge_text[quiz_name][game_name][medal]
+            self.root.ids[medal + "_challenge_label"].text = self.challenges[quiz_name][game_name][medal]["text"]
             self.root.ids[medal + "_challenge_label"].disabled = \
                 not self.data[quiz_name][game_name]["challenges_completed"][medal]
 

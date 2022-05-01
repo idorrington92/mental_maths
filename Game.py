@@ -40,6 +40,7 @@ class GameLogic:
         self.PopUp = None
         self.HelpPopUp = None
         self.count_down = 3
+        self.app = MDApp.get_running_app()
 
     def generate_end_game_pop_up(self):
         self.PopUp = MDDialog(title=self.EndGamePopUpTitle,
@@ -57,7 +58,7 @@ class GameLogic:
                                   buttons=[
                                       CloseButton(),
                                   ],
-                                  md_bg_color=MDApp.get_running_app().theme_cls.bg_dark,
+                                  md_bg_color=self.app.theme_cls.bg_dark,
                                   auto_dismiss=False,
                                   )
 
@@ -67,17 +68,17 @@ class GameLogic:
 
     def reset_countdown(self):
         self.count_down = 3
-        MDApp.get_running_app().root.ids["count_down_screen"].ids["count_down"].text = f"{self.count_down}"
+        self.app.root.ids["count_down_screen"].ids["count_down"].text = f"{self.count_down}"
 
     def start_game(self):
-        MDApp.get_running_app().change_screen("count_down_screen")
+        self.app.change_screen("count_down_screen")
         Clock.schedule_interval(self.update_count_down, 1)
 
     def update_count_down(self, *args):
         self.count_down -= 1
-        MDApp.get_running_app().root.ids["count_down_screen"].ids["count_down"].text = f"{self.count_down}"
+        self.app.root.ids["count_down_screen"].ids["count_down"].text = f"{self.count_down}"
         if self.count_down == 0:
-            MDApp.get_running_app().change_screen("game_screen")
+            self.app.change_screen("game_screen")
             self.play_game()
         elif self.count_down < 0:
             Clock.unschedule(self.update_count_down)
@@ -86,13 +87,13 @@ class GameLogic:
     @abstractmethod
     def play_game(self):
         self.score = 0
-        MDApp.get_running_app().root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
+        self.app.root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
         self.timestep = 0
         self.clock = Clock.schedule_interval(self.update, self.timestep_size)
 
     def update(self, *args):
         self.timestep += self.timestep_size
-        MDApp.get_running_app().root.ids["game_screen"].ids['clock_label'].text = f"{self.timestep:.3f}"
+        self.app.root.ids["game_screen"].ids['clock_label'].text = f"{self.timestep:.3f}"
 
     @abstractmethod
     def start_round(self, *args):
@@ -114,8 +115,17 @@ class GameLogic:
         self.clock.cancel()
         self.set_end_game_text()
         self.set_prompt("")
+        self.challenges_check()
         self.generate_end_game_pop_up()
         self.PopUp.open()
+
+    def challenges_check(self):
+        if self.app.challenges[self.app.quiz_name][self.app.game_name]["bronze"]["condition"](self.score):
+            print("You did it!")
+        if self.app.challenges[self.app.quiz_name][self.app.game_name]["silver"]["condition"](self.score):
+            print("You did it!")
+        if self.app.challenges[self.app.quiz_name][self.app.game_name]["gold"]["condition"](self.score):
+            print("You did it!")
 
     @abstractmethod
     def set_end_game_text(self):
@@ -133,7 +143,7 @@ class GameLogic:
             help to be displayed, or the player quit. True indicates the game player entered a valid answer and the game
             should move on to the next round.
         """
-        self.player_answer = MDApp.get_running_app().root.ids["game_screen"].ids.PlayerInput.text
+        self.player_answer = self.app.root.ids["game_screen"].ids.PlayerInput.text
         if not self.is_player_correct():
             self.incorrect_answer_action()
         else:
@@ -142,11 +152,11 @@ class GameLogic:
 
     def set_prompt(self, text):
         self.prompt = text
-        MDApp.get_running_app().root.ids["game_screen"].ids.prompt.text = self.prompt
+        self.app.root.ids["game_screen"].ids.prompt.text = self.prompt
 
 
     def incorrect_answer_action(self):
-        MDApp.get_running_app().root.ids["game_screen"].ids.highlight.run_correct_answer_animation(correct=False)
+        self.app.root.ids["game_screen"].ids.highlight.run_correct_answer_animation(correct=False)
         self.set_prompt(f"Unlucky. The correct answer is {self.correct_answer()}")
 
     def correct_answer_action(self):
@@ -155,8 +165,8 @@ class GameLogic:
         :return:
         """
         self.score += 1
-        MDApp.get_running_app().root.ids["game_screen"].ids.highlight.run_correct_answer_animation(correct=True)
-        MDApp.get_running_app().root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
+        self.app.root.ids["game_screen"].ids.highlight.run_correct_answer_animation(correct=True)
+        self.app.root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
         self.set_prompt("Correct!")
 
     @abstractmethod
