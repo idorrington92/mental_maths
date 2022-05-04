@@ -1,3 +1,5 @@
+from json import dump
+
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.screen import MDScreen
@@ -43,7 +45,7 @@ class MentalMathsApp(MDApp):
                 "Timed Quiz": {
                     "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
                     "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
-                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score > 3}
+                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score >= 3}
                 },
                 "Time Attack": {
                     "bronze": {"text": "Score 5 points", "condition": lambda score: score >=5},
@@ -55,7 +57,7 @@ class MentalMathsApp(MDApp):
                 "Timed Quiz": {
                     "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
                     "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
-                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score > 3}
+                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score >= 3}
                 },
                 "Time Attack": {
                     "bronze": {"text": "Score 5 points", "condition": lambda score: score >= 5},
@@ -67,7 +69,7 @@ class MentalMathsApp(MDApp):
                 "Timed Quiz": {
                     "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
                     "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
-                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score > 3}
+                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score >= 3}
                 },
                 "Time Attack": {
                     "bronze": {"text": "Score 5 points", "condition": lambda score: score >= 5},
@@ -79,7 +81,7 @@ class MentalMathsApp(MDApp):
                 "Timed Quiz": {
                     "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
                     "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
-                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score > 3}
+                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score >= 3}
                 },
                 "Time Attack": {
                     "bronze": {"text": "Score 5 points", "condition": lambda score: score >= 5},
@@ -92,6 +94,14 @@ class MentalMathsApp(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Cyan"
+
+    def save(self):
+        with open(self.data.filename, 'w') as fd:
+            dump(
+                self.data._data, fd,
+                indent=self.data.indent,
+                sort_keys=self.data.sort_keys
+            )
 
     def light_dark_switch(self):
         self.theme_cls.theme_style = "Dark" if self.theme_cls.theme_style == "Light" else "Light"

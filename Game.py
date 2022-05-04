@@ -120,12 +120,20 @@ class GameLogic:
         self.PopUp.open()
 
     def challenges_check(self):
+        need_to_save = False
         if self.app.challenges[self.app.quiz_name][self.app.game_name]["bronze"]["condition"](self.score):
-            print("You did it!")
+            self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["bronze"] = True
+            need_to_save = True
         if self.app.challenges[self.app.quiz_name][self.app.game_name]["silver"]["condition"](self.score):
-            print("You did it!")
+            self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["silver"] = True
+            need_to_save = True
         if self.app.challenges[self.app.quiz_name][self.app.game_name]["gold"]["condition"](self.score):
-            print("You did it!")
+            self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["gold"] = True
+            need_to_save = True
+        if need_to_save:
+            self.app.save()
+        print(self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"])
+
 
     @abstractmethod
     def set_end_game_text(self):
