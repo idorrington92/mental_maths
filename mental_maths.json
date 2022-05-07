@@ -1,72 +1,75 @@
 {
-  "is_level_locked": {
-    "Multiply By 11": false,
-    "Two Digit Addition": false,
-    "Three By One Digit Multiplication": false,
-    "Two Digit Multiplication": true
-  },
-  "Multiply By 11": {
-    "Timed Quiz": {
-      "challenges_completed": {
-        "bronze": true,
-        "silver": true,
-        "gold": true
-      }
+    "is_level_locked": {
+        "Multiply By 11": false,
+        "Two Digit Addition": false,
+        "Three By One Digit Multiplication": false,
+        "Two Digit Multiplication": true
     },
-    "Time Attack": {
-      "challenges_completed": {
-        "bronze": false,
-        "silver": false,
-        "gold": false
-      }
-    }
-  },
-  "Two Digit Addition": {
-    "Timed Quiz": {
-      "challenges_completed": {
-        "bronze": false,
-        "silver": false,
-        "gold": false
-      }
+    "theme": {
+        "dark_mode": true
     },
-    "Time Attack": {
-      "challenges_completed": {
-        "bronze": false,
-        "silver": false,
-        "gold": false
-      }
-    }
-  },
-  "Three By One Digit Multiplication": {
-    "Timed Quiz": {
-      "challenges_completed": {
-        "bronze": false,
-        "silver": false,
-        "gold": false
-      }
+    "Multiply By 11": {
+        "Timed Quiz": {
+            "challenges_completed": {
+                "bronze": true,
+                "silver": true,
+                "gold": true
+            }
+        },
+        "Time Attack": {
+            "challenges_completed": {
+                "bronze": true,
+                "silver": false,
+                "gold": false
+            }
+        }
     },
-    "Time Attack": {
-      "challenges_completed": {
-        "bronze": false,
-        "silver": false,
-        "gold": false
-      }
-    }
-  },
-  "Two Digit Multiplication": {
-    "Timed Quiz": {
-      "challenges_completed": {
-        "bronze": false,
-        "silver": false,
-        "gold": false
-      }
+    "Two Digit Addition": {
+        "Timed Quiz": {
+            "challenges_completed": {
+                "bronze": true,
+                "silver": true,
+                "gold": false
+            }
+        },
+        "Time Attack": {
+            "challenges_completed": {
+                "bronze": true,
+                "silver": false,
+                "gold": false
+            }
+        }
     },
-    "Time Attack": {
-      "challenges_completed": {
-        "bronze": false,
-        "silver": false,
-        "gold": false
-      }
+    "Three By One Digit Multiplication": {
+        "Timed Quiz": {
+            "challenges_completed": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            }
+        },
+        "Time Attack": {
+            "challenges_completed": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            }
+        }
+    },
+    "Two Digit Multiplication": {
+        "Timed Quiz": {
+            "challenges_completed": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            }
+        },
+        "Time Attack": {
+            "challenges_completed": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            }
+        }
     }
-  }
 }

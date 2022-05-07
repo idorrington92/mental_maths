@@ -27,7 +27,7 @@ class MentalMathsApp(MDApp):
         self.game = None
         self.quiz = None
         self.nrounds = 3
-        self.data = JsonStore("mental_maths.json")
+        self.data = JsonStore("mental_maths.json", indent=4)
         self.is_locked_level = self.data.get("is_level_locked")
 
         self.quiz_dict = {"Maths Dojo": None,
@@ -93,9 +93,11 @@ class MentalMathsApp(MDApp):
 
     def build(self):
         self.theme_cls.theme_style = "Light"
+        self.root.ids["dark_mode_switch"].active = self.data["theme"]["dark_mode"]
         self.theme_cls.primary_palette = "Cyan"
 
     def save(self):
+        self.data["theme"]["dark_mode"] = True if self.theme_cls.theme_style == "Dark" else False
         with open(self.data.filename, 'w') as fd:
             dump(
                 self.data._data, fd,
@@ -105,6 +107,7 @@ class MentalMathsApp(MDApp):
 
     def light_dark_switch(self):
         self.theme_cls.theme_style = "Dark" if self.theme_cls.theme_style == "Light" else "Light"
+        self.save()
 
     def printIDs(self):
         print(self.root.ids)
