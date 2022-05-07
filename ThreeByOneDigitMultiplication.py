@@ -15,7 +15,7 @@ class ThreeByOneDigitMultiplication(QuizLogic):
     def game_round(self):
         self.number1 = rand.randint(101, 1000)
         self.number2 = rand.randint(2, 10)
-        self.prompt = f"{self.number1} x {self.number2} = "
+        self.question = f"{self.number1} x {self.number2} = "
 
     def correct_answer(self):
         return self.number1 * self.number2

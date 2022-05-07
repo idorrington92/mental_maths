@@ -4,8 +4,8 @@ from Game import GameLogic
 
 
 class TimedQuiz(GameLogic):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args):
+        super().__init__(*args)
         self.number_of_rounds = 3
         self.g_round = 0
 
@@ -20,8 +20,8 @@ class TimedQuiz(GameLogic):
         self.g_round += 1
         if self.g_round <= self.number_of_rounds:
             print(f"Round {self.g_round}")
-            self.game_round()
-            self.set_prompt(self.prompt)
+            self.quiz.game_round()
+            self.set_prompt(self.quiz.question)
         else:
             self.end_game()  # Player reaches end of game without quiting
 

@@ -16,7 +16,7 @@ class MultiplyBy11(QuizLogic):
 
     def game_round(self):
         self.number = rand.randint(10, 100)
-        self.prompt = f"{self.number} x 11 = "
+        self.question = f"{self.number} x 11 = "
 
     def correct_answer(self):
         return self.number * 11

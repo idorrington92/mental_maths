@@ -25,7 +25,8 @@ class MentalMathsApp(MDApp):
         self.game = Game()
         self.quiz_name = ""
         self.game_name = ""
-        self.game_type = None
+        self.game = None
+        self.quiz = None
         self.nrounds = 3
         self.data = JsonStore("mental_maths.json")
         self.is_locked_level = self.data.get("is_level_locked")
@@ -110,17 +111,12 @@ class MentalMathsApp(MDApp):
         print(self.root.ids)
 
     def set_game(self, quiz_name, game_name):
-        self.quiz_name= quiz_name
+        self.quiz_name = quiz_name
         self.game_name = game_name
-        quiz = self.quiz_dict[quiz_name]
-        game = self.game_dict[game_name]
-        self.game_type = None
+        self.quiz = self.quiz_dict[quiz_name]
+        self.game = self.game_dict[game_name]
 
-        if quiz and game:
-            class Game(quiz, game):
-                pass
-
-            self.game_type = Game
+        if self.quiz and self.game:
             self.set_challenge_text(quiz_name, game_name)
 
     def set_challenge_text(self, quiz_name, game_name):
@@ -130,7 +126,7 @@ class MentalMathsApp(MDApp):
                 not self.data[quiz_name][game_name]["challenges_completed"][medal]
 
     def launch_game(self):
-        self.game = self.game_type()
+        self.game = self.game(self.quiz())
 
     def change_screen(self, screen_name):
         self.root.ids.screen_manager.current = screen_name

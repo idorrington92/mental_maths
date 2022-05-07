@@ -16,7 +16,7 @@ class TwoDigitMultiplication(QuizLogic):
     def game_round(self):
         self.number1 = rand.randint(11, 100)
         self.number2 = rand.randint(11, 100)
-        self.prompt = f"{self.number1} x {self.number2} = "
+        self.question = f"{self.number1} x {self.number2} = "
 
     def correct_answer(self):
         return self.number1 * self.number2

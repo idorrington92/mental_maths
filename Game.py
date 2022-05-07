@@ -11,8 +11,7 @@ class QuizLogic:
     """This abstract class is for the logic of the questions that get asked,
     i.e. calculating the correct answer and generating the question prompt"""
     def __init__(self):
-        super().__init__()
-        self.prompt = ""
+        self.question = ""
 
     @abstractmethod
     def game_round(self):
@@ -27,7 +26,8 @@ class GameLogic:
     """This class is for all the game logic apart from the questions.
     e.g. how to set up a new round, how the game starts and ends, etc."""
 
-    def __init__(self):
+    def __init__(self, quiz_logic):
+        self.quiz = quiz_logic
         self.player_answer = None
         self.timestep = 0
         self.timestep_size = 0.1
@@ -100,13 +100,6 @@ class GameLogic:
         pass
 
     @abstractmethod
-    def game_round(self):
-        """
-        Set up game prerequisites. For example, generating random numbers and assigning the prompt for the player
-        :return: None:
-        """
-
-    @abstractmethod
     def end_game(self):
         """
         End game display
@@ -165,7 +158,7 @@ class GameLogic:
 
     def incorrect_answer_action(self):
         self.app.root.ids["game_screen"].ids.highlight.run_correct_answer_animation(correct=False)
-        self.set_prompt(f"Unlucky. The correct answer is {self.correct_answer()}")
+        self.set_prompt(f"Unlucky. The correct answer is {self.quiz.correct_answer()}")
 
     def correct_answer_action(self):
         """
@@ -177,15 +170,8 @@ class GameLogic:
         self.app.root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
         self.set_prompt("Correct!")
 
-    @abstractmethod
-    def correct_answer(self):
-        """
-        Returns the correct answer
-        """
-        pass
-
     def is_player_correct(self):
-        return self.player_answer == str(self.correct_answer())
+        return self.player_answer == str(self.quiz.correct_answer())
 
 
 class Game(ABC, QuizLogic, GameLogic):
