@@ -174,10 +174,6 @@ class GameLogic:
         return self.player_answer == str(self.quiz.correct_answer())
 
 
-class Game(ABC, QuizLogic, GameLogic):
-    pass
-
-
 class MenuButton(MDFlatButton):
     pass
 

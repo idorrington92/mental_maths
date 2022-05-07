@@ -15,14 +15,13 @@ from ThreeByOneDigitMultiplication import ThreeByOneDigitMultiplication
 from TwoDigitMultiplication import TwoDigitMultiplication
 from TimedQuiz import TimedQuiz
 from TimeAttack import TimeAttack
-from Game import Game
 
 
 class MentalMathsApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.prompt = "Nothing yet"
-        self.game = Game()
+        self.game = None
         self.quiz_name = ""
         self.game_name = ""
         self.game = None
