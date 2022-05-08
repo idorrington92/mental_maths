@@ -8,6 +8,8 @@ from kivymd.uix.widget import MDWidget
 from kivy.properties import ListProperty
 from kivy.storage.jsonstore import JsonStore
 from kivymd.uix.button import MDRoundFlatIconButton
+from kivymd.uix.card import MDCard
+from kivy.properties import StringProperty
 
 from multiplyBy11 import MultiplyBy11
 from TwoDigitAddition import TwoDigitAddition
@@ -92,7 +94,7 @@ class MentalMathsApp(MDApp):
         }
 
     def build(self):
-        self.theme_cls.theme_style = "Light"
+        self.theme_cls.theme_style = "Dark"
         self.root.ids["dark_mode_switch"].active = self.data["theme"]["dark_mode"]
         self.theme_cls.primary_palette = "Cyan"
 
@@ -182,6 +184,10 @@ class ChallengeLabel(MDRoundFlatIconButton):
     def on_touch_down(self, touch):
         pass
 
+
+class MenuCard(MDCard):
+    text = StringProperty("")
+    description = StringProperty("")
 
 if __name__ == '__main__':
     MentalMathsApp().run()
