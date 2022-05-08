@@ -95,7 +95,7 @@ class MentalMathsApp(MDApp):
 
     def build(self):
         self.theme_cls.theme_style = "Dark"
-        self.root.ids["dark_mode_switch"].active = self.data["theme"]["dark_mode"]
+        self.root.ids["dark_mode_switch"].active = not self.data["theme"]["dark_mode"]
         self.theme_cls.primary_palette = "Cyan"
 
     def save(self):
@@ -114,14 +114,16 @@ class MentalMathsApp(MDApp):
     def printIDs(self):
         print(self.root.ids)
 
-    def set_game(self, quiz_name, game_name):
+    def set_quiz(self, quiz_name):
         self.quiz_name = quiz_name
+
+    def set_game(self, game_name):
         self.game_name = game_name
-        self.quiz = self.quiz_dict[quiz_name]
-        self.game = self.game_dict[game_name]
+        self.quiz = self.quiz_dict[self.quiz_name]
+        self.game = self.game_dict[self.game_name]
 
         if self.quiz and self.game:
-            self.set_challenge_text(quiz_name, game_name)
+            self.set_challenge_text(self.quiz_name, self.game_name)
 
     def set_challenge_text(self, quiz_name, game_name):
         for medal in ("bronze", "silver", "gold"):

@@ -34,9 +34,8 @@
                         description: "Multiply two digit numbers by 11"
                         disabled: app.is_locked_level["Multiply By 11"]
                         on_press:
-                            app.root.ids.screen_manager.current = 'pregame'
-                            app.set_game("Multiply By 11", "Timed Quiz")
-                            app.launch_game()
+                            app.set_quiz("Multiply By 11")
+                            app.change_screen('game_lobby')
 
                 MDBoxLayout:
                     adaptive_width: True
@@ -52,9 +51,8 @@
                         description: "Add two digit numbers"
                         disabled: app.is_locked_level["Two Digit Addition"]
                         on_press:
-                            app.root.ids.screen_manager.current = 'pregame'
-                            app.set_game("Two Digit Addition", "Time Attack")
-                            app.launch_game()
+                            app.set_quiz("Two Digit Addition")
+                            app.change_screen('game_lobby')
 
                 MDBoxLayout:
                     adaptive_width: True
@@ -71,9 +69,8 @@
                         pos_hint: {"center_x": 0.5}
                         disabled: app.is_locked_level["Three By One Digit Multiplication"]
                         on_press:
-                            app.root.ids.screen_manager.current = 'pregame'
-                            app.set_game("Three By One Digit Multiplication", "Timed Quiz")
-                            app.launch_game()
+                            app.set_quiz("Three By One Digit Multiplication")
+                            app.change_screen('game_lobby')
 
                 MDBoxLayout:
                     adaptive_width: True
@@ -91,9 +88,8 @@
                         disabled: app.is_locked_level["Two Digit Multiplication"]
                         focus_behavior: not self.disabled
                         on_press:
-                            app.root.ids.screen_manager.current = 'pregame'
-                            app.set_game("Two Digit Multiplication", "Timed Quiz")
-                            app.launch_game()
+                            app.set_quiz("Two Digit Multiplication")
+                            app.change_screen('game_lobby')
 
 
 <BasicScreen>
@@ -123,6 +119,31 @@ MDBoxLayout:
         GameScreen:
             id: game_screen
             name: "game_screen"
+
+        BasicScreen:
+            id: game_lobby
+            name: "game_lobby"
+
+            MDBoxLayout:
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                size_hint: {0.66, 0.1}
+                MDCard:
+                    on_press:
+                        app.root.ids.screen_manager.current = 'pregame'
+                        app.set_game("Timed Quiz")
+                        app.launch_game()
+                    MDBoxLayout:
+                        MDLabel:
+                            text: "Quiz"
+                MDCard:
+                    on_press:
+                        app.root.ids.screen_manager.current = 'pregame'
+                        app.set_game("Time Attack")
+                        app.launch_game()
+                    MDBoxLayout:
+                        MDLabel:
+                            text: "Time Attack"
+
 
         BasicScreen:
             id: pregame
@@ -240,14 +261,14 @@ MDBoxLayout:
     text: "Menu"
     on_release:
         app.root.ids.screen_manager.current = "home"
-        app.set_game("Maths Dojo", "Maths Dojo")
+        app.set_game("Maths Dojo")
 
 <PopUpMenuButton>
     text: "Menu"
     on_release:
         app.game.PopUp.dismiss()
         app.root.ids.screen_manager.current = "home"
-        app.set_game("Maths Dojo", "Maths Dojo")
+        app.set_game("Maths Dojo")
 
 <PlayAgainButton>
     text: "Play Again"
