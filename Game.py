@@ -125,7 +125,9 @@ class GameLogic:
             need_to_save = True
         if need_to_save:
             self.app.save()
-        print(self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"])
+            self.app.root.ids["MenuList"].ids[self.app.quiz_name + " button"].completed = \
+                self.app.completed(self.app.quiz_name)
+
 
 
     @abstractmethod

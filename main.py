@@ -111,6 +111,10 @@ class MentalMathsApp(MDApp):
         self.theme_cls.theme_style = "Dark" if self.theme_cls.theme_style == "Light" else "Light"
         self.save()
 
+    def completed(self, level_name):
+        return all(all(self.data[level_name][game_type]["challenges_completed"].values())
+                   for game_type in self.data[level_name])
+    
     def printIDs(self):
         print(self.root.ids)
 

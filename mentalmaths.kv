@@ -1,7 +1,6 @@
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
 
 <MenuList>
-    id: "MenuList"
     name: "menulist"
     ScrollView:
         pos_hint: {"center_x": 0.5, "center_y": 0.55}
@@ -29,8 +28,9 @@
                     pos_hint: {"center_x": .5}
 
                     MenuCard:
+                        id: Multiply By 11 button
                         text: 'Multiply By 11'
-                        completed: all(app.data[self.text]["Timed Quiz"]["challenges_completed"].values())
+                        completed: app.completed("Multiply By 11")
                         description: "Multiply two digit numbers by 11"
                         disabled: app.is_locked_level["Multiply By 11"]
                         on_press:
@@ -46,8 +46,9 @@
                     pos_hint: {"center_x": .5}
 
                     MenuCard:
+                        id: Two Digit Addition button
                         text: 'Two Digit Addition'
-                        completed: all(app.data[self.text]["Timed Quiz"]["challenges_completed"].values())
+                        completed: app.completed("Two Digit Addition")
                         description: "Add two digit numbers"
                         disabled: app.is_locked_level["Two Digit Addition"]
                         on_press:
@@ -63,8 +64,9 @@
                     pos_hint: {"center_x": .5}
 
                     MenuCard:
+                        id: Three By One Digit Multiplication button
                         text: 'Three By One Digit Multiplication'
-                        completed: all(app.data[self.text]["Timed Quiz"]["challenges_completed"].values())
+                        completed: app.completed("Three By One Digit Multiplication")
                         description: "Multiply three digit numbers by a single digit number"
                         pos_hint: {"center_x": 0.5}
                         disabled: app.is_locked_level["Three By One Digit Multiplication"]
@@ -81,8 +83,9 @@
                     pos_hint: {"center_x": .5}
 
                     MenuCard:
+                        id: Two Digit Multiplication button
                         text: 'Two Digit Multiplication'
-                        completed: all(app.data[self.text]["Timed Quiz"]["challenges_completed"].values())
+                        completed: app.completed("Two Digit Multiplication")
                         description: "Multiply two digit numbers"
                         pos_hint: {"center_x": 0.5}
                         disabled: app.is_locked_level["Two Digit Multiplication"]
@@ -113,6 +116,7 @@ MDBoxLayout:
             name: "home"
 
             MenuList:
+                id: MenuList
 
 
 
