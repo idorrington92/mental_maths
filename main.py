@@ -1,4 +1,6 @@
 from json import dump
+from typing import Callable
+from dataclasses import dataclass
 
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -17,6 +19,19 @@ from ThreeByOneDigitMultiplication import ThreeByOneDigitMultiplication
 from TwoDigitMultiplication import TwoDigitMultiplication
 from TimedQuiz import TimedQuiz
 from TimeAttack import TimeAttack
+
+
+@dataclass
+class Challenge:
+    text: str
+    condition: Callable
+
+
+@dataclass
+class Medals:
+    bronze: Challenge
+    silver: Challenge
+    gold: Challenge
 
 
 class MentalMathsApp(MDApp):
@@ -44,52 +59,36 @@ class MentalMathsApp(MDApp):
                           }
         self.challenges = {
             "Multiply By 11": {
-                "Timed Quiz": {
-                    "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
-                    "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
-                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score >= 3}
-                },
-                "Time Attack": {
-                    "bronze": {"text": "Score 5 points", "condition": lambda score: score >=5},
-                    "silver": {"text": "Score 7 points", "condition": lambda score: score >= 7},
-                    "gold": {"text": "Score 10 points", "condition": lambda score: score >= 10},
-                },
+                "Timed Quiz": Medals(Challenge("Get 1 answer correct", lambda score: score >= 1),
+                                     Challenge("Get 2 answers correct", lambda score: score >= 2),
+                                     Challenge("Answer all questions correctly", lambda score: score >= 3)),
+                "Time Attack": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                                      Challenge("Score 7 points", lambda score: score >= 7),
+                                      Challenge("Score 10 points", lambda score: score >= 10)),
             },
             "Two Digit Addition": {
-                "Timed Quiz": {
-                    "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
-                    "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
-                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score >= 3}
-                },
-                "Time Attack": {
-                    "bronze": {"text": "Score 5 points", "condition": lambda score: score >= 5},
-                    "silver": {"text": "Score 7 points", "condition": lambda score: score >= 7},
-                    "gold": {"text": "Score 10 points", "condition": lambda score: score >= 10},
-                },
+                "Timed Quiz": Medals(Challenge("Get 1 answer correct", lambda score: score >= 1),
+                                     Challenge("Get 2 answers correct", lambda score: score >= 2),
+                                     Challenge("Answer all questions correctly", lambda score: score >= 3)),
+                "Time Attack": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                                      Challenge("Score 7 points", lambda score: score >= 7),
+                                      Challenge("Score 10 points", lambda score: score >= 10)),
             },
             "Three By One Digit Multiplication": {
-                "Timed Quiz": {
-                    "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
-                    "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
-                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score >= 3}
-                },
-                "Time Attack": {
-                    "bronze": {"text": "Score 5 points", "condition": lambda score: score >= 5},
-                    "silver": {"text": "Score 7 points", "condition": lambda score: score >= 7},
-                    "gold": {"text": "Score 10 points", "condition": lambda score: score >= 10},
-                },
+                "Timed Quiz": Medals(Challenge("Get 1 answer correct", lambda score: score >= 1),
+                                     Challenge("Get 2 answers correct", lambda score: score >= 2),
+                                     Challenge("Answer all questions correctly", lambda score: score >= 3)),
+                "Time Attack": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                                      Challenge("Score 7 points", lambda score: score >= 7),
+                                      Challenge("Score 10 points", lambda score: score >= 10)),
             },
             "Two Digit Multiplication": {
-                "Timed Quiz": {
-                    "bronze": {"text": "Get 1 answer correct", "condition": lambda score: score >= 1},
-                    "silver": {"text": "Get 2 answers correct", "condition": lambda score: score >= 2},
-                    "gold": {"text": "Answer all questions correctly", "condition": lambda score: score >= 3}
-                },
-                "Time Attack": {
-                    "bronze": {"text": "Score 5 points", "condition": lambda score: score >= 5},
-                    "silver": {"text": "Score 7 points", "condition": lambda score: score >= 7},
-                    "gold": {"text": "Score 10 points", "condition": lambda score: score >= 10},
-                },
+                "Timed Quiz": Medals(Challenge("Get 1 answer correct", lambda score: score >= 1),
+                                     Challenge("Get 2 answers correct", lambda score: score >= 2),
+                                     Challenge("Answer all questions correctly", lambda score: score >= 3)),
+                "Time Attack": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                                      Challenge("Score 7 points", lambda score: score >= 7),
+                                      Challenge("Score 10 points", lambda score: score >= 10)),
             }
         }
 
@@ -131,7 +130,8 @@ class MentalMathsApp(MDApp):
 
     def set_challenge_text(self, quiz_name, game_name):
         for medal in ("bronze", "silver", "gold"):
-            self.root.ids[medal + "_challenge_label"].text = self.challenges[quiz_name][game_name][medal]["text"]
+            self.root.ids[medal + "_challenge_label"].text = \
+                getattr(self.challenges[quiz_name][game_name], medal).text
             self.root.ids[medal + "_challenge_label"].disabled = \
                 not self.data[quiz_name][game_name]["challenges_completed"][medal]
 

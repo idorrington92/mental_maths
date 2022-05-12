@@ -114,13 +114,13 @@ class GameLogic:
 
     def challenges_check(self):
         need_to_save = False
-        if self.app.challenges[self.app.quiz_name][self.app.game_name]["bronze"]["condition"](self.score):
+        if self.app.challenges[self.app.quiz_name][self.app.game_name].bronze.condition(self.score):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["bronze"] = True
             need_to_save = True
-        if self.app.challenges[self.app.quiz_name][self.app.game_name]["silver"]["condition"](self.score):
+        if self.app.challenges[self.app.quiz_name][self.app.game_name].silver.condition(self.score):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["silver"] = True
             need_to_save = True
-        if self.app.challenges[self.app.quiz_name][self.app.game_name]["gold"]["condition"](self.score):
+        if self.app.challenges[self.app.quiz_name][self.app.game_name].gold.condition(self.score):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["gold"] = True
             need_to_save = True
         if need_to_save:
