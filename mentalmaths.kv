@@ -101,7 +101,7 @@
         pos_hint: {"bottom": 1}
         elevation: 10
         title: "Maths Dojo"
-        right_action_items: [["home", lambda x: app.change_screen("home")], ["cog-outline", lambda x: app.change_screen("settings")]]
+        right_action_items: [["home", lambda x: app.change_screen("home")], ["cog-outline", lambda x: app.change_screen("settings")], ["arrow-left-thick", lambda x: app.previous_screen()]]
 
 
 
@@ -118,8 +118,6 @@ MDBoxLayout:
             MenuList:
                 id: MenuList
 
-
-
         GameScreen:
             id: game_screen
             name: "game_screen"
@@ -133,7 +131,7 @@ MDBoxLayout:
                 size_hint: {0.66, 0.1}
                 MDCard:
                     on_press:
-                        app.root.ids.screen_manager.current = 'pregame'
+                        app.change_screen('pregame')
                         app.set_game("Timed Quiz")
                         app.launch_game()
                     MDBoxLayout:
@@ -141,7 +139,7 @@ MDBoxLayout:
                             text: "Quiz"
                 MDCard:
                     on_press:
-                        app.root.ids.screen_manager.current = 'pregame'
+                        app.change_screen('pregame')
                         app.set_game("Time Attack")
                         app.launch_game()
                     MDBoxLayout:
@@ -264,14 +262,14 @@ MDBoxLayout:
 <MenuButton>
     text: "Menu"
     on_release:
-        app.root.ids.screen_manager.current = "home"
+        app.change_screen('home')
         app.set_game("Maths Dojo")
 
 <PopUpMenuButton>
     text: "Menu"
     on_release:
         app.game.PopUp.dismiss()
-        app.root.ids.screen_manager.current = "home"
+        app.change_screen('home')
         app.set_game("Maths Dojo")
 
 <PlayAgainButton>

@@ -1,6 +1,7 @@
 from json import dump
 from typing import Callable
 from dataclasses import dataclass
+from collections import deque
 
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -38,6 +39,7 @@ class MentalMathsApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.prompt = "Nothing yet"
+        self.previous_screens = deque(["home"])
         self.game = None
         self.quiz_name = ""
         self.game_name = ""
@@ -139,7 +141,14 @@ class MentalMathsApp(MDApp):
         self.game = self.game(self.quiz())
 
     def change_screen(self, screen_name):
+        self.previous_screens.append(self.root.ids.screen_manager.current)
         self.root.ids.screen_manager.current = screen_name
+
+    def previous_screen(self):
+        if len(self.previous_screens) == 1:
+            self.root.ids.screen_manager.current = "home"
+            return
+        self.root.ids.screen_manager.current = self.previous_screens.pop()
 
 
 class BasicScreen(MDScreen):
