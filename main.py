@@ -13,6 +13,8 @@ from kivy.storage.jsonstore import JsonStore
 from kivymd.uix.button import MDRoundFlatIconButton
 from kivymd.uix.card import MDCard
 from kivy.properties import StringProperty
+from kivymd.uix.datatables import MDDataTable
+from kivy.metrics import dp
 
 from multiplyBy11 import MultiplyBy11
 from TwoDigitAddition import TwoDigitAddition
@@ -90,6 +92,7 @@ class MentalMathsApp(MDApp):
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             }
         }
+        self.records = None
 
     def build(self):
         self.theme_cls.theme_style = "Dark"
@@ -126,6 +129,7 @@ class MentalMathsApp(MDApp):
 
         if self.quiz and self.game:
             self.set_challenge_text(self.quiz_name, self.game_name)
+            self.records = self.data[self.quiz_name][self.game_name]["records"]
 
     def set_challenge_text(self, quiz_name, game_name):
         for medal, challenge in self.challenges[quiz_name][game_name]._asdict().items():
@@ -149,6 +153,19 @@ class MentalMathsApp(MDApp):
 
 class BasicScreen(MDScreen):
     pass
+
+
+class RecordScreen(BasicScreen):
+    def on_enter(self):
+        records = MDApp.get_running_app().records["scores"]
+        names = MDApp.get_running_app().records["names"]
+        table = MDDataTable(
+            pos_hint={"center_x": 0.5, "center_y": 0.6},
+            size_hint=(0.7, 0.7),
+            column_data=[("Name", dp(30)), ("Score", dp(30))],
+            row_data=[[n, r] for n, r in zip(names, records)]
+        )
+        self.add_widget(table)
 
 
 class GameScreen(BasicScreen):

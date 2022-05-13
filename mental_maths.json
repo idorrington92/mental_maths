@@ -14,21 +14,23 @@
                 "bronze": true,
                 "silver": true,
                 "gold": true
-            }
+            },
+            "records": {"scores":  [3, 2, 1],
+                        "names":  ["AAA", "BBB", "CCC"]}
         },
         "Time Attack": {
             "challenges_completed": {
                 "bronze": true,
-                "silver": false,
-                "gold": false
+                "silver": true,
+                "gold": true
             }
         }
     },
     "Two Digit Addition": {
         "Timed Quiz": {
             "challenges_completed": {
-                "bronze": true,
-                "silver": true,
+                "bronze": false,
+                "silver": false,
                 "gold": false
             }
         },

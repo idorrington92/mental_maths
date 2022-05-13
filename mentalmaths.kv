@@ -165,7 +165,7 @@ MDBoxLayout:
                         pos_hint: {"center_x": 0.3}
                     HelpButton:
                         pos_hint: {"center_x": 0.5}
-                    MenuButton:
+                    RecordButton:
                         pos_hint: {"center_x": 0.7}
 
                 MDBoxLayout:
@@ -202,6 +202,13 @@ MDBoxLayout:
                 id: dark_mode_switch
                 pos_hint: {"center_x": .75, "center_y": .8}
                 on_active: app.light_dark_switch()
+
+        RecordScreen:
+            id: records_screen
+            name: "Records"
+            MDLabel:
+                text: "Records"
+                pos_hint: {"center_x": 0.9, "center_y": 0.5}
 
         CountDownScreen:
             id: count_down_screen
@@ -259,11 +266,10 @@ MDBoxLayout:
             size: (root.blink_size[0], root.blink_size[1])
             pos: self.pos[0] + self.size[0]/2. - self.blink_size[0]/2., self.pos[1] + self.size[1]/2. - self.blink_size[1]/2.
 
-<MenuButton>
-    text: "Menu"
+<RecordButton>
+    text: "Records"
     on_release:
-        app.change_screen('home')
-        app.set_game("Maths Dojo")
+        app.change_screen('Records')
 
 <PopUpMenuButton>
     text: "Menu"
