@@ -1,7 +1,7 @@
 from json import dump
 from typing import Callable
-from dataclasses import dataclass
 from collections import deque
+from typing import NamedTuple
 
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -22,18 +22,15 @@ from TimedQuiz import TimedQuiz
 from TimeAttack import TimeAttack
 
 
-@dataclass
-class Challenge:
+class Challenge(NamedTuple):
     text: str
     condition: Callable
 
 
-@dataclass
-class Medals:
+class Medals(NamedTuple):
     bronze: Challenge
     silver: Challenge
     gold: Challenge
-
 
 class MentalMathsApp(MDApp):
     def __init__(self, **kwargs):
@@ -131,9 +128,8 @@ class MentalMathsApp(MDApp):
             self.set_challenge_text(self.quiz_name, self.game_name)
 
     def set_challenge_text(self, quiz_name, game_name):
-        for medal in ("bronze", "silver", "gold"):
-            self.root.ids[medal + "_challenge_label"].text = \
-                getattr(self.challenges[quiz_name][game_name], medal).text
+        for medal, challenge in self.challenges[quiz_name][game_name]._asdict().items():
+            self.root.ids[medal + "_challenge_label"].text = challenge.text
             self.root.ids[medal + "_challenge_label"].disabled = \
                 not self.data[quiz_name][game_name]["challenges_completed"][medal]
 
