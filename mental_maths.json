@@ -15,8 +15,22 @@
                 "silver": true,
                 "gold": true
             },
-            "records": {"scores":  [3, 2, 1],
-                        "names":  ["AAA", "BBB", "CCC"]}
+            "records": {
+                "scores": [
+                    3,
+                    2,
+                    2,
+                    1,
+                    1
+                ],
+                "names": [
+                    "EEE",
+                    "DDD",
+                    "CCC",
+                    "BBB",
+                    "ZZZ"
+                ]
+            }
         },
         "Time Attack": {
             "challenges_completed": {

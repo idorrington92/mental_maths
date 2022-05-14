@@ -109,8 +109,34 @@ class GameLogic:
         self.set_end_game_text()
         self.set_prompt("")
         self.challenges_check()
+        self.records_check()
         self.generate_end_game_pop_up()
         self.PopUp.open()
+
+    def records_check(self):
+        scores = self.app.records["scores"]
+        if self.score > min(scores):
+            # Replace lowest existing score
+            for i, score in enumerate(scores):
+                if score == min(scores):
+                        self.app.records["names"][i] = self.set_player_name()
+                        self.app.records["scores"][i] = self.score
+
+            # Sort records by score
+            self.app.records["scores"], self.app.records["names"] = \
+                zip(*sorted(zip(self.app.records["scores"], self.app.records["names"]), reverse=True))
+
+            # Convert to lists as these must be mutable next time we want to write
+            self.app.records["scores"], self.app.records["names"] = \
+                list(self.app.records["scores"]), list(self.app.records["names"])
+
+            # Save to the Json file
+            self.app.data[self.app.quiz_name][self.app.game_name]["records"] = self.app.records
+            self.app.save()
+
+    def set_player_name(self):
+        # TODO Add method for player to add their name
+        return "ZZZ"
 
     def challenges_check(self):
         need_to_save = False
