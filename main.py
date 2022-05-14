@@ -148,7 +148,14 @@ class MentalMathsApp(MDApp):
         if len(self.previous_screens) == 1:
             self.root.ids.screen_manager.current = "home"
             return
-        self.root.ids.screen_manager.current = self.previous_screens.pop()
+        if (previous_screen := self.previous_screens.pop()) == "game_screen":
+            self.game.start_game()
+            return
+        # Don't want count down screen to behave like a regular screen (otherwise can't go back from game screen)
+        if previous_screen == "count_down_screen":
+            self.previous_screen()
+            return
+        self.root.ids.screen_manager.current = previous_screen
 
 
 class BasicScreen(MDScreen):
