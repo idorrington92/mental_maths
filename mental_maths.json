@@ -18,17 +18,17 @@
             "records": {
                 "scores": [
                     3,
+                    3,
+                    3,
                     2,
-                    2,
-                    1,
-                    1
+                    2
                 ],
                 "names": [
+                    "ZZZ",
+                    "ZZZ",
                     "EEE",
                     "DDD",
-                    "CCC",
-                    "BBB",
-                    "ZZZ"
+                    "CCC"
                 ]
             }
         },
@@ -37,15 +37,39 @@
                 "bronze": true,
                 "silver": true,
                 "gold": true
+            },
+            "records": {
+                "scores": [
+                    10,
+                    9,
+                    8,
+                    5,
+                    1
+                ],
+                "names": [
+                    "ZZZ",
+                    "ZZZ",
+                    "ZZZ",
+                    "ZZZ",
+                    "ZZZ"
+                ]
             }
         }
     },
     "Two Digit Addition": {
         "Timed Quiz": {
             "challenges_completed": {
-                "bronze": false,
-                "silver": false,
+                "bronze": true,
+                "silver": true,
                 "gold": false
+            },
+            "records": {
+                "scores": [
+                    2
+                ],
+                "names": [
+                    "ZZZ"
+                ]
             }
         },
         "Time Attack": {
@@ -53,6 +77,10 @@
                 "bronze": true,
                 "silver": false,
                 "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
             }
         }
     },
@@ -62,6 +90,10 @@
                 "bronze": false,
                 "silver": false,
                 "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
             }
         },
         "Time Attack": {
@@ -69,6 +101,10 @@
                 "bronze": false,
                 "silver": false,
                 "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
             }
         }
     },
@@ -78,6 +114,10 @@
                 "bronze": false,
                 "silver": false,
                 "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
             }
         },
         "Time Attack": {
@@ -85,6 +125,10 @@
                 "bronze": false,
                 "silver": false,
                 "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
             }
         }
     }
