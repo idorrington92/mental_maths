@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 from kivy.clock import Clock
+from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.dialog import MDDialog
@@ -29,6 +30,7 @@ class GameLogic:
     def __init__(self, quiz_logic):
         self.quiz = quiz_logic
         self.player_answer = None
+        self.player_name = ""
         self.timestep = 0
         self.timestep_size = 0.1
         self.score = 0
@@ -38,6 +40,7 @@ class GameLogic:
         self.prompt = ""
         self.EndGamePopUpTitle = ""
         self.PopUp = None
+        self.record_pop_up = None
         self.HelpPopUp = None
         self.count_down = 3
         self.app = MDApp.get_running_app()
@@ -51,6 +54,14 @@ class GameLogic:
                                   ],
                               auto_dismiss=False,
                               )
+
+    def generate_record_pop_up(self):
+        self.record_pop_up = MDDialog(title="New Record!",
+                                      text="Congratulations",
+                                      type="custom",
+                                      content_cls=RecordDialog(),
+                                      auto_dismiss=False,
+                                      )
 
     def generate_help_pop_up(self):
         self.HelpPopUp = MDDialog(title="Help",
@@ -109,16 +120,25 @@ class GameLogic:
         self.set_end_game_text()
         self.set_prompt("")
         self.challenges_check()
-        self.records_check()
-        self.generate_end_game_pop_up()
-        self.PopUp.open()
+        if self.records_check():
+            self.generate_record_pop_up()
+            await self.record_pop_up.open()
+        else:
+            self.generate_end_game_pop_up()
+            self.PopUp.open()
 
     def records_check(self):
+        scores = self.app.records["scores"]
+        if len(scores) < 5 or self.score > min(scores):
+            return True
+        return False
+
+    def records_update(self):
         scores = self.app.records["scores"]
 
         if len(scores) < 5:
             # If there are less than 5 records, then always add player score
-            self.app.records["names"].append(self.set_player_name())
+            self.app.records["names"].append(self.player_name)
             self.app.records["scores"].append(self.score)
 
         elif self.score > min(scores):
@@ -126,7 +146,7 @@ class GameLogic:
             # smallest existing score
             for i, score in enumerate(scores):
                 if score == min(scores):
-                    self.app.records["names"][i] = self.set_player_name()
+                    self.app.records["names"][i] = self.player_name
                     self.app.records["scores"][i] = self.score
         else:
             # No new record
@@ -145,9 +165,8 @@ class GameLogic:
         self.app.data[self.app.quiz_name][self.app.game_name]["records"] = self.app.records
         self.app.save()
 
-    def set_player_name(self):
-        # TODO Add method for player to add their name
-        return "ZZZ"
+    def set_player_name(self, text):
+        self.player_name = text
 
     def challenges_check(self):
         need_to_save = False
@@ -238,4 +257,8 @@ class CloseButton(MDFlatButton):
 
 
 class ClockLabel(MDLabel):
+    pass
+
+
+class RecordDialog(BoxLayout):
     pass

@@ -256,6 +256,27 @@ MDBoxLayout:
         on_text_validate:
             app.game.player_input()
 
+<RecordDialog>:
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        id: NameInput
+        hint_text: "Enter your name"
+        helper_text: ""
+        helper_text_mode: "on_focus"
+        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+        text_validate_unfocus: False
+        on_text_validate:
+            app.game.set_player_name(self.text)
+            app.game.records_update()
+            self.text = ""
+            app.game.record_pop_up.dismiss()
+            app.game.generate_end_game_pop_up()
+            app.game.PopUp.open()
+
 <AnswerBoxHighlight>
     animated_color: 0, 0, 0, 0
     blink_size: (0, 0)
