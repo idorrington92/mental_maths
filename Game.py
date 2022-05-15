@@ -115,24 +115,35 @@ class GameLogic:
 
     def records_check(self):
         scores = self.app.records["scores"]
-        if self.score > min(scores):
-            # Replace lowest existing score
+
+        if len(scores) < 5:
+            # If there are less than 5 records, then always add player score
+            self.app.records["names"].append(self.set_player_name())
+            self.app.records["scores"].append(self.score)
+
+        elif self.score > min(scores):
+            # If there are more than 5 records, then add score if it's bigger than the
+            # smallest existing score
             for i, score in enumerate(scores):
                 if score == min(scores):
-                        self.app.records["names"][i] = self.set_player_name()
-                        self.app.records["scores"][i] = self.score
+                    self.app.records["names"][i] = self.set_player_name()
+                    self.app.records["scores"][i] = self.score
+        else:
+            # No new record
+            return
 
-            # Sort records by score
-            self.app.records["scores"], self.app.records["names"] = \
-                zip(*sorted(zip(self.app.records["scores"], self.app.records["names"]), reverse=True))
+        # Sort records by score
+        self.app.records["scores"], self.app.records["names"] = \
+            zip(*sorted(zip(self.app.records["scores"], self.app.records["names"]),
+                        reverse=True))
 
-            # Convert to lists as these must be mutable next time we want to write
-            self.app.records["scores"], self.app.records["names"] = \
-                list(self.app.records["scores"]), list(self.app.records["names"])
+        # Convert to lists as these must be mutable next time we want to write
+        self.app.records["scores"], self.app.records["names"] = \
+            list(self.app.records["scores"]), list(self.app.records["names"])
 
-            # Save to the Json file
-            self.app.data[self.app.quiz_name][self.app.game_name]["records"] = self.app.records
-            self.app.save()
+        # Save to the Json file
+        self.app.data[self.app.quiz_name][self.app.game_name]["records"] = self.app.records
+        self.app.save()
 
     def set_player_name(self):
         # TODO Add method for player to add their name
