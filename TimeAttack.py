@@ -31,10 +31,6 @@ class TimeAttack(GameLogic):
         else:
             self.end_game()
 
-    def end_game(self):
-        self.clock.cancel()
-        super().end_game()
-
     def end_game_text(self):
         return f"Score: {self.score}"
 
