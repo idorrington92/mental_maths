@@ -117,12 +117,12 @@ class GameLogic:
         :return:
         """
         self.clock.cancel()
-        self.set_end_game_text()
         self.set_prompt("")
+        # TODO Added a challenge completed pop up
         self.challenges_check()
         if self.records_check():
             self.generate_record_pop_up()
-            await self.record_pop_up.open()
+            self.record_pop_up.open()
         else:
             self.generate_end_game_pop_up()
             self.PopUp.open()
@@ -184,12 +184,6 @@ class GameLogic:
             self.app.root.ids["MenuList"].ids[self.app.quiz_name + " button"].completed = \
                 self.app.completed(self.app.quiz_name)
 
-
-
-    @abstractmethod
-    def set_end_game_text(self):
-        pass
-
     def end_game_text(self):
         return "End game"
 
@@ -212,7 +206,6 @@ class GameLogic:
     def set_prompt(self, text):
         self.prompt = text
         self.app.root.ids["game_screen"].ids.prompt.text = self.prompt
-
 
     def incorrect_answer_action(self):
         self.app.root.ids["game_screen"].ids.highlight.run_correct_answer_animation(correct=False)
