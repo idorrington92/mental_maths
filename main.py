@@ -34,6 +34,7 @@ class Medals(NamedTuple):
     silver: Challenge
     gold: Challenge
 
+
 class MentalMathsApp(MDApp):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
