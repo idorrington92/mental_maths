@@ -40,7 +40,6 @@ class MentalMathsApp(MDApp):
         super().__init__(**kwargs)
         self.prompt = "Nothing yet"
         self.previous_screens = deque(["home"])
-        self.game = None
         self.quiz_name = ""
         self.game_name = ""
         self.game = None
@@ -166,6 +165,8 @@ class BasicScreen(MDScreen):
 class RecordScreen(BasicScreen):
     def on_enter(self):
         records = MDApp.get_running_app().records["scores"]
+        if MDApp.get_running_app().game_name == "Timed Quiz":
+            records = [f"{record:.2f}" for record in records]
         names = MDApp.get_running_app().records["names"]
         table = MDDataTable(
             pos_hint={"center_x": 0.5, "center_y": 0.6},
