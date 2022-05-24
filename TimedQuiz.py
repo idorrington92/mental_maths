@@ -35,3 +35,41 @@ class TimedQuiz(GameLogic):
     def incorrect_answer_action(self):
         super().incorrect_answer_action()
         self.timestep += 5
+
+    def records_check(self):
+        timesteps = self.app.records["scores"]
+        if len(timesteps) < 5 or self.timestep < max(timesteps):
+            return True
+        return False
+
+    def records_update(self):
+        timesteps = self.app.records["scores"]
+
+        if len(timesteps) < 5:
+            # If there are less than 5 records, then always add player score
+            self.app.records["names"].append(self.player_name)
+            self.app.records["scores"].append(self.timestep)
+
+        elif self.timestep < max(timesteps):
+            # If there are more than 5 records, then add score if it's smaller than the
+            # largest existing score
+            for i, timestep in enumerate(timesteps):
+                if timestep == max(timesteps):
+                    self.app.records["names"][i] = self.player_name
+                    self.app.records["scores"][i] = self.timestep
+        else:
+            # No new record
+            return
+
+        # Sort records by score
+        self.app.records["scores"], self.app.records["names"] = \
+            zip(*sorted(zip(self.app.records["scores"], self.app.records["names"]),
+                        reverse=False))
+
+        # Convert to lists as these must be mutable next time we want to write
+        self.app.records["scores"], self.app.records["names"] = \
+            list(self.app.records["scores"]), list(self.app.records["names"])
+
+        # Save to the Json file
+        self.app.data[self.app.quiz_name][self.app.game_name]["records"] = self.app.records
+        self.app.save()

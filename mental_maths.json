@@ -17,18 +17,18 @@
             },
             "records": {
                 "scores": [
-                    3,
-                    3,
-                    3,
-                    2,
-                    2
+                    23.400037323,
+                    30,
+                    35,
+                    40,
+                    60
                 ],
                 "names": [
+                    "Iain",
+                    "hello",
                     "ZZZ",
                     "ZZZ",
-                    "EEE",
-                    "DDD",
-                    "CCC"
+                    "EEE"
                 ]
             }
         },
@@ -44,14 +44,14 @@
                     9,
                     8,
                     5,
-                    1
+                    4
                 ],
                 "names": [
                     "ZZZ",
                     "ZZZ",
                     "ZZZ",
                     "ZZZ",
-                    "ZZZ"
+                    "IAIN"
                 ]
             }
         }
@@ -61,14 +61,22 @@
             "challenges_completed": {
                 "bronze": true,
                 "silver": true,
-                "gold": false
+                "gold": true
             },
             "records": {
                 "scores": [
-                    2
+                    8.899999999999984,
+                    9.299999999999983,
+                    10.799999999999978,
+                    30,
+                    35
                 ],
                 "names": [
-                    "ZZZ"
+                    "iain",
+                    "tresheepa",
+                    "iain2",
+                    "iain",
+                    "iain"
                 ]
             }
         },
@@ -87,13 +95,21 @@
     "Three By One Digit Multiplication": {
         "Timed Quiz": {
             "challenges_completed": {
-                "bronze": false,
-                "silver": false,
-                "gold": false
+                "bronze": true,
+                "silver": true,
+                "gold": true
             },
             "records": {
-                "scores": [],
-                "names": []
+                "scores": [
+                    30,
+                    35,
+                    40
+                ],
+                "names": [
+                    "Iain",
+                    "Iain",
+                    "Barry"
+                ]
             }
         },
         "Time Attack": {
