@@ -291,6 +291,7 @@ MDBoxLayout:
     text: "Records"
     on_release:
         app.change_screen('Records')
+        if app.game.PopUp is not None: app.game.PopUp.dismiss()
 
 <PopUpMenuButton>
     text: "Menu"
