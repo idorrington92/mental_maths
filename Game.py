@@ -51,6 +51,7 @@ class GameLogic:
                               buttons=[
                                   PlayAgainButton(),
                                   PopUpMenuButton(),
+                                  RecordButton(),
                                   ],
                               auto_dismiss=False,
                               )
@@ -168,15 +169,17 @@ class GameLogic:
     def set_player_name(self, text):
         self.player_name = text
 
-    def challenges_check(self):
+    def challenges_check(self, score=None):
         need_to_save = False
-        if self.app.challenges[self.app.quiz_name][self.app.game_name].bronze.condition(self.score):
+        if score is None:
+            score = self.score
+        if self.app.challenges[self.app.quiz_name][self.app.game_name].bronze.condition(score):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["bronze"] = True
             need_to_save = True
-        if self.app.challenges[self.app.quiz_name][self.app.game_name].silver.condition(self.score):
+        if self.app.challenges[self.app.quiz_name][self.app.game_name].silver.condition(score):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["silver"] = True
             need_to_save = True
-        if self.app.challenges[self.app.quiz_name][self.app.game_name].gold.condition(self.score):
+        if self.app.challenges[self.app.quiz_name][self.app.game_name].gold.condition(score):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["gold"] = True
             need_to_save = True
         if need_to_save:

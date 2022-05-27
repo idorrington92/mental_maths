@@ -4,6 +4,8 @@ from Game import GameLogic
 
 
 class TimedQuiz(GameLogic):
+    target = 3
+
     def play_game(self):
         super().play_game()
         self.start_round()
@@ -23,13 +25,18 @@ class TimedQuiz(GameLogic):
         self.EndGamePopUpTitle = "Game over"
         super().end_game()
 
+    def challenges_check(self, score=None):
+        # The score for timed quiz is actually the time taken to complete the quiz
+        if score is None:
+            score = self.timestep
+        super().challenges_check(score)
+
     def end_game_text(self):
-        return f"\nScore: {self.score}\n" \
-               f"Time taken: {self.timestep:.2f}s"
+        return f"Time taken: {self.timestep:.2f}s"
 
     def correct_answer_action(self):
         super().correct_answer_action()
-        if self.score >= 3:
+        if self.score >= self.target:
             self.end_game()
 
     def incorrect_answer_action(self):

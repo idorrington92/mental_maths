@@ -17,18 +17,18 @@
             },
             "records": {
                 "scores": [
+                    8.299999999999986,
+                    10.699999999999978,
                     23.400037323,
                     30,
-                    35,
-                    40,
-                    60
+                    35
                 ],
                 "names": [
+                    "iiaaiinn",
+                    "iain",
                     "Iain",
                     "hello",
-                    "ZZZ",
-                    "ZZZ",
-                    "EEE"
+                    "ZZZ"
                 ]
             }
         },
@@ -60,23 +60,23 @@
         "Timed Quiz": {
             "challenges_completed": {
                 "bronze": true,
-                "silver": true,
-                "gold": true
+                "silver": false,
+                "gold": false
             },
             "records": {
                 "scores": [
+                    6.8999999999999915,
                     8.899999999999984,
                     9.299999999999983,
                     10.799999999999978,
-                    30,
-                    35
+                    21.600000000000023
                 ],
                 "names": [
+                    "iiiaaaaiiiinnn",
                     "iain",
                     "tresheepa",
                     "iain2",
-                    "iain",
-                    "iain"
+                    "me"
                 ]
             }
         },
