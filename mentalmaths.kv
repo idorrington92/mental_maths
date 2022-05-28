@@ -1,4 +1,5 @@
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import TimedQuiz TimedQuiz.TimedQuiz
 
 <MenuList>
     name: "menulist"
@@ -131,27 +132,60 @@ MDBoxLayout:
             name: "game_lobby"
             title: app.quiz_name
 
-
             MDBoxLayout:
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                size_hint: {0.66, 0.1}
-                MDCard:
-                    on_press:
-                        app.change_screen('pregame')
-                        app.set_game("Timed Quiz")
-                        app.launch_game()
-                    MDBoxLayout:
-                        MDLabel:
-                            text: "Quiz"
-                MDCard:
-                    on_press:
-                        app.change_screen('pregame')
-                        app.set_game("Time Attack")
-                        app.launch_game()
-                    MDBoxLayout:
-                        MDLabel:
-                            text: "Time Attack"
+                pos_hint: {"center_x": 0.5, "center_y": 0.9}
+                size_hint: (1, 0.8)
+                bar_width: 0
+                MDBoxLayout:
+                    adaptive_height: True
+                    orientation: "vertical"
+                    pos_hint: {"center_x": 0.5}
 
+                    MDBoxLayout:
+                        padding: "10dp"
+                        adaptive_height: True
+                        size_hint_x: 1
+                        spacing: "10dp"
+                        orientation: "vertical"
+                        pos_hint: {"center_x": 0.5}
+
+                        MDBoxLayout:
+                            adaptive_width: True
+                            size_hint_x: 0.5
+                            size_hint_y: None
+                            height: "56dp"
+                            spacing: "10dp"
+                            pos_hint: {"center_x": .5}
+
+                            MenuCard:
+                                id: Timed Quiz button
+                                text: 'Timed Quiz'
+                                completed: False
+                                description: f"Answer {TimedQuiz.target} questions as fast as possible"
+                                disabled: False
+                                on_press:
+                                    app.change_screen('pregame')
+                                    app.set_game("Timed Quiz")
+                                    app.launch_game()
+
+                        MDBoxLayout:
+                            adaptive_width: True
+                            size_hint_x: 0.5
+                            size_hint_y: None
+                            height: "56dp"
+                            spacing: "10dp"
+                            pos_hint: {"center_x": .5}
+
+                            MenuCard:
+                                id: Time Attack button
+                                text: 'Time Attack'
+                                completed: False
+                                description: "Answer as many questions as you can in 30 seconds"
+                                disabled: False
+                                on_press:
+                                    app.change_screen('pregame')
+                                    app.set_game("Time Attack")
+                                    app.launch_game()
 
         BasicScreen:
             id: pregame
