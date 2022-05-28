@@ -40,7 +40,7 @@ class MentalMathsApp(MDApp):
         super().__init__(**kwargs)
         self.prompt = "Nothing yet"
         self.previous_screens = deque(["home"])
-        self.quiz_name = ""
+        self.quiz_name = "Maths Dojo"
         self.game_name = ""
         self.game = None
         self.quiz = None
@@ -229,6 +229,7 @@ class ChallengeLabel(MDRoundFlatIconButton):
 class MenuCard(MDCard):
     text = StringProperty("")
     description = StringProperty("")
+
 
 if __name__ == '__main__':
     MentalMathsApp().run()

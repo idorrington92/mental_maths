@@ -96,11 +96,13 @@
 
 
 <BasicScreen>
+    on_pre_enter:
+        self.ids.toolbar.title = app.quiz_name
     MDTopAppBar:
         id: toolbar
+        title: app.quiz_name
         pos_hint: {"bottom": 1}
         elevation: 10
-        title: "Maths Dojo"
         right_action_items: [["home", lambda x: app.change_screen("home")], ["cog-outline", lambda x: app.change_screen("settings")], ["arrow-left-thick", lambda x: app.previous_screen()]]
 
 
@@ -114,6 +116,8 @@ MDBoxLayout:
         BasicScreen:
             id: home
             name: "home"
+            on_pre_enter:
+                app.quiz_name = "Maths Dojo"
 
             MenuList:
                 id: MenuList
@@ -125,6 +129,8 @@ MDBoxLayout:
         BasicScreen:
             id: game_lobby
             name: "game_lobby"
+            title: app.quiz_name
+
 
             MDBoxLayout:
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
