@@ -82,9 +82,15 @@ class GameLogic:
         self.count_down = 3
         self.app.root.ids["count_down_screen"].ids["count_down"].text = f"{self.count_down}"
 
-    def start_game(self):
+    def start_countdown(self):
+        self.reset()
         self.app.change_screen("count_down_screen")
         Clock.schedule_interval(self.update_count_down, 1)
+
+    def reset(self):
+        self.score = 0
+        self.timestep = 0
+        self.PopUp = None
 
     def update_count_down(self, *args):
         self.count_down -= 1
@@ -98,9 +104,7 @@ class GameLogic:
 
     @abstractmethod
     def play_game(self):
-        self.score = 0
         self.app.root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
-        self.timestep = 0
         self.clock = Clock.schedule_interval(self.update, self.timestep_size)
 
     def update(self, *args):

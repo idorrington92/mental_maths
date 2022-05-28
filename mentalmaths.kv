@@ -303,7 +303,7 @@ MDBoxLayout:
     text: "Play Again"
     on_release:
         app.game.PopUp.dismiss()
-        app.game.start_game()
+        app.game.start_countdown()
 
 <HelpButton>
     text: "Help"
@@ -318,7 +318,7 @@ MDBoxLayout:
 <StartGameButton>
     text: "Start Game"
     on_release:
-        app.game.start_game()
+        app.game.start_countdown()
 
 <ClockLabel>
     text: "This shouldn't be here"

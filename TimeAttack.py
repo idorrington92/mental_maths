@@ -18,11 +18,15 @@ class TimeAttack(GameLogic):
         self.set_prompt(self.quiz.question)
 
     def play_game(self):
-        self.score = 0
         MDApp.get_running_app().root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
         self.timestep = self.time_limit
         self.clock = Clock.schedule_interval(self.update, self.timestep_size)
         self.start_round()
+
+    def reset(self):
+        self.score = 0
+        self.timestep = self.time_limit
+        self.PopUp = None
 
     def update(self, *args):
         if self.timestep > 0:
