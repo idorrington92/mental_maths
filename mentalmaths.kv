@@ -155,12 +155,15 @@ MDBoxLayout:
                 pos_hint: {"center_x": 0.5, "center_y": 0.4}
                 orientation: "vertical"
                 spacing: "50dp"
+                padding: "20dp"
                 adaptive_width: True
                 size_hint_y: None
 
                 MDBoxLayout:
                     adaptive_width: True
                     size_hint_y: None
+                    spacing: "50dp"
+                    padding: "20dp"
                     StartGameButton:
                         pos_hint: {"center_x": 0.3}
                     HelpButton:
@@ -172,6 +175,7 @@ MDBoxLayout:
                     adaptive_width: True
                     size_hint_y: None
                     orientation: "vertical"
+                    pos_hint: {"center_x": 0.5}
                     ChallengeLabel:
                         id: gold_challenge_label
                         icon: "trophy"
@@ -249,6 +253,8 @@ MDBoxLayout:
     MDTextField:
         id: PlayerInput
         hint_text: "Enter your answer"
+        input_type: "number"
+        input_filter: "int"
         helper_text: ""
         helper_text_mode: "on_focus"
         pos_hint: {'center_x': 0.5, 'center_y': 0.3}
