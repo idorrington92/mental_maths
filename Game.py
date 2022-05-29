@@ -123,7 +123,7 @@ class GameLogic:
         """
         self.clock.cancel()
         self.set_prompt("")
-        # TODO Added a challenge completed pop up
+        # TODO Added a challenge completed_quiz pop up
         self.challenges_check()
         if self.records_check():
             self.generate_record_pop_up()
@@ -188,8 +188,8 @@ class GameLogic:
             need_to_save = True
         if need_to_save:
             self.app.save()
-            self.app.root.ids["MenuList"].ids[self.app.quiz_name + " button"].completed = \
-                self.app.completed(self.app.quiz_name)
+            self.app.root.ids["MenuList"].ids[self.app.quiz_name + " button"].completed_quiz = \
+                self.app.completed_quiz(self.app.quiz_name)
 
     def end_game_text(self):
         return "End game"

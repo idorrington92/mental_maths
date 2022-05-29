@@ -112,10 +112,16 @@ class MentalMathsApp(MDApp):
         self.theme_cls.theme_style = "Dark" if self.theme_cls.theme_style == "Light" else "Light"
         self.save()
 
-    def completed(self, level_name):
+    def completed_quiz(self, level_name):
         return all(all(self.data[level_name][game_type]["challenges_completed"].values())
                    for game_type in self.data[level_name])
-    
+
+    def completed_game(self, game_name):
+        if self.quiz_name == "Maths Dojo":
+            return False
+        return all(
+            self.data[self.quiz_name][game_name]["challenges_completed"].values())
+
     def printIDs(self):
         print(self.root.ids)
 
@@ -159,6 +165,10 @@ class MentalMathsApp(MDApp):
 
 
 class BasicScreen(MDScreen):
+    pass
+
+
+class GameLobbyScreen(BasicScreen):
     pass
 
 
