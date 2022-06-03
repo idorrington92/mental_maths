@@ -34,6 +34,7 @@
                         completed: app.completed_quiz("Multiply By 11")
                         description: "Multiply two digit numbers by 11"
                         disabled: app.is_level_locked("Multiply By 11")
+                        focus_behavior: not self.disabled
                         on_press:
                             app.set_quiz("Multiply By 11")
                             app.change_screen('game_lobby')
@@ -52,6 +53,7 @@
                         completed: app.completed_quiz("Two Digit Addition")
                         description: "Add two digit numbers"
                         disabled: app.is_level_locked("Two Digit Addition")
+                        focus_behavior: not self.disabled
                         on_press:
                             app.set_quiz("Two Digit Addition")
                             app.change_screen('game_lobby')
@@ -71,6 +73,7 @@
                         description: "Multiply three digit numbers by a single digit number"
                         pos_hint: {"center_x": 0.5}
                         disabled: app.is_level_locked("Three By One Digit Multiplication")
+                        focus_behavior: not self.disabled
                         on_press:
                             app.set_quiz("Three By One Digit Multiplication")
                             app.change_screen('game_lobby')
@@ -353,7 +356,6 @@ MDBoxLayout:
             orientation: "vertical"
             MDLabel:
                 theme_text_color: "Custom"
-                text_color: "black"
                 text: root.text
             MDBoxLayout:
                 MDLabel:

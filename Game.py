@@ -180,6 +180,7 @@ class GameLogic:
         if self.app.challenges[self.app.quiz_name][self.app.game_name].bronze.condition(score):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["bronze"] = True
             need_to_save = True
+            self.app.unlock_level()
         if self.app.challenges[self.app.quiz_name][self.app.game_name].silver.condition(score):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["silver"] = True
             need_to_save = True
