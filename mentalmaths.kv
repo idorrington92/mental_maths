@@ -33,7 +33,7 @@
                         text: 'Multiply By 11'
                         completed: app.completed_quiz("Multiply By 11")
                         description: "Multiply two digit numbers by 11"
-                        disabled: app.is_locked_level["Multiply By 11"]
+                        disabled: app.is_level_locked("Multiply By 11")
                         on_press:
                             app.set_quiz("Multiply By 11")
                             app.change_screen('game_lobby')
@@ -51,7 +51,7 @@
                         text: 'Two Digit Addition'
                         completed: app.completed_quiz("Two Digit Addition")
                         description: "Add two digit numbers"
-                        disabled: app.is_locked_level["Two Digit Addition"]
+                        disabled: app.is_level_locked("Two Digit Addition")
                         on_press:
                             app.set_quiz("Two Digit Addition")
                             app.change_screen('game_lobby')
@@ -70,7 +70,7 @@
                         completed: app.completed_quiz("Three By One Digit Multiplication")
                         description: "Multiply three digit numbers by a single digit number"
                         pos_hint: {"center_x": 0.5}
-                        disabled: app.is_locked_level["Three By One Digit Multiplication"]
+                        disabled: app.is_level_locked("Three By One Digit Multiplication")
                         on_press:
                             app.set_quiz("Three By One Digit Multiplication")
                             app.change_screen('game_lobby')
@@ -89,7 +89,7 @@
                         completed: app.completed_quiz("Two Digit Multiplication")
                         description: "Multiply two digit numbers"
                         pos_hint: {"center_x": 0.5}
-                        disabled: app.is_locked_level["Two Digit Multiplication"]
+                        disabled: app.is_level_locked("Two Digit Multiplication")
                         focus_behavior: not self.disabled
                         on_press:
                             app.set_quiz("Two Digit Multiplication")

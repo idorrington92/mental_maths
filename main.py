@@ -46,8 +46,6 @@ class MentalMathsApp(MDApp):
         self.quiz = None
         self.nrounds = 3
         self.data = JsonStore("mental_maths.json", indent=4)
-        self.is_locked_level = self.data.get("is_level_locked")
-
         self.quiz_dict = {"Maths Dojo": None,
                           "Multiply By 11": MultiplyBy11,
                           "Two Digit Addition": TwoDigitAddition,
@@ -92,6 +90,12 @@ class MentalMathsApp(MDApp):
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             }
         }
+        self.level_order = {
+            "Multiply By 11": 1,
+            "Two Digit Addition": 2,
+            "Three By One Digit Multiplication": 3,
+            "Two Digit Multiplication": 4,
+        }
         self.records = None
 
     def build(self):
@@ -111,6 +115,14 @@ class MentalMathsApp(MDApp):
     def light_dark_switch(self):
         self.theme_cls.theme_style = "Dark" if self.theme_cls.theme_style == "Light" else "Light"
         self.save()
+
+    def is_level_locked(self, level_name):
+        if level_name == "Multiply By 11":
+            # First level is never locked
+            return False
+        previous_level = list(self.level_order.keys())[self.level_order[level_name] - 2]
+        return not all([self.data[previous_level][game_name]["challenges_completed"]["bronze"]
+                       for game_name in self.game_dict.keys() if game_name != "Maths Dojo"])
 
     def completed_quiz(self, level_name):
         return all(all(self.data[level_name][game_type]["challenges_completed"].values())
