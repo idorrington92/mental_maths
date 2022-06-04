@@ -41,6 +41,7 @@ class GameLogic:
         self.EndGamePopUpTitle = ""
         self.PopUp = None
         self.record_pop_up = None
+        self.challenge_pop_up = None
         self.HelpPopUp = None
         self.count_down = 3
         self.app = MDApp.get_running_app()
@@ -61,6 +62,15 @@ class GameLogic:
                                       text="Congratulations",
                                       type="custom",
                                       content_cls=RecordDialog(),
+                                      auto_dismiss=False,
+                                      )
+
+    def generate_challenge_pop_up(self, medal: str):
+        self.challenge_pop_up = MDDialog(title="Challenge Completed!",
+                                      text=f"Congratulations, you completed the {medal} medal challenge",
+                                      buttons=[
+                                          ChallengeCloseButton()
+                                      ],
                                       auto_dismiss=False,
                                       )
 
@@ -123,8 +133,13 @@ class GameLogic:
         """
         self.clock.cancel()
         self.set_prompt("")
-        # TODO Added a challenge completed_quiz pop up
-        self.challenges_check()
+        # TODO Tidy up the pop up chaining, it's too varied and should follow a consistent pattern
+        if self.check_challenges(self.score):
+            self.challenges_update_and_open_pop_up()
+        else:
+            self.records_check_and_open()
+
+    def records_check_and_open(self):
         if self.records_check():
             self.generate_record_pop_up()
             self.record_pop_up.open()
@@ -173,20 +188,41 @@ class GameLogic:
     def set_player_name(self, text):
         self.player_name = text
 
-    def challenges_check(self, score=None):
+    def check_challenges(self, score):
+        return any([self.check_challenge(score, "bronze"),
+                    self.check_challenge(score, "silver"),
+                    self.check_challenge(score, "gold")])
+
+    def check_challenge(self, score, medal: str):
+        medal_num = {"bronze": 0, "silver": 1, "gold": 2}[medal]
+        return self.app.challenges[self.app.quiz_name][self.app.game_name][medal_num].condition(score) and \
+                not self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"][medal]
+
+    def challenges_update_and_open_pop_up(self, score=None):
         need_to_save = False
         if score is None:
             score = self.score
-        if self.app.challenges[self.app.quiz_name][self.app.game_name].bronze.condition(score):
+        if self.check_challenge(score, "bronze"):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["bronze"] = True
             need_to_save = True
-            self.app.unlock_level()
-        if self.app.challenges[self.app.quiz_name][self.app.game_name].silver.condition(score):
+            self.app.check_and_unlock_level()
+            self.generate_challenge_pop_up(medal="bronze")
+            # self.challenge_pop_up.open()
+        if self.check_challenge(score, "silver"):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["silver"] = True
             need_to_save = True
-        if self.app.challenges[self.app.quiz_name][self.app.game_name].gold.condition(score):
+            self.generate_challenge_pop_up(medal="silver")
+            # self.challenge_pop_up.open()
+        if self.check_challenge(score, "gold"):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["gold"] = True
             need_to_save = True
+            self.generate_challenge_pop_up(medal="gold")
+            # self.challenge_pop_up.open()
+
+        # TODO This only shows a pop up for the hardest challenge completed. This probably requires chaining
+        # the pop ups together in an analgous way to how challenges chains to records chains to the end game
+        # pop up
+        self.challenge_pop_up.open()
         if need_to_save:
             self.app.save()
             self.app.root.ids["MenuList"].ids[self.app.quiz_name + " button"].completed_quiz = \
@@ -250,6 +286,10 @@ class StartGameButton(MDFlatButton):
 
 
 class HelpButton(MDFlatButton):
+    pass
+
+
+class ChallengeCloseButton(MDFlatButton):
     pass
 
 

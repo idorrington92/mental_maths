@@ -309,6 +309,12 @@ MDBoxLayout:
     on_release:
         app.game.HelpPopUp.dismiss()
 
+<ChallengeCloseButton>
+    text: "Close"
+    on_release:
+        app.game.challenge_pop_up.dismiss()
+        app.game.records_check_and_open()
+
 <StartGameButton>
     text: "Start Game"
     on_release:

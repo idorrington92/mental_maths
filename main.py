@@ -124,12 +124,12 @@ class MentalMathsApp(MDApp):
         return not all([self.data[previous_level][game_name]["challenges_completed"]["bronze"]
                        for game_name in self.game_dict.keys() if game_name != "Maths Dojo"])
 
-    def unlock_level(self):
+    def check_and_unlock_level(self):
         level_name = self.quiz_name
         next_level = list(self.level_order.keys())[self.level_order[level_name]]
+        # Enable button if it is now unlocked
         self.root.ids["MenuList"].ids[next_level + " button"].disabled = \
             self.is_level_locked(next_level)
-
 
     def completed_quiz(self, level_name):
         return all(all(self.data[level_name][game_type]["challenges_completed"].values())

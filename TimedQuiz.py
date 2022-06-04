@@ -25,11 +25,11 @@ class TimedQuiz(GameLogic):
         self.EndGamePopUpTitle = "Game over"
         super().end_game()
 
-    def challenges_check(self, score=None):
+    def challenges_update_and_open_pop_up(self, score=None):
         # The score for timed quiz is actually the time taken to complete the quiz
         if score is None:
             score = self.timestep
-        super().challenges_check(score)
+        super().challenges_update_and_open_pop_up(score)
 
     def end_game_text(self):
         return f"Time taken: {self.timestep:.2f}s"
