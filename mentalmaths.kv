@@ -269,7 +269,7 @@ MDBoxLayout:
             self.text = ""
             app.game.record_pop_up.dismiss()
             app.game.generate_end_game_pop_up()
-            app.game.PopUp.open()
+            app.game.end_game_pop_up.open()
 
 <AnswerBoxHighlight>
     animated_color: 0, 0, 0, 0
@@ -285,18 +285,18 @@ MDBoxLayout:
     text: "Records"
     on_release:
         app.change_screen('Records')
-        if app.game.PopUp is not None: app.game.PopUp.dismiss()
+        if app.game.end_game_pop_up is not None: app.game.end_game_pop_up.dismiss()
 
 <PopUpMenuButton>
     text: "Menu"
     on_release:
-        app.game.PopUp.dismiss()
+        app.game.end_game_pop_up.dismiss()
         app.change_screen('home')
 
 <PlayAgainButton>
     text: "Play Again"
     on_release:
-        app.game.PopUp.dismiss()
+        app.game.end_game_pop_up.dismiss()
         app.game.start_countdown()
 
 <HelpButton>
@@ -307,7 +307,7 @@ MDBoxLayout:
 <CloseButton>
     text: "Close"
     on_release:
-        app.game.HelpPopUp.dismiss()
+        app.game.help_pop_up.dismiss()
 
 <ChallengeCloseButton>
     text: "Close"

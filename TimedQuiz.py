@@ -22,7 +22,7 @@ class TimedQuiz(GameLogic):
         :return:
         """
         MDApp.get_running_app().root.ids["game_screen"].ids.PlayerInput.focus = False
-        self.EndGamePopUpTitle = "Game over"
+        self.end_game_pop_up_title = "Game over"
         super().end_game()
 
     def challenges_update_and_open_pop_up(self, score=None):

@@ -35,27 +35,28 @@ class GameLogic:
         self.timestep_size = 0.1
         self.score = 0
         self.goal = 0
-        self.startTime = 0
+        self.start_time = 0
+        self.clock = None
         self.help = ""
         self.prompt = ""
-        self.EndGamePopUpTitle = ""
-        self.PopUp = None
+        self.end_game_pop_up_title = ""
+        self.end_game_pop_up = None
         self.record_pop_up = None
         self.challenge_pop_up = None
-        self.HelpPopUp = None
+        self.help_pop_up = None
         self.count_down = 3
         self.app = MDApp.get_running_app()
 
     def generate_end_game_pop_up(self):
-        self.PopUp = MDDialog(title=self.EndGamePopUpTitle,
-                              text=self.end_game_text(),
-                              buttons=[
+        self.end_game_pop_up = MDDialog(title=self.end_game_pop_up_title,
+                                        text=self.end_game_text(),
+                                        buttons=[
                                   PlayAgainButton(),
                                   PopUpMenuButton(),
                                   RecordButton(),
                                   ],
-                              auto_dismiss=False,
-                              )
+                                        auto_dismiss=False,
+                                        )
 
     def generate_record_pop_up(self):
         self.record_pop_up = MDDialog(title="New Record!",
@@ -75,18 +76,18 @@ class GameLogic:
                                       )
 
     def generate_help_pop_up(self):
-        self.HelpPopUp = MDDialog(title="Help",
-                                  text=self.help,
-                                  buttons=[
+        self.help_pop_up = MDDialog(title="Help",
+                                    text=self.help,
+                                    buttons=[
                                       CloseButton(),
                                   ],
-                                  md_bg_color=self.app.theme_cls.bg_dark,
-                                  auto_dismiss=False,
-                                  )
+                                    md_bg_color=self.app.theme_cls.bg_dark,
+                                    auto_dismiss=False,
+                                    )
 
     def display_help(self):
         self.generate_help_pop_up()
-        self.HelpPopUp.open()
+        self.help_pop_up.open()
 
     def reset_countdown(self):
         self.count_down = 3
@@ -100,7 +101,7 @@ class GameLogic:
     def reset(self):
         self.score = 0
         self.timestep = 0
-        self.PopUp = None
+        self.end_game_pop_up = None
 
     def update_count_down(self, *args):
         self.count_down -= 1
@@ -128,15 +129,35 @@ class GameLogic:
     @abstractmethod
     def end_game(self):
         """
-        End game display
-        :return:
+        Stop game clock, clear prompt, and open pop ups
         """
         self.clock.cancel()
         self.set_prompt("")
         # TODO Tidy up the pop up chaining, it's too varied and should follow a consistent pattern
-        if self.check_challenges(self.score):
+        self.open_pop_ups()
+
+    def open_pop_ups(self):
+        """
+        Open the end game pop ups. This involves chaining together pop ups so that
+        when one is closed the next appropriate one opens.
+
+        e.g. If a challenge is completed and a record is broken, then the challenge
+        pop up will open, followed by the record one once the challenge pop up is
+        dismissed, and then finally the end game pop up.
+
+        If no challenge is completed, but a record is broken, then it will first open
+        the record pop up followed by the end game pop up.
+
+        The implementation is that only the first pop up is called in the main code,
+        with following pop ups opened by the first one being dismissed
+        """
+        if self.any_challenges_completed(self.score):
+            # Save to the json file that the challenge has been completed, then
+            # generate and open the pop up
             self.challenges_update_and_open_pop_up()
         else:
+            # check if a record has been broken and act accordingly, otherwise open
+            # the end game pop up
             self.records_check_and_open()
 
     def records_check_and_open(self):
@@ -145,7 +166,7 @@ class GameLogic:
             self.record_pop_up.open()
         else:
             self.generate_end_game_pop_up()
-            self.PopUp.open()
+            self.end_game_pop_up.open()
 
     def records_check(self):
         scores = self.app.records["scores"]
@@ -188,12 +209,12 @@ class GameLogic:
     def set_player_name(self, text):
         self.player_name = text
 
-    def check_challenges(self, score):
-        return any([self.check_challenge(score, "bronze"),
-                    self.check_challenge(score, "silver"),
-                    self.check_challenge(score, "gold")])
+    def any_challenges_completed(self, score):
+        return any([self.challenge_is_completed(score, "bronze"),
+                    self.challenge_is_completed(score, "silver"),
+                    self.challenge_is_completed(score, "gold")])
 
-    def check_challenge(self, score, medal: str):
+    def challenge_is_completed(self, score, medal: str):
         medal_num = {"bronze": 0, "silver": 1, "gold": 2}[medal]
         return self.app.challenges[self.app.quiz_name][self.app.game_name][medal_num].condition(score) and \
                 not self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"][medal]
@@ -202,18 +223,18 @@ class GameLogic:
         need_to_save = False
         if score is None:
             score = self.score
-        if self.check_challenge(score, "bronze"):
+        if self.challenge_is_completed(score, "bronze"):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["bronze"] = True
             need_to_save = True
             self.app.check_and_unlock_level()
             self.generate_challenge_pop_up(medal="bronze")
             # self.challenge_pop_up.open()
-        if self.check_challenge(score, "silver"):
+        if self.challenge_is_completed(score, "silver"):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["silver"] = True
             need_to_save = True
             self.generate_challenge_pop_up(medal="silver")
             # self.challenge_pop_up.open()
-        if self.check_challenge(score, "gold"):
+        if self.challenge_is_completed(score, "gold"):
             self.app.data[self.app.quiz_name][self.app.game_name]["challenges_completed"]["gold"] = True
             need_to_save = True
             self.generate_challenge_pop_up(medal="gold")
