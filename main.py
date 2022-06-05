@@ -121,7 +121,7 @@ class MentalMathsApp(MDApp):
             # First level is never locked
             return False
         previous_level = list(self.level_order.keys())[self.level_order[level_name] - 2]
-        return not all([self.data[previous_level][game_name]["challenges_completed"]["bronze"]
+        return not all([self.data[previous_level][game_name]["completed_challenges"]["bronze"]
                        for game_name in self.game_dict.keys() if game_name != "Maths Dojo"])
 
     def check_and_unlock_level(self):
@@ -132,14 +132,14 @@ class MentalMathsApp(MDApp):
             self.is_level_locked(next_level)
 
     def completed_quiz(self, level_name):
-        return all(all(self.data[level_name][game_type]["challenges_completed"].values())
+        return all(all(self.data[level_name][game_type]["completed_challenges"].values())
                    for game_type in self.data[level_name])
 
     def completed_game(self, game_name):
         if self.quiz_name == "Maths Dojo":
             return False
         return all(
-            self.data[self.quiz_name][game_name]["challenges_completed"].values())
+            self.data[self.quiz_name][game_name]["completed_challenges"].values())
 
     def printIDs(self):
         print(self.root.ids)
@@ -160,7 +160,7 @@ class MentalMathsApp(MDApp):
         for medal, challenge in self.challenges[quiz_name][game_name]._asdict().items():
             self.root.ids[medal + "_challenge_label"].text = challenge.text
             self.root.ids[medal + "_challenge_label"].disabled = \
-                not self.data[quiz_name][game_name]["challenges_completed"][medal]
+                not self.data[quiz_name][game_name]["completed_challenges"][medal]
 
     def launch_game(self):
         self.game = self.game(self.quiz())

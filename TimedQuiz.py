@@ -23,13 +23,7 @@ class TimedQuiz(GameLogic):
         """
         MDApp.get_running_app().root.ids["game_screen"].ids.PlayerInput.focus = False
         self.end_game_pop_up_title = "Game over"
-        super().end_game()
-
-    def challenges_update_and_open_pop_up(self, score=None):
-        # The score for timed quiz is actually the time taken to complete the quiz
-        if score is None:
-            score = self.timestep
-        super().challenges_update_and_open_pop_up(score)
+        super().end_game(score=self.timestep)
 
     def end_game_text(self):
         return f"Time taken: {self.timestep:.2f}s"
@@ -43,7 +37,7 @@ class TimedQuiz(GameLogic):
         super().incorrect_answer_action()
         self.timestep += 5
 
-    def records_check(self):
+    def any_records_broken(self):
         timesteps = self.app.records["scores"]
         if len(timesteps) < 5 or self.timestep < max(timesteps):
             return True

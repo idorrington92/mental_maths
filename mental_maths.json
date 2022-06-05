@@ -4,7 +4,7 @@
     },
     "Multiply By 11": {
         "Timed Quiz": {
-            "challenges_completed": {
+            "completed_challenges": {
                 "bronze": true,
                 "silver": true,
                 "gold": true
@@ -27,7 +27,7 @@
             }
         },
         "Time Attack": {
-            "challenges_completed": {
+            "completed_challenges": {
                 "bronze": true,
                 "silver": true,
                 "gold": true
@@ -52,30 +52,30 @@
     },
     "Two Digit Addition": {
         "Timed Quiz": {
-            "challenges_completed": {
+            "completed_challenges": {
                 "bronze": true,
-                "silver": false,
-                "gold": false
+                "silver": true,
+                "gold": true
             },
             "records": {
                 "scores": [
                     6.8999999999999915,
+                    8.399999999999986,
+                    8.399999999999986,
                     8.899999999999984,
-                    9.299999999999983,
-                    10.799999999999978,
-                    10.899999999999977
+                    8.999999999999984
                 ],
                 "names": [
                     "iiiaaaaiiiinnn",
                     "iain",
-                    "tresheepa",
-                    "iain2",
+                    "iain is the best",
+                    "iain",
                     "iain"
                 ]
             }
         },
         "Time Attack": {
-            "challenges_completed": {
+            "completed_challenges": {
                 "bronze": true,
                 "silver": true,
                 "gold": true
@@ -100,7 +100,7 @@
     },
     "Three By One Digit Multiplication": {
         "Timed Quiz": {
-            "challenges_completed": {
+            "completed_challenges": {
                 "bronze": true,
                 "silver": true,
                 "gold": true
@@ -119,7 +119,7 @@
             }
         },
         "Time Attack": {
-            "challenges_completed": {
+            "completed_challenges": {
                 "bronze": false,
                 "silver": false,
                 "gold": false
@@ -132,7 +132,7 @@
     },
     "Two Digit Multiplication": {
         "Timed Quiz": {
-            "challenges_completed": {
+            "completed_challenges": {
                 "bronze": false,
                 "silver": false,
                 "gold": false
@@ -143,7 +143,7 @@
             }
         },
         "Time Attack": {
-            "challenges_completed": {
+            "completed_challenges": {
                 "bronze": false,
                 "silver": false,
                 "gold": false
