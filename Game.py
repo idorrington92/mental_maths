@@ -68,7 +68,6 @@ class GameLogic:
 
     def generate_challenge_pop_up(self, challenges_completed):
         medal = challenges_completed.pop()
-        print(f"{medal} pop up")
         self.challenge_pop_up = MDDialog(title="Challenge Completed!",
                                       text=f"Congratulations, you completed the {medal} medal challenge",
                                       buttons=[
@@ -101,6 +100,8 @@ class GameLogic:
         Clock.schedule_interval(self.update_count_down, 1)
 
     def reset(self):
+        if self.clock is not None:
+            self.clock.cancel()
         self.score = 0
         self.timestep = 0
         self.end_game_pop_up = None

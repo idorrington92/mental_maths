@@ -313,7 +313,6 @@ MDBoxLayout:
     text: "Close"
     on_release:
         app.game.challenge_pop_up.dismiss()
-        print(f"{self.challenges_completed=}")
         app.game.challenge_update_and_open_pop_up(self.challenges_completed) if self.challenges_completed else app.game.records_check_and_open()
 
 <StartGameButton>
