@@ -24,9 +24,8 @@ class TimeAttack(GameLogic):
         self.start_round()
 
     def reset(self):
-        self.score = 0
         self.timestep = self.time_limit
-        self.PopUp = None
+        super().reset()
 
     def update(self, *args):
         if self.timestep > 0:
