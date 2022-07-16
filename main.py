@@ -21,7 +21,7 @@ from TwoDigitAddition import TwoDigitAddition
 from ThreeByOneDigitMultiplication import ThreeByOneDigitMultiplication
 from TwoDigitMultiplication import TwoDigitMultiplication
 from TimedQuiz import TimedQuiz
-from TimeAttack import TimeAttack
+from Marathon import Marathon
 
 
 class Challenge(NamedTuple):
@@ -52,16 +52,22 @@ class MentalMathsApp(MDApp):
                           "Three By One Digit Multiplication": ThreeByOneDigitMultiplication,
                           "Two Digit Multiplication": TwoDigitMultiplication,
                           }
+        self.quiz_short_name = {"Maths Dojo": "Maths Dojo",
+                                "Multiply By 11": "Multiplication 1",
+                                "Two Digit Addition": "Addition 1",
+                                "Three By One Digit Multiplication": "Multiplication 2",
+                                "Two Digit Multiplication": "Multiplication 3",
+                                }
         self.game_dict = {"Maths Dojo": None,
-                          "Time Attack": TimeAttack,
-                          "Timed Quiz": TimedQuiz
+                          "Marathon": Marathon,
+                          "Timed Quiz": TimedQuiz,
                           }
         self.challenges = {
             "Multiply By 11": {
                 "Timed Quiz": Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
-                "Time Attack": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                "Marathon": Medals(Challenge("Score 5 points", lambda score: score >= 5),
                                       Challenge("Score 7 points", lambda score: score >= 7),
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
@@ -69,7 +75,7 @@ class MentalMathsApp(MDApp):
                 "Timed Quiz": Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
-                "Time Attack": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                "Marathon": Medals(Challenge("Score 5 points", lambda score: score >= 5),
                                       Challenge("Score 7 points", lambda score: score >= 7),
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
@@ -77,7 +83,7 @@ class MentalMathsApp(MDApp):
                 "Timed Quiz": Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
-                "Time Attack": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                "Marathon": Medals(Challenge("Score 5 points", lambda score: score >= 5),
                                       Challenge("Score 7 points", lambda score: score >= 7),
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
@@ -85,7 +91,7 @@ class MentalMathsApp(MDApp):
                 "Timed Quiz": Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
-                "Time Attack": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                "Marathon": Medals(Challenge("Score 5 points", lambda score: score >= 5),
                                       Challenge("Score 7 points", lambda score: score >= 7),
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             }

@@ -274,7 +274,6 @@ class GameLogic:
         Actions to be carried out when player is correct (e.g. increment score)
         :return:
         """
-        self.score += 1
         self.app.root.ids["game_screen"].ids.highlight.run_correct_answer_animation(correct=True)
         self.app.root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
         self.set_prompt("Correct!")

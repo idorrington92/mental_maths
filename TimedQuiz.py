@@ -30,6 +30,7 @@ class TimedQuiz(GameLogic):
 
     def correct_answer_action(self):
         super().correct_answer_action()
+        self.score += 1
         if self.score >= self.target:
             self.end_game()
 

@@ -20,7 +20,7 @@
             MenuButtonLayout:
                 MenuCard:
                     id: Multiply By 11 button
-                    text: 'Multiply By 11'
+                    text: 'Multiplication 1'
                     completed: app.completed_quiz("Multiply By 11")
                     description: "Multiply two digit numbers by 11"
                     disabled: app.is_level_locked("Multiply By 11")
@@ -32,7 +32,7 @@
             MenuButtonLayout:
                 MenuCard:
                     id: Two Digit Addition button
-                    text: 'Two Digit Addition'
+                    text: 'Addition 1'
                     completed: app.completed_quiz("Two Digit Addition")
                     description: "Add two digit numbers"
                     disabled: app.is_level_locked("Two Digit Addition")
@@ -44,9 +44,9 @@
             MenuButtonLayout:
                 MenuCard:
                     id: Three By One Digit Multiplication button
-                    text: 'Three By One Digit Multiplication'
+                    text: 'Multiplication 2'
                     completed: app.completed_quiz("Three By One Digit Multiplication")
-                    description: "739 x 8 = ..." # "Multiply three digit numbers by a single digit number"
+                    description: "Multiply three digit numbers by a single digit number"
                     pos_hint: {"center_x": 0.5}
                     disabled: app.is_level_locked("Three By One Digit Multiplication")
                     focus_behavior: not self.disabled
@@ -57,7 +57,7 @@
             MenuButtonLayout:
                 MenuCard:
                     id: Two Digit Multiplication button
-                    text: 'Two Digit Multiplication'
+                    text: 'Multiplication 3'
                     completed: app.completed_quiz("Two Digit Multiplication")
                     description: "Multiply two digit numbers"
                     pos_hint: {"center_x": 0.5}
@@ -70,7 +70,7 @@
 
 <BasicScreen>
     on_pre_enter:
-        self.ids.toolbar.title = app.quiz_name
+        self.ids.toolbar.title = app.quiz_short_name[app.quiz_name]
     MDTopAppBar:
         id: toolbar
         title: app.quiz_name
@@ -332,11 +332,13 @@ MDBoxLayout:
             orientation: "vertical"
             MDLabel:
                 theme_text_color: "Custom"
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
                 text: root.text
                 font_size: 20
             MDBoxLayout:
                 MDLabel:
                     text: root.description
+                    pos_hint: {"center_x": 0, "center_y": 0.6}
                     font_size: 15
                     theme_text_color: "Custom"
                     text_color: [0.0, 0.0, 0.0, 0.54]
@@ -349,7 +351,7 @@ MDBoxLayout:
 <GameLobbyScreen>
     on_pre_enter:
         self.ids["Timed Quiz button"].completed = app.completed_game("Timed Quiz")
-        self.ids["Time Attack button"].completed = app.completed_game("Time Attack")
+        self.ids["Marathon button"].completed = app.completed_game("Marathon")
 
     MDBoxLayout:
         pos_hint: {"center_x": 0.5, "center_y": 0.9}
@@ -382,14 +384,14 @@ MDBoxLayout:
 
                 MenuButtonLayout:
                     MenuCard:
-                        id: Time Attack button
-                        text: 'Time Attack'
-                        completed: app.completed_game("Time Attack")
-                        description: "Answer as many questions as you can in 30 seconds"
+                        id: Marathon button
+                        text: 'Marathon'
+                        completed: app.completed_game("Marathon")
+                        description: "Answer quickly for more points, but be careful not run out of lives"
                         disabled: False
                         on_press:
                             app.change_screen('pregame')
-                            app.set_game("Time Attack")
+                            app.set_game("Marathon")
                             app.launch_game()
 
 <MenuButtonLayout@MDBoxLayout>
