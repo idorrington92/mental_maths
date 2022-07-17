@@ -9,17 +9,21 @@ from Game import GameLogic
 class Marathon(GameLogic, ABC):
     def __init__(self, *args):
         super().__init__(*args)
+        self.combo = 10
         self.clock = None
-        self.initial_time_limit = 5
+        self.initial_time_limit = 20
         self.time_limit = self.initial_time_limit
         self.clock_paused = False
-        # TODO Add lives on game screen
+        self.app.root.ids["game_screen"].ids['life1'].text_color = (100, 0, 0, 1)
+        self.app.root.ids["game_screen"].ids['life2'].text_color = (100, 0, 0, 1)
+        self.app.root.ids["game_screen"].ids['life3'].text_color = (100, 0, 0, 1)
         self.lives = 3
         self.timestep = self.time_limit
-        self.combo = 0
+        self.current_combo = 0
         self.question_number = 0
 
     def start_round(self, *args):
+        self.clock = Clock.schedule_interval(self.update, self.timestep_size)
         MDApp.get_running_app().root.ids["game_screen"].ids.PlayerInput.focus = True
         MDApp.get_running_app().root.ids["game_screen"].ids.PlayerInput.text = self.player_answer = ''
         self.question_number += 1
@@ -32,10 +36,13 @@ class Marathon(GameLogic, ABC):
         self.timestep = self.time_limit
         self.clock_paused = False
 
+    def player_input(self):
+        self.clock.cancel()
+        super().player_input()
+
     def play_game(self):
         MDApp.get_running_app().root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
         self.timestep = self.time_limit
-        self.clock = Clock.schedule_interval(self.update, self.timestep_size)
         self.start_round()
 
     def reset(self):
@@ -52,36 +59,44 @@ class Marathon(GameLogic, ABC):
             # Player runs out of time
             # Clock only displays zero rather than a negative time
             MDApp.get_running_app().root.ids["game_screen"].ids['clock_label'].text = f"{0:.3f}"
-            if not self.clock_paused:
-                # When the clock reaches zero, it is paused
-                # NOTE, this is only the display, the actual clock keeps going
-                self.clock_paused = True
-                # The player input should be handled only once (so they don't lose a life with every timestep)
-                self.player_input()
+            # Enter player answer as it is
+            self.player_input()
 
     def end_game_text(self):
         return f"Score: {self.score}"
 
     def incorrect_answer_action(self):
         super().incorrect_answer_action()
-        self.combo = 0
+        self.current_combo = 0
         self.lives -= 1
+        self.change_lives_display()
         # Game ends when player gets an incorrect answer while out of lives
-        print(f"{self.lives=}")
         if self.lives < 0:
             self.end_game()
+        return 1
 
     def correct_answer_action(self):
-        super().correct_answer_action()
-        self.combo += 1
-        if not self.combo % 3 and self.lives < 3:
-            self.add_life()
+        self.current_combo += 1
         self.score += self.calculate_score()
+        prompt = "Correct!"
+        extra_delay_factor = 1
+        if not self.current_combo % self.combo:
+            prompt = f"{self.current_combo} correct answers in a row!"
+            extra_delay_factor = 3
+            if self.lives < 3:
+                self.add_life()
+                prompt = "".join([prompt, "One life restored!"])
+        delay = super().correct_answer_action(prompt)
+        return delay * extra_delay_factor
 
     def add_life(self):
-        # TODO Add some kind of animation for this
         self.lives += 1
-        print(f"New life {self.combo=} {self.lives=}")
+        self.change_lives_display()
+
+    def change_lives_display(self):
+        self.app.root.ids["game_screen"].ids['life3'].disabled = True if self.lives < 3 else False
+        self.app.root.ids["game_screen"].ids['life2'].disabled = True if self.lives < 2 else False
+        self.app.root.ids["game_screen"].ids['life1'].disabled = True if self.lives < 1 else False
 
     def calculate_score(self):
         return int((self.initial_time_limit - self.timestep) * (1 + self.question_number / 2))

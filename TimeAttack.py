@@ -41,8 +41,8 @@ class TimeAttack(GameLogic):
 
     def incorrect_answer_action(self):
         self.timestep -= 10
-        super().incorrect_answer_action()
+        return super().incorrect_answer_action()
 
     def correct_answer_action(self):
-        super().correct_answer_action()
         self.score += 1
+        return super().correct_answer_action()

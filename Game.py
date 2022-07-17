@@ -46,6 +46,9 @@ class GameLogic:
         self.help_pop_up = None
         self.count_down = 3
         self.app = MDApp.get_running_app()
+        self.app.root.ids["game_screen"].ids['life1'].text_color = (100, 0, 0, 0)
+        self.app.root.ids["game_screen"].ids['life2'].text_color = (100, 0, 0, 0)
+        self.app.root.ids["game_screen"].ids['life3'].text_color = (100, 0, 0, 0)
 
     def generate_end_game_pop_up(self):
         self.end_game_pop_up = MDDialog(title=self.end_game_pop_up_title,
@@ -248,10 +251,11 @@ class GameLogic:
     def player_input(self):
         self.player_answer = self.app.root.ids["game_screen"].ids.PlayerInput.text
         if not self.is_player_correct():
-            self.incorrect_answer_action()
+            delay = self.incorrect_answer_action()
         else:
-            self.correct_answer_action()
-        Clock.schedule_once(self.start_round, 0.5 if self.is_player_correct() else 1)
+            delay = self.correct_answer_action()
+        Clock.schedule_once(self.start_round, delay if self.is_player_correct() else delay * 2)
+
 
     def set_prompt(self, text):
         self.prompt = text
@@ -260,15 +264,17 @@ class GameLogic:
     def incorrect_answer_action(self):
         self.app.root.ids["game_screen"].ids.highlight.run_correct_answer_animation(correct=False)
         self.set_prompt(f"Unlucky. The correct answer is {self.quiz.correct_answer()}")
+        return 1
 
-    def correct_answer_action(self):
+    def correct_answer_action(self, prompt="Correct!"):
         """
         Actions to be carried out when player is correct (e.g. increment score)
         :return:
         """
         self.app.root.ids["game_screen"].ids.highlight.run_correct_answer_animation(correct=True)
         self.app.root.ids["game_screen"].ids.score.text = f"Score: {self.score}"
-        self.set_prompt("Correct!")
+        self.set_prompt(prompt)
+        return 0.5
 
     def is_player_correct(self):
         return self.player_answer == str(self.quiz.correct_answer())

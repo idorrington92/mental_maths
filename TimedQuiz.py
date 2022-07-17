@@ -29,14 +29,15 @@ class TimedQuiz(GameLogic):
         return f"Time taken: {self.timestep:.2f}s"
 
     def correct_answer_action(self):
-        super().correct_answer_action()
+        delay = super().correct_answer_action()
         self.score += 1
         if self.score >= self.target:
             self.end_game()
+        return delay
 
     def incorrect_answer_action(self):
-        super().incorrect_answer_action()
         self.timestep += 5
+        return super().incorrect_answer_action()
 
     def any_records_broken(self):
         timesteps = self.app.records["scores"]
