@@ -246,14 +246,6 @@ class GameLogic:
         return "End game"
 
     def player_input(self):
-        """
-        Checks player input is valid, then checks if player wants help, quit, or has entered the correct answer.
-        Otherwise they must have entered an incorrect answer.
-        :return: Boolean
-            False indicates that the game should not move on (either because the input was invalid, the player asked for
-            help to be displayed, or the player quit. True indicates the game player entered a valid answer and the game
-            should move on to the next round.
-        """
         self.player_answer = self.app.root.ids["game_screen"].ids.PlayerInput.text
         if not self.is_player_correct():
             self.incorrect_answer_action()
