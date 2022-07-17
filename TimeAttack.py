@@ -28,10 +28,12 @@ class TimeAttack(GameLogic):
         super().reset()
 
     def update(self, *args):
+        self.timestep -= self.timestep_size
         if self.timestep > 0:
-            self.timestep -= self.timestep_size
             MDApp.get_running_app().root.ids["game_screen"].ids['clock_label'].text = f"{self.timestep:.3f}"
         else:
+            self.timestep = 0
+            MDApp.get_running_app().root.ids["game_screen"].ids['clock_label'].text = f"{self.timestep:.3f}"
             self.end_game()
 
     def end_game_text(self):
