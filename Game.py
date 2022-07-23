@@ -6,6 +6,8 @@ from kivymd.app import MDApp
 from kivymd.uix.label import MDLabel
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
+from kivy.properties import ListProperty
+from kivy.animation import Animation
 
 
 class QuizLogic:
@@ -311,7 +313,18 @@ class CloseButton(MDFlatButton):
 
 
 class ClockLabel(MDLabel):
-    pass
+    colour = ListProperty([0, 0, 0, 0])
+
+    def change_colour(self, duration):
+        self.color = MDApp.get_running_app().theme_cls.error_color
+        anim = Animation(animated_color=self.color, duration=duration*2)
+        anim.bind(on_complete=self.reset)
+        anim.start(self)
+
+    def reset(self, *args):
+        self.color = MDApp.get_running_app().theme_cls.primary_color
+        anim = Animation(animated_color=self.color)
+        anim.start(self)
 
 
 class RecordDialog(BoxLayout):

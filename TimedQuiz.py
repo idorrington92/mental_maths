@@ -1,4 +1,5 @@
 from kivymd.app import MDApp
+from kivy.clock import Clock
 
 from Game import GameLogic
 
@@ -37,7 +38,12 @@ class TimedQuiz(GameLogic):
 
     def incorrect_answer_action(self):
         self.timestep += 5
-        return super().incorrect_answer_action()
+        delay = super().incorrect_answer_action()
+        self.change_clock_colour(duration=delay)
+        return delay
+
+    def change_clock_colour(self, duration=1):
+        self.app.root.ids["game_screen"].ids.clock_label.change_colour(duration)
 
     def any_records_broken(self):
         timesteps = self.app.records["scores"]
