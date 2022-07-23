@@ -71,8 +71,9 @@ class Marathon(GameLogic, ABC):
         self.lives -= 1
         self.change_lives_display()
         # Game ends when player gets an incorrect answer while out of lives
-        if self.lives < 0:
+        if self.lives < 1:
             self.end_game()
+        # Return the number of seconds to delay the clock restarting
         return 1
 
     def correct_answer_action(self):
@@ -87,6 +88,7 @@ class Marathon(GameLogic, ABC):
                 self.add_life()
                 prompt = "".join([prompt, "One life restored!"])
         delay = super().correct_answer_action(prompt)
+        # Return the number of seconds to delay the clock restarting
         return delay * extra_delay_factor
 
     def add_life(self):
