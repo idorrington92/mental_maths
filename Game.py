@@ -51,6 +51,7 @@ class GameLogic:
         self.app.root.ids["game_screen"].ids['life1'].text_color = (100, 0, 0, 0)
         self.app.root.ids["game_screen"].ids['life2'].text_color = (100, 0, 0, 0)
         self.app.root.ids["game_screen"].ids['life3'].text_color = (100, 0, 0, 0)
+        self.records = self.app.data[self.app.quiz_name][self.app.game_name]["records"]
 
     def generate_end_game_pop_up(self):
         self.end_game_pop_up = MDDialog(title=self.end_game_pop_up_title,
@@ -180,41 +181,41 @@ class GameLogic:
             self.end_game_pop_up.open()
 
     def any_records_broken(self):
-        scores = self.app.records["scores"]
+        scores = self.records["scores"]
         if len(scores) < 5 or self.score > min(scores):
             return True
         return False
 
     def records_update(self):
-        scores = self.app.records["scores"]
+        scores = self.records["scores"]
 
         if len(scores) < 5:
             # If there are less than 5 records, then always add player score
-            self.app.records["names"].append(self.player_name)
-            self.app.records["scores"].append(self.score)
+            self.records["names"].append(self.player_name)
+            self.records["scores"].append(self.score)
 
         elif self.score > min(scores):
             # If there are more than 5 records, then add score if it's bigger than the
             # smallest existing score
             for i, score in enumerate(scores):
                 if score == min(scores):
-                    self.app.records["names"][i] = self.player_name
-                    self.app.records["scores"][i] = self.score
+                    self.records["names"][i] = self.player_name
+                    self.records["scores"][i] = self.score
         else:
             # No new record
             return
 
         # Sort records by score
-        self.app.records["scores"], self.app.records["names"] = \
-            zip(*sorted(zip(self.app.records["scores"], self.app.records["names"]),
+        self.records["scores"], self.records["names"] = \
+            zip(*sorted(zip(self.records["scores"], self.records["names"]),
                         reverse=True))
 
         # Convert to lists as these must be mutable next time we want to write
-        self.app.records["scores"], self.app.records["names"] = \
-            list(self.app.records["scores"]), list(self.app.records["names"])
+        self.records["scores"], self.records["names"] = \
+            list(self.records["scores"]), list(self.records["names"])
 
         # Save to the Json file
-        self.app.data[self.app.quiz_name][self.app.game_name]["records"] = self.app.records
+        self.app.data[self.app.quiz_name][self.app.game_name]["records"] = self.records
         self.app.save()
 
     def set_player_name(self, text):
@@ -257,7 +258,6 @@ class GameLogic:
         else:
             delay = self.correct_answer_action()
         Clock.schedule_once(self.start_round, delay if self.is_player_correct() else delay * 2)
-
 
     def set_prompt(self, text):
         self.prompt = text

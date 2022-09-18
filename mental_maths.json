@@ -1,6 +1,6 @@
 {
     "theme": {
-        "dark_mode": true
+        "dark_mode": false
     },
     "Multiply By 11": {
         "Timed Quiz": {
@@ -11,18 +11,18 @@
             },
             "records": {
                 "scores": [
+                    7.499999999999989,
                     8.299999999999986,
                     10.699999999999978,
-                    23.400037323,
-                    30,
-                    35
+                    15.499999999999979,
+                    23.400037323
                 ],
                 "names": [
+                    "su",
                     "iiaaiinn",
                     "iain",
-                    "Iain",
-                    "hello",
-                    "ZZZ"
+                    "tresheepa",
+                    "Iain"
                 ]
             }
         },
@@ -34,17 +34,17 @@
             },
             "records": {
                 "scores": [
-                    10,
-                    9,
-                    8,
-                    6,
-                    5
+                    1547,
+                    1342,
+                    1288,
+                    101,
+                    10
                 ],
                 "names": [
-                    "ZZZ",
-                    "ZZZ",
-                    "ZZZ",
                     "iain",
+                    "iain",
+                    "iain",
+                    "a",
                     "ZZZ"
                 ]
             }

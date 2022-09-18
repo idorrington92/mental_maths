@@ -102,7 +102,6 @@ class MentalMathsApp(MDApp):
             "Three By One Digit Multiplication": 3,
             "Two Digit Multiplication": 4,
         }
-        self.records = None
 
     def build(self):
         self.theme_cls.theme_style = "Dark"
@@ -160,7 +159,6 @@ class MentalMathsApp(MDApp):
 
         if self.quiz and self.game:
             self.set_challenge_text(self.quiz_name, self.game_name)
-            self.records = self.data[self.quiz_name][self.game_name]["records"]
 
     def set_challenge_text(self, quiz_name, game_name):
         for medal, challenge in self.challenges[quiz_name][game_name]._asdict().items():
@@ -198,18 +196,30 @@ class GameLobbyScreen(BasicScreen):
 
 
 class RecordScreen(BasicScreen):
-    def on_enter(self):
-        records = MDApp.get_running_app().records["scores"]
-        if MDApp.get_running_app().game_name == "Timed Quiz":
-            records = [f"{record:.2f}" for record in records]
-        names = MDApp.get_running_app().records["names"]
-        table = MDDataTable(
+    def __init__(self, **kwargs):
+        super().__init__()
+        self.table = MDDataTable(
             pos_hint={"center_x": 0.5, "center_y": 0.6},
             size_hint=(0.7, 0.7),
             column_data=[("Name", dp(30)), ("Score", dp(30))],
-            row_data=[[n, r] for n, r in zip(names, records)]
+            row_data=zip([None] * 5, [None] * 5)
         )
-        self.add_widget(table)
+        self.add_widget(self.table)
+
+    def load_table(self):
+        records = MDApp.get_running_app().game.records["scores"]
+        if MDApp.get_running_app().game_name == "Timed Quiz":
+            records = [f"{record:.2f}" for record in records]
+        names = MDApp.get_running_app().game.records["names"]
+        self.update_table(names, records)
+
+    def update_table(self, names, records) -> None:
+        row_data = zip(names, records)
+        for i, (name, record) in enumerate(row_data):
+            self.table.update_row(
+                self.table.row_data[i],  # old row data
+                [name, record],  # new row data
+            )
 
 
 class GameScreen(BasicScreen):
