@@ -2,6 +2,7 @@ from json import dump
 from typing import Callable
 from collections import deque
 from typing import NamedTuple
+from enum import Enum
 
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -24,6 +25,20 @@ from TimedQuiz import TimedQuiz
 from Marathon import Marathon
 
 
+class GameName(Enum):
+    MATHS_DOJO = None
+    TIMED_QUIZ = "Timed Quiz"
+    MARATHON = "Marathon"
+
+
+class QuizName(Enum):
+    MATHS_DOJO = "Maths Dojo"
+    MULTIPLY_BY_11 = "Multiply By 11"
+    TWO_DIGIT_ADDITION = "Two Digit Addition"
+    THREE_BY_ONE_MULTIPLICATION = "Three By One Digit Multiplication"
+    TWO_DIGIT_MULTIPLICATION ="Two Digit Multiplication"
+
+
 class Challenge(NamedTuple):
     text: str
     condition: Callable
@@ -40,67 +55,67 @@ class MentalMathsApp(MDApp):
         super().__init__(**kwargs)
         self.prompt = "Nothing yet"
         self.previous_screens = deque(["home"])
-        self.quiz_name = "Maths Dojo"
+        self.quiz_name = QuizName.MATHS_DOJO.value
         self.game_name = ""
         self.game = None
         self.quiz = None
         self.nrounds = 3
         self.data = JsonStore("mental_maths.json", indent=4)
-        self.quiz_dict = {"Maths Dojo": None,
-                          "Multiply By 11": MultiplyBy11,
-                          "Two Digit Addition": TwoDigitAddition,
-                          "Three By One Digit Multiplication": ThreeByOneDigitMultiplication,
-                          "Two Digit Multiplication": TwoDigitMultiplication,
+        self.quiz_dict = {QuizName.MATHS_DOJO.value: None,
+                          QuizName.MULTIPLY_BY_11.value: MultiplyBy11,
+                          QuizName.TWO_DIGIT_ADDITION.value: TwoDigitAddition,
+                          QuizName.THREE_BY_ONE_MULTIPLICATION.value: ThreeByOneDigitMultiplication,
+                          QuizName.TWO_DIGIT_MULTIPLICATION.value: TwoDigitMultiplication,
                           }
-        self.quiz_short_name = {"Maths Dojo": "Maths Dojo",
-                                "Multiply By 11": "Multiplication 1",
-                                "Two Digit Addition": "Addition 1",
-                                "Three By One Digit Multiplication": "Multiplication 2",
-                                "Two Digit Multiplication": "Multiplication 3",
+        self.quiz_short_name = {QuizName.MATHS_DOJO.value: "Maths Dojo",
+                                QuizName.MULTIPLY_BY_11.value: "Multiplication 1",
+                                QuizName.TWO_DIGIT_ADDITION.value: "Addition 1",
+                                QuizName.THREE_BY_ONE_MULTIPLICATION.value: "Multiplication 2",
+                                QuizName.TWO_DIGIT_MULTIPLICATION.value: "Multiplication 3",
                                 }
-        self.game_dict = {"Maths Dojo": None,
-                          "Marathon": Marathon,
-                          "Timed Quiz": TimedQuiz,
+        self.game_dict = {GameName.MATHS_DOJO.value: None,
+                          GameName.MARATHON.value: Marathon,
+                          GameName.TIMED_QUIZ.value: TimedQuiz,
                           }
         self.challenges = {
-            "Multiply By 11": {
-                "Timed Quiz": Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
+            QuizName.MULTIPLY_BY_11.value: {
+                GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
-                "Marathon": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                GameName.MARATHON.value: Medals(Challenge("Score 5 points", lambda score: score >= 5),
                                       Challenge("Score 7 points", lambda score: score >= 7),
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
-            "Two Digit Addition": {
-                "Timed Quiz": Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
+            QuizName.TWO_DIGIT_ADDITION.value: {
+                GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
-                "Marathon": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                GameName.MARATHON.value: Medals(Challenge("Score 5 points", lambda score: score >= 5),
                                       Challenge("Score 7 points", lambda score: score >= 7),
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
-            "Three By One Digit Multiplication": {
-                "Timed Quiz": Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
+            QuizName.THREE_BY_ONE_MULTIPLICATION.value: {
+                GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
-                "Marathon": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                GameName.MARATHON.value: Medals(Challenge("Score 5 points", lambda score: score >= 5),
                                       Challenge("Score 7 points", lambda score: score >= 7),
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
-            "Two Digit Multiplication": {
-                "Timed Quiz": Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
+            QuizName.TWO_DIGIT_MULTIPLICATION.value: {
+                GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
-                "Marathon": Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                GameName.MARATHON.value: Medals(Challenge("Score 5 points", lambda score: score >= 5),
                                       Challenge("Score 7 points", lambda score: score >= 7),
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             }
         }
         self.level_order = {
-            "Multiply By 11": 1,
-            "Two Digit Addition": 2,
-            "Three By One Digit Multiplication": 3,
-            "Two Digit Multiplication": 4,
+            QuizName.MULTIPLY_BY_11.value: 1,
+            QuizName.TWO_DIGIT_ADDITION.value: 2,
+            QuizName.THREE_BY_ONE_MULTIPLICATION.value: 3,
+            QuizName.TWO_DIGIT_MULTIPLICATION.value: 4,
         }
 
     def build(self):
@@ -122,12 +137,12 @@ class MentalMathsApp(MDApp):
         self.save()
 
     def is_level_locked(self, level_name):
-        if level_name == "Multiply By 11":
+        if level_name == QuizName.MULTIPLY_BY_11.value:
             # First level is never locked
             return False
         previous_level = list(self.level_order.keys())[self.level_order[level_name] - 2]
         return not all([self.data[previous_level][game_name]["completed_challenges"]["bronze"]
-                       for game_name in self.game_dict.keys() if game_name != "Maths Dojo"])
+                       for game_name in self.game_dict.keys() if game_name != GameName.MATHS_DOJO.value])
 
     def check_and_unlock_level(self):
         level_name = self.quiz_name
@@ -141,7 +156,7 @@ class MentalMathsApp(MDApp):
                    for game_type in self.data[level_name])
 
     def completed_game(self, game_name):
-        if self.quiz_name == "Maths Dojo":
+        if self.quiz_name == QuizName.MATHS_DOJO.value:
             return False
         return all(
             self.data[self.quiz_name][game_name]["completed_challenges"].values())
@@ -208,7 +223,7 @@ class RecordScreen(BasicScreen):
 
     def load_table(self):
         records = MDApp.get_running_app().game.records["scores"]
-        if MDApp.get_running_app().game_name == "Timed Quiz":
+        if MDApp.get_running_app().game_name == GameName.TIMED_QUIZ.value:
             records = [f"{record:.2f}" for record in records]
         names = MDApp.get_running_app().game.records["names"]
         self.update_table(names, records)
@@ -252,10 +267,7 @@ class AnswerBoxHighlight(MDWidget):
         self.duration = 0.5
 
     def run_correct_answer_animation(self, correct: bool):
-        if correct:
-            self.colour = [0.67, 1.0, 0.2, 1.0]
-        else:
-            self.colour = [1, 0, 0, 1]
+        self.colour = [0.67, 1.0, 0.2, 1.0] if correct else [1, 0, 0, 1]
         anim = Animation(animated_color=self.colour,
                          blink_size=(1200.0, 94.5),
                          opacity=0.75,

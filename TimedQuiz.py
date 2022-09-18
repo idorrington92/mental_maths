@@ -1,5 +1,4 @@
 from kivymd.app import MDApp
-from kivy.clock import Clock
 
 from Game import GameLogic
 
