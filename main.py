@@ -36,7 +36,7 @@ class QuizName(Enum):
     MULTIPLY_BY_11 = "Multiply By 11"
     TWO_DIGIT_ADDITION = "Two Digit Addition"
     THREE_BY_ONE_MULTIPLICATION = "Three By One Digit Multiplication"
-    TWO_DIGIT_MULTIPLICATION ="Two Digit Multiplication"
+    TWO_DIGIT_MULTIPLICATION = "Two Digit Multiplication"
 
 
 class Challenge(NamedTuple):
