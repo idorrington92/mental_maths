@@ -108,8 +108,6 @@ MDBoxLayout:
             id: pregame
             name: "pregame"
 
-            on_enter:
-                app.root.ids.records_screen.load_table()
 
             MDBoxLayout:
                 pos_hint: {"center_x": 0.5, "center_y": 0.4}
@@ -170,6 +168,8 @@ MDBoxLayout:
         RecordScreen:
             id: records_screen
             name: "Records"
+            on_pre_enter:
+                app.root.ids.records_screen.load_table()
 
         CountDownScreen:
             id: count_down_screen

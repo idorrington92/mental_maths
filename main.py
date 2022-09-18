@@ -202,7 +202,7 @@ class RecordScreen(BasicScreen):
             pos_hint={"center_x": 0.5, "center_y": 0.6},
             size_hint=(0.7, 0.7),
             column_data=[("Name", dp(30)), ("Score", dp(30))],
-            row_data=zip([None] * 5, [None] * 5)
+            row_data=zip([""] * 5, [""] * 5)
         )
         self.add_widget(self.table)
 
@@ -214,12 +214,17 @@ class RecordScreen(BasicScreen):
         self.update_table(names, records)
 
     def update_table(self, names, records) -> None:
+        self.clear_table()
         row_data = zip(names, records)
         for i, (name, record) in enumerate(row_data):
             self.table.update_row(
                 self.table.row_data[i],  # old row data
                 [name, record],  # new row data
             )
+
+    def clear_table(self):
+        for i in range(5):
+            self.table.update_row(self.table.row_data[i], ["", ""])
 
 
 class GameScreen(BasicScreen):
