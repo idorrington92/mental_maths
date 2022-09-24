@@ -215,10 +215,12 @@ class RecordScreen(BasicScreen):
         super().__init__()
         self.table = MDDataTable(
             pos_hint={"center_x": 0.5, "center_y": 0.6},
-            size_hint=(0.7, 0.7),
-            column_data=[("Name", dp(30)), ("Score", dp(30))],
+            size_hint=(1, 0.7),
+            column_data=[("Name", dp(30)), ("Score", dp(10))],
             row_data=zip([""] * 5, [""] * 5)
         )
+        self.table.size_hint_max_x = dp(250)
+        self.table.size_hint_min_x = dp(50)
         self.add_widget(self.table)
 
     def load_table(self):
