@@ -213,14 +213,15 @@ class GameLobbyScreen(BasicScreen):
 class RecordScreen(BasicScreen):
     def __init__(self, **kwargs):
         super().__init__()
+        self.nrows = 5
         self.table = MDDataTable(
             pos_hint={"center_x": 0.5, "center_y": 0.6},
-            size_hint=(1, 0.7),
-            column_data=[("Name", dp(30)), ("Score", dp(10))],
-            row_data=zip([""] * 5, [""] * 5)
+            size_hint=(1, 0.6),
+            column_data=[("", dp(10)), ("Name", dp(30)), ("Score", dp(20))],
+            row_data=zip([""] * self.nrows, [""] * self.nrows, [""] * self.nrows)
         )
-        self.table.size_hint_max_x = dp(250)
-        self.table.size_hint_min_x = dp(50)
+        self.table.size_hint_max_x = dp(350)
+        self.table.size_hint_min_x = dp(70)
         self.add_widget(self.table)
 
     def load_table(self):
@@ -231,17 +232,31 @@ class RecordScreen(BasicScreen):
         self.update_table(names, records)
 
     def update_table(self, names, records) -> None:
+        # Remove any data already in the table
         self.clear_table()
+
+        # Fill table with records from json file
         row_data = zip(names, records)
         for i, (name, record) in enumerate(row_data):
             self.table.update_row(
                 self.table.row_data[i],  # old row data
-                [name, record],  # new row data
+                [i+1, name, record],  # new row data
+            )
+
+        # In case of no records, set i to -1, so loop below starts at 0
+        if not records:
+            i = -1
+
+        # Fill in the remainder of the table
+        for j in range(i+1, self.nrows):
+            self.table.update_row(
+                self.table.row_data[j],  # old row data
+                [j+1, "", ""],  # new row data
             )
 
     def clear_table(self):
-        for i in range(5):
-            self.table.update_row(self.table.row_data[i], ["", ""])
+        for i in range(self.nrows):
+            self.table.update_row(self.table.row_data[i], ["", "", ""])
 
 
 class GameScreen(BasicScreen):
