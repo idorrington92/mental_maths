@@ -3,69 +3,77 @@
 
 <MenuList>
     name: "menulist"
-    ScrollView:
-        pos_hint: {"center_x": 0.5, "center_y": 0.55}
-        size_hint: (1, 0.9)
-        bar_width: 0
-        orientation: "vertical"
-
+    pos_hint: {"center_x": 0.5}
+    MDBoxLayout:
+        orientation: "horizontal"
         MDBoxLayout:
-            padding: "10dp"
-            adaptive_height: True
-            size_hint_x: 1
-            spacing: "10dp"
+            size_hint_x: 0.3
+        ScrollView:
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+            size_hint: (1, 0.9)
+            size_hint_min_x: 300
+            bar_width: 0
             orientation: "vertical"
-            pos_hint: {"center_x": 0.5}
 
-            MenuButtonLayout:
-                MenuCard:
-                    id: Multiply By 11 button
-                    text: 'Multiplication 1'
-                    completed: app.completed_quiz("Multiply By 11")
-                    description: "Multiply two digit numbers by 11"
-                    disabled: app.is_level_locked("Multiply By 11")
-                    focus_behavior: not self.disabled
-                    on_press:
-                        app.set_quiz("Multiply By 11")
-                        app.change_screen('game_lobby')
+            MDBoxLayout:
+                padding: "10dp"
+                adaptive_height: True
+                size_hint_x: 1
+                spacing: "10dp"
+                orientation: "vertical"
+                pos_hint: {"center_x": 0.5}
 
-            MenuButtonLayout:
-                MenuCard:
-                    id: Two Digit Addition button
-                    text: 'Addition 1'
-                    completed: app.completed_quiz("Two Digit Addition")
-                    description: "Add two digit numbers"
-                    disabled: app.is_level_locked("Two Digit Addition")
-                    focus_behavior: not self.disabled
-                    on_press:
-                        app.set_quiz("Two Digit Addition")
-                        app.change_screen('game_lobby')
+                MenuButtonLayout:
+                    MenuCard:
+                        id: Multiply By 11 button
+                        text: 'Multiplication 1'
+                        completed: app.completed_quiz("Multiply By 11")
+                        description: "Multiply two digit numbers by 11"
+                        disabled: app.is_level_locked("Multiply By 11")
+                        focus_behavior: not self.disabled
+                        on_press:
+                            app.set_quiz("Multiply By 11")
+                            app.change_screen('game_lobby')
 
-            MenuButtonLayout:
-                MenuCard:
-                    id: Three By One Digit Multiplication button
-                    text: 'Multiplication 2'
-                    completed: app.completed_quiz("Three By One Digit Multiplication")
-                    description: "Multiply three digit numbers by a single digit number"
-                    pos_hint: {"center_x": 0.5}
-                    disabled: app.is_level_locked("Three By One Digit Multiplication")
-                    focus_behavior: not self.disabled
-                    on_press:
-                        app.set_quiz("Three By One Digit Multiplication")
-                        app.change_screen('game_lobby')
+                MenuButtonLayout:
+                    MenuCard:
+                        id: Two Digit Addition button
+                        text: 'Addition 1'
+                        completed: app.completed_quiz("Two Digit Addition")
+                        description: "Add two digit numbers"
+                        disabled: app.is_level_locked("Two Digit Addition")
+                        focus_behavior: not self.disabled
+                        on_press:
+                            app.set_quiz("Two Digit Addition")
+                            app.change_screen('game_lobby')
 
-            MenuButtonLayout:
-                MenuCard:
-                    id: Two Digit Multiplication button
-                    text: 'Multiplication 3'
-                    completed: app.completed_quiz("Two Digit Multiplication")
-                    description: "Multiply two digit numbers"
-                    pos_hint: {"center_x": 0.5}
-                    disabled: app.is_level_locked("Two Digit Multiplication")
-                    focus_behavior: not self.disabled
-                    on_press:
-                        app.set_quiz("Two Digit Multiplication")
-                        app.change_screen('game_lobby')
+                MenuButtonLayout:
+                    MenuCard:
+                        id: Three By One Digit Multiplication button
+                        text: 'Multiplication 2'
+                        completed: app.completed_quiz("Three By One Digit Multiplication")
+                        description: "Multiply three digit numbers by a single digit number"
+                        pos_hint: {"center_x": 0.5}
+                        disabled: app.is_level_locked("Three By One Digit Multiplication")
+                        focus_behavior: not self.disabled
+                        on_press:
+                            app.set_quiz("Three By One Digit Multiplication")
+                            app.change_screen('game_lobby')
+
+                MenuButtonLayout:
+                    MenuCard:
+                        id: Two Digit Multiplication button
+                        text: 'Multiplication 3'
+                        completed: app.completed_quiz("Two Digit Multiplication")
+                        description: "Multiply two digit numbers"
+                        pos_hint: {"center_x": 0.5}
+                        disabled: app.is_level_locked("Two Digit Multiplication")
+                        focus_behavior: not self.disabled
+                        on_press:
+                            app.set_quiz("Two Digit Multiplication")
+                            app.change_screen('game_lobby')
+        MDBoxLayout:
+            size_hint_x: 0.3
 
 
 <BasicScreen>
@@ -81,6 +89,7 @@
 
 
 MDBoxLayout:
+    pos_hint: {"center_x": 0.5}
 
     ScreenManager:
         id: screen_manager
@@ -346,6 +355,8 @@ MDBoxLayout:
     md_bg_color: app.theme_cls.primary_color if not self.disabled else app.theme_cls.bg_dark
     unfocus_color: app.theme_cls.primary_color
     focus_color: app.theme_cls.primary_dark
+    size_hint_max_x: 750
+    size_hint_min_x: 250
     MDBoxLayout:
         spacing: "20dp"
         padding: "10dp"
@@ -383,9 +394,13 @@ MDBoxLayout:
         size_hint: (1, 0.8)
         bar_width: 0
         MDBoxLayout:
+            size_hint_x: 0.3
+        MDBoxLayout:
             adaptive_height: True
             orientation: "vertical"
             pos_hint: {"center_x": 0.5}
+            size_hint_min_x: 300
+            size_hint_x: 0.4
 
             MDBoxLayout:
                 padding: "10dp"
@@ -418,12 +433,13 @@ MDBoxLayout:
                             app.change_screen('pregame')
                             app.set_game("Marathon")
                             app.launch_game()
+        MDBoxLayout:
+            size_hint_x: 0.3
 
 <MenuButtonLayout@MDBoxLayout>
-    adaptive_width: True
-    size_hint_x: 0.9
+    size_hint_x: 1
     size_hint_y: None
     height: "112dp"
     spacing: "10dp"
-    pos_hint: {"center_x": .5}
+    pos_hint: {"center_x": 0.5}
 
