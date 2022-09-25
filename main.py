@@ -218,10 +218,10 @@ class RecordScreen(BasicScreen):
             pos_hint={"center_x": 0.5, "center_y": 0.6},
             size_hint=(1, 0.6),
             column_data=[("", dp(10)), ("Name", dp(30)), ("Score", dp(20))],
-            row_data=zip([""] * self.nrows, [""] * self.nrows, [""] * self.nrows)
+            row_data=zip([""] * self.nrows, [""] * self.nrows, [""] * self.nrows),
+            size_hint_max_x=dp(350),
+            size_hint_min_x=dp(70)
         )
-        self.table.size_hint_max_x = dp(350)
-        self.table.size_hint_min_x = dp(70)
         self.add_widget(self.table)
 
     def load_table(self):
