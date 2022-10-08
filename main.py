@@ -73,6 +73,8 @@ class MentalMathsApp(MDApp):
                           QuizName.THREE_BY_ONE_MULTIPLICATION.value: ThreeByOneDigitMultiplication,
                           QuizName.TWO_DIGIT_MULTIPLICATION.value: TwoDigitMultiplication,
                           }
+
+        # TODO Move this into the quiz classes, like short description
         self.quiz_short_name = {QuizName.MATHS_DOJO.value: "Maths Dojo",
                                 QuizName.MULTIPLY_BY_11.value: "Multiplication 1",
                                 QuizName.TWO_DIGIT_ADDITION.value: "Addition 1",
