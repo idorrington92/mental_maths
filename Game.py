@@ -138,9 +138,9 @@ class GameLogic:
         """
         Stop game clock, clear prompt, and open pop ups
         """
+        Clock.unschedule(self.update)
         if score is None:
             score = self.score
-        self.clock.cancel()
         self.set_prompt("")
         self.open_pop_ups(score)
 
@@ -249,10 +249,17 @@ class GameLogic:
 
     def player_input(self):
         self.player_answer = self.app.root.ids["game_screen"].ids.PlayerInput.text
-        if not self.is_player_correct():
-            delay = self.incorrect_answer_action()
-        else:
-            delay = self.correct_answer_action()
+
+        # The answer_action methods return the delay in seconds before starting the next round
+        delay = self.correct_answer_action() if self.is_player_correct() else self.incorrect_answer_action()
+
+        # delay is None indicates not to start a new round
+        if delay is None:
+            self.end_game()
+            return
+
+        # Start a new round
+        # Double the length of the delay for incorrect answers as player has to read a longer prompt
         Clock.schedule_once(self.start_round, delay if self.is_player_correct() else delay * 2)
 
     def set_prompt(self, text):

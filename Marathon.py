@@ -70,9 +70,9 @@ class Marathon(GameLogic, ABC):
         self.current_combo = 0
         self.lives -= 1
         self.change_lives_display()
-        # Game ends when player gets an incorrect answer while out of lives
+        # Returning a delay of None indicates the game is over. See Game.player_input
         if self.lives < 1:
-            self.end_game()
+            return None
         # Return the number of seconds to delay the clock restarting
         return 1
 
