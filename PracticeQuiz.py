@@ -19,7 +19,6 @@ class TimedQuiz(GameLogic):
         MDApp.get_running_app().root.ids["game_screen"].ids.PlayerInput.text = self.player_answer = ''
         self.g_round += 1
         if self.g_round <= self.number_of_rounds:
-            print(f"Round {self.g_round}")
             self.quiz.game_round()
             self.set_prompt(self.quiz.question)
         else:
