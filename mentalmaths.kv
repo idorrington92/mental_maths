@@ -61,6 +61,18 @@
 
                 MenuButtonLayout:
                     MenuCard:
+                        id: Square Two Digit Numbers button
+                        text: 'Squares'
+                        completed: app.completed_quiz("Square Two Digit Numbers")
+                        description: "Square Two Digit Numbers"
+                        disabled: app.is_level_locked("Square Two Digit Numbers")
+                        focus_behavior: not self.disabled
+                        on_press:
+                            app.set_quiz("Square Two Digit Numbers")
+                            app.change_screen('game_lobby')
+
+                MenuButtonLayout:
+                    MenuCard:
                         id: Three By One Digit Multiplication button
                         text: 'Multiplication 3'
                         completed: app.completed_quiz("Three By One Digit Multiplication")

@@ -134,6 +134,34 @@
             }
         }
     },
+    "Square Two Digit Numbers": {
+        "Timed Quiz": {
+            "completed_challenges": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            },
+            "records": {
+                "scores": [
+                    223.19999999999237
+                ],
+                "names": [
+                    "iain"
+                ]
+            }
+        },
+        "Marathon": {
+            "completed_challenges": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
+            }
+        }
+    },
     "Three By One Digit Multiplication": {
         "Timed Quiz": {
             "completed_challenges": {
