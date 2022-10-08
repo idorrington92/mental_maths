@@ -19,6 +19,7 @@ from kivy.metrics import dp
 
 from multiplyBy11 import MultiplyBy11
 from TwoDigitAddition import TwoDigitAddition
+from TwoByOneDigitMultiplication import TwoByOneDigitMultiplication
 from ThreeByOneDigitMultiplication import ThreeByOneDigitMultiplication
 from TwoDigitMultiplication import TwoDigitMultiplication
 from TimedQuiz import TimedQuiz
@@ -35,6 +36,7 @@ class QuizName(Enum):
     MATHS_DOJO = "Maths Dojo"
     MULTIPLY_BY_11 = "Multiply By 11"
     TWO_DIGIT_ADDITION = "Two Digit Addition"
+    TWO_BY_ONE_MULTIPLICATION = "Two By One Digit Multiplication"
     THREE_BY_ONE_MULTIPLICATION = "Three By One Digit Multiplication"
     TWO_DIGIT_MULTIPLICATION = "Two Digit Multiplication"
 
@@ -64,14 +66,16 @@ class MentalMathsApp(MDApp):
         self.quiz_dict = {QuizName.MATHS_DOJO.value: None,
                           QuizName.MULTIPLY_BY_11.value: MultiplyBy11,
                           QuizName.TWO_DIGIT_ADDITION.value: TwoDigitAddition,
+                          QuizName.TWO_BY_ONE_MULTIPLICATION.value: TwoByOneDigitMultiplication,
                           QuizName.THREE_BY_ONE_MULTIPLICATION.value: ThreeByOneDigitMultiplication,
                           QuizName.TWO_DIGIT_MULTIPLICATION.value: TwoDigitMultiplication,
                           }
         self.quiz_short_name = {QuizName.MATHS_DOJO.value: "Maths Dojo",
                                 QuizName.MULTIPLY_BY_11.value: "Multiplication 1",
                                 QuizName.TWO_DIGIT_ADDITION.value: "Addition 1",
-                                QuizName.THREE_BY_ONE_MULTIPLICATION.value: "Multiplication 2",
-                                QuizName.TWO_DIGIT_MULTIPLICATION.value: "Multiplication 3",
+                                QuizName.TWO_BY_ONE_MULTIPLICATION.value: "Multiplication 2",
+                                QuizName.THREE_BY_ONE_MULTIPLICATION.value: "Multiplication 3",
+                                QuizName.TWO_DIGIT_MULTIPLICATION.value: "Multiplication 4",
                                 }
         self.game_dict = {GameName.MATHS_DOJO.value: None,
                           GameName.MARATHON.value: Marathon,
@@ -94,6 +98,14 @@ class MentalMathsApp(MDApp):
                                       Challenge("Score 7 points", lambda score: score >= 7),
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
+            QuizName.TWO_BY_ONE_MULTIPLICATION.value: {
+                GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
+                                                  Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
+                                                  Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
+                GameName.MARATHON.value: Medals(Challenge("Score 5 points", lambda score: score >= 5),
+                                                Challenge("Score 7 points", lambda score: score >= 7),
+                                                Challenge("Score 10 points", lambda score: score >= 10)),
+            },
             QuizName.THREE_BY_ONE_MULTIPLICATION.value: {
                 GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
@@ -114,8 +126,9 @@ class MentalMathsApp(MDApp):
         self.level_order = {
             QuizName.MULTIPLY_BY_11.value: 1,
             QuizName.TWO_DIGIT_ADDITION.value: 2,
-            QuizName.THREE_BY_ONE_MULTIPLICATION.value: 3,
-            QuizName.TWO_DIGIT_MULTIPLICATION.value: 4,
+            QuizName.TWO_BY_ONE_MULTIPLICATION.value: 3,
+            QuizName.THREE_BY_ONE_MULTIPLICATION.value: 4,
+            QuizName.TWO_DIGIT_MULTIPLICATION.value: 5,
         }
 
     def build(self):

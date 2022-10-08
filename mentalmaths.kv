@@ -49,8 +49,20 @@
 
                 MenuButtonLayout:
                     MenuCard:
-                        id: Three By One Digit Multiplication button
+                        id: Two By One Digit Multiplication button
                         text: 'Multiplication 2'
+                        completed: app.completed_quiz("Two By One Digit Multiplication")
+                        description: "Multiply a two digit number by a single digit number"
+                        disabled: app.is_level_locked("Two By One Digit Multiplication")
+                        focus_behavior: not self.disabled
+                        on_press:
+                            app.set_quiz("Two By One Digit Multiplication")
+                            app.change_screen('game_lobby')
+
+                MenuButtonLayout:
+                    MenuCard:
+                        id: Three By One Digit Multiplication button
+                        text: 'Multiplication 3'
                         completed: app.completed_quiz("Three By One Digit Multiplication")
                         description: "Multiply three digit numbers by a single digit number"
                         pos_hint: {"center_x": 0.5}
@@ -63,7 +75,7 @@
                 MenuButtonLayout:
                     MenuCard:
                         id: Two Digit Multiplication button
-                        text: 'Multiplication 3'
+                        text: 'Multiplication 4'
                         completed: app.completed_quiz("Two Digit Multiplication")
                         description: "Multiply two digit numbers"
                         pos_hint: {"center_x": 0.5}

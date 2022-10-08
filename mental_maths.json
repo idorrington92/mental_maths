@@ -1,6 +1,6 @@
 {
     "theme": {
-        "dark_mode": false
+        "dark_mode": true
     },
     "Multiply By 11": {
         "Timed Quiz": {
@@ -94,6 +94,42 @@
                     "iain",
                     "iain",
                     "iain"
+                ]
+            }
+        }
+    },
+    "Two By One Digit Multiplication": {
+        "Timed Quiz": {
+            "completed_challenges": {
+                "bronze": true,
+                "silver": false,
+                "gold": false
+            },
+            "records": {
+                "scores": [
+                    17.099999999999973
+                ],
+                "names": [
+                    "Iain"
+                ]
+            }
+        },
+        "Marathon": {
+            "completed_challenges": {
+                "bronze": true,
+                "silver": true,
+                "gold": true
+            },
+            "records": {
+                "scores": [
+                    646,
+                    646,
+                    646
+                ],
+                "names": [
+                    "iain",
+                    "iain",
+                    "a"
                 ]
             }
         }
