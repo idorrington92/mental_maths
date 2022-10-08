@@ -57,10 +57,10 @@ class GameLogic:
         self.end_game_pop_up = MDDialog(title=self.end_game_pop_up_title,
                                         text=self.end_game_text(),
                                         buttons=[
-                                  PlayAgainButton(),
-                                  PopUpMenuButton(),
-                                  RecordButton(),
-                                  ],
+                                                 PlayAgainButton(),
+                                                 PopUpMenuButton(),
+                                                 RecordButton(),
+                                                ],
                                         auto_dismiss=False,
                                         )
 
@@ -75,19 +75,15 @@ class GameLogic:
     def generate_challenge_pop_up(self, challenges_completed):
         medal = challenges_completed.pop()
         self.challenge_pop_up = MDDialog(title="Challenge Completed!",
-                                      text=f"Congratulations, you completed the {medal} medal challenge",
-                                      buttons=[
-                                          ChallengeCloseButton(challenges_completed)
-                                      ],
-                                      auto_dismiss=False,
-                                      )
+                                         text=f"Congratulations, you completed the {medal} medal challenge",
+                                         buttons=[ChallengeCloseButton(challenges_completed)],
+                                         auto_dismiss=False,
+                                         )
 
     def generate_help_pop_up(self):
         self.help_pop_up = MDDialog(title="Help",
                                     text=self.help,
-                                    buttons=[
-                                      CloseButton(),
-                                  ],
+                                    buttons=[CloseButton()],
                                     md_bg_color=self.app.theme_cls.bg_dark,
                                     auto_dismiss=False,
                                     )
@@ -228,7 +224,7 @@ class GameLogic:
     def challenge_is_completed(self, score, medal: str):
         medal_num = {"bronze": 0, "silver": 1, "gold": 2}[medal]
         return self.app.challenges[self.app.quiz_name][self.app.game_name][medal_num].condition(score) and \
-                not self.app.data[self.app.quiz_name][self.app.game_name]["completed_challenges"][medal]
+            not self.app.data[self.app.quiz_name][self.app.game_name]["completed_challenges"][medal]
 
     def challenge_update_and_open_pop_up(self, completed_challenges):
         medal = completed_challenges[-1]
