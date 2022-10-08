@@ -7,7 +7,6 @@ class MultiplyBy11(QuizLogic):
     short_description = "Each problem involves multiplying by 11"
 
     def __init__(self):
-        # NOTE Short description must go before super
         super().__init__()
         self.number = 0
         self.help = "To multiply a two digit number by 11, add the two digits together and put the result between \n" \

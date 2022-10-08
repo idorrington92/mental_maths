@@ -7,7 +7,6 @@ class TwoByOneDigitMultiplication(QuizLogic):
     short_description = "Multiply a three digit number by a single digit number"
 
     def __init__(self):
-        # NOTE Short description must go before super
         super().__init__()
         self.number1 = 0
         self.number2 = 0
