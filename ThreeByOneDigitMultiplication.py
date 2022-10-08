@@ -4,9 +4,10 @@ from Game import QuizLogic
 
 
 class ThreeByOneDigitMultiplication(QuizLogic):
+    short_description = "Multiply a three digit number by a single digit number"
+
     def __init__(self):
         # NOTE Short description must go before super
-        self.short_description = "Multiply a three digit number by a single digit number"
         super().__init__()
         self.number1 = 0
         self.number2 = 0

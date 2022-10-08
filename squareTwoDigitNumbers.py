@@ -4,9 +4,10 @@ from Game import QuizLogic
 
 
 class SquareTwoDigitNumbers(QuizLogic):
+    short_description = "Square two digit numbers."
+
     def __init__(self):
         # NOTE Short description must go before super
-        self.short_description = "Square two digit numbers."
         super().__init__()
         self.number = 0
         self.help = ""

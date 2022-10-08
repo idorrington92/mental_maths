@@ -24,78 +24,35 @@
                 pos_hint: {"center_x": 0.5}
 
                 MenuButtonLayout:
-                    MenuCard:
+                    TopMenuCard:
                         id: Multiply By 11 button
-                        text: 'Multiplication 1'
-                        completed: app.completed_quiz("Multiply By 11")
-                        description: "Multiply two digit numbers by 11"
-                        disabled: app.is_level_locked("Multiply By 11")
-                        focus_behavior: not self.disabled
-                        on_press:
-                            app.set_quiz("Multiply By 11")
-                            app.change_screen('game_lobby')
+                        quiz_name: "Multiply By 11"
 
                 MenuButtonLayout:
-                    MenuCard:
+                    TopMenuCard:
                         id: Two Digit Addition button
-                        text: 'Addition 1'
-                        completed: app.completed_quiz("Two Digit Addition")
-                        description: "Add two digit numbers"
-                        disabled: app.is_level_locked("Two Digit Addition")
-                        focus_behavior: not self.disabled
-                        on_press:
-                            app.set_quiz("Two Digit Addition")
-                            app.change_screen('game_lobby')
+                        quiz_name: "Two Digit Addition"
 
                 MenuButtonLayout:
-                    MenuCard:
+                    TopMenuCard:
                         id: Two By One Digit Multiplication button
-                        text: 'Multiplication 2'
-                        completed: app.completed_quiz("Two By One Digit Multiplication")
-                        description: "Multiply a two digit number by a single digit number"
-                        disabled: app.is_level_locked("Two By One Digit Multiplication")
-                        focus_behavior: not self.disabled
-                        on_press:
-                            app.set_quiz("Two By One Digit Multiplication")
-                            app.change_screen('game_lobby')
+                        quiz_name: "Two By One Digit Multiplication"
 
                 MenuButtonLayout:
-                    MenuCard:
+                    TopMenuCard:
                         id: Square Two Digit Numbers button
-                        text: 'Squares'
-                        completed: app.completed_quiz("Square Two Digit Numbers")
-                        description: "Square Two Digit Numbers"
-                        disabled: app.is_level_locked("Square Two Digit Numbers")
-                        focus_behavior: not self.disabled
-                        on_press:
-                            app.set_quiz("Square Two Digit Numbers")
-                            app.change_screen('game_lobby')
+                        quiz_name: "Square Two Digit Numbers"
+
 
                 MenuButtonLayout:
-                    MenuCard:
+                    TopMenuCard:
                         id: Three By One Digit Multiplication button
-                        text: 'Multiplication 3'
-                        completed: app.completed_quiz("Three By One Digit Multiplication")
-                        description: "Multiply three digit numbers by a single digit number"
-                        pos_hint: {"center_x": 0.5}
-                        disabled: app.is_level_locked("Three By One Digit Multiplication")
-                        focus_behavior: not self.disabled
-                        on_press:
-                            app.set_quiz("Three By One Digit Multiplication")
-                            app.change_screen('game_lobby')
+                        quiz_name: "Three By One Digit Multiplication"
 
                 MenuButtonLayout:
-                    MenuCard:
+                    TopMenuCard:
                         id: Two Digit Multiplication button
-                        text: 'Multiplication 4'
-                        completed: app.completed_quiz("Two Digit Multiplication")
-                        description: "Multiply two digit numbers"
-                        pos_hint: {"center_x": 0.5}
-                        disabled: app.is_level_locked("Two Digit Multiplication")
-                        focus_behavior: not self.disabled
-                        on_press:
-                            app.set_quiz("Two Digit Multiplication")
-                            app.change_screen('game_lobby')
+                        quiz_name: "Two Digit Multiplication"
         MDBoxLayout:
             size_hint_x: 0.3
 
@@ -370,6 +327,17 @@ MDBoxLayout:
     line_color_disabled: (0, 0, 0, 0)
     line_color: (0, 0, 0, 0)
     ripple_scale: 0
+
+<TopMenuCard@MenuCard>
+    quiz_name: ""
+    text: app.quiz_short_name[self.quiz_name] if self.quiz_name else ""
+    completed: app.completed_quiz(self.quiz_name) if self.quiz_name else False
+    description: app.quiz_dict[self.quiz_name].short_description if self.quiz_name else ""
+    disabled: app.is_level_locked(self.quiz_name) if self.quiz_name else False
+    focus_behavior: not self.disabled
+    on_press:
+        app.set_quiz(self.quiz_name)
+        app.change_screen('game_lobby')
 
 <MenuCard>
     text: root.text

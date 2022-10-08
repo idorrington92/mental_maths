@@ -4,9 +4,10 @@ from Game import QuizLogic
 
 
 class TwoDigitMultiplication(QuizLogic):
+    short_description = "Multiply the two digit numbers together"
+
     def __init__(self):
         # NOTE Short description must go before super
-        self.short_description = "Multiply the two digit numbers together"
         super().__init__()
         self.number1 = 0
         self.number2 = 0

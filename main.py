@@ -77,9 +77,9 @@ class MentalMathsApp(MDApp):
                                 QuizName.MULTIPLY_BY_11.value: "Multiplication 1",
                                 QuizName.TWO_DIGIT_ADDITION.value: "Addition 1",
                                 QuizName.TWO_BY_ONE_MULTIPLICATION.value: "Multiplication 2",
-                                QuizName.SQUARE_TWO_DIGIT.value: "Multipication 3",
-                                QuizName.THREE_BY_ONE_MULTIPLICATION.value: "Multiplication 4",
-                                QuizName.TWO_DIGIT_MULTIPLICATION.value: "Multiplication 5",
+                                QuizName.SQUARE_TWO_DIGIT.value: "Squares",
+                                QuizName.THREE_BY_ONE_MULTIPLICATION.value: "Multiplication 3",
+                                QuizName.TWO_DIGIT_MULTIPLICATION.value: "Multiplication 4",
                                 }
         self.game_dict = {GameName.MATHS_DOJO.value: None,
                           GameName.MARATHON.value: Marathon,
@@ -178,6 +178,8 @@ class MentalMathsApp(MDApp):
             self.is_level_locked(next_level)
 
     def completed_quiz(self, level_name):
+        if level_name == QuizName.MATHS_DOJO.value:
+            return
         return all(all(self.data[level_name][game_type]["completed_challenges"].values())
                    for game_type in self.data[level_name])
 
