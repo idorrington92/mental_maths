@@ -3,7 +3,8 @@ from kivymd.app import MDApp
 from Game import GameLogic
 
 
-class TimedQuiz(GameLogic):
+class PracticeQuiz(GameLogic):
+    short_description = "No time limit, just answer in your own time"
     def __init__(self, *args):
         super().__init__(*args)
         self.number_of_rounds = 3
