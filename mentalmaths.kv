@@ -60,13 +60,15 @@
 <BasicScreen>
     on_pre_enter:
         self.ids.toolbar.title = app.quiz_short_name[app.quiz_name]
-    MDTopAppBar:
+    ToolBar:
         id: toolbar
-        title: app.quiz_name
-        pos_hint: {"bottom": 1}
-        elevation: 10
-        right_action_items: [["home", lambda x: app.change_screen("home")], ["cog-outline", lambda x: app.change_screen("settings")], ["arrow-left-thick", lambda x: app.previous_screen()]]
 
+
+<ToolBar@MDTopAppBar>
+    title: app.quiz_name
+    pos_hint: {"bottom": 1}
+    elevation: 10
+    right_action_items: [["home", lambda x: app.change_screen("home")], ["cog-outline", lambda x: app.change_screen("settings")], ["arrow-left-thick", lambda x: app.previous_screen()]]
 
 
 MDBoxLayout:
@@ -76,14 +78,15 @@ MDBoxLayout:
         id: screen_manager
         transition: FadeTransition(duration=.2, clearcolor=app.theme_cls.bg_dark)
 
-        BasicScreen:
+        MDScreen:
             id: home
             name: "home"
             on_pre_enter:
                 app.quiz_name = "Maths Dojo"
-
             MenuList:
                 id: MenuList
+            ToolBar:
+                id: toolbar
 
         GameScreen:
             id: game_screen
@@ -408,29 +411,15 @@ MDBoxLayout:
                     game_name: "Accuracy"
                     description: "No time limit, but make one mistake and it's game over"
 
-                MenuButtonLayout:
-                    MenuCard:
-                        id: Timed Quiz button
-                        text: 'Timed Quiz'
-                        completed: app.completed_game("Timed Quiz")
-                        description: f"Answer {TimedQuiz.target} questions as fast as possible"
-                        disabled: False
-                        on_press:
-                            app.change_screen('pregame')
-                            app.set_game("Timed Quiz")
-                            app.launch_game()
+                GameLobbyButton:
+                    id: Timed Quiz button
+                    game_name: 'Timed Quiz'
+                    description: f"Answer {TimedQuiz.target} questions as fast as possible"
 
-                MenuButtonLayout:
-                    MenuCard:
-                        id: Marathon button
-                        text: 'Marathon'
-                        completed: app.completed_game("Marathon")
-                        description: "Answer quickly for more points, but be careful not run out of lives"
-                        disabled: False
-                        on_press:
-                            app.change_screen('pregame')
-                            app.set_game("Marathon")
-                            app.launch_game()
+                GameLobbyButton:
+                    id: Marathon button
+                    game_name: 'Marathon'
+                    description: "Answer quickly for more points, but be careful not run out of lives"
 
         MDBoxLayout:
             size_hint_x: 0.3
@@ -445,11 +434,12 @@ MDBoxLayout:
 <GameLobbyButton@MenuButtonLayout>
     game_name: ""
     description: ""
+    completed: app.completed_game(self.game_name)
     MenuCard:
         id: Marathon button
         text: root.game_name
         description: root.description
-        completed: app.completed_game(root.game_name)
+        completed: root.completed
         disabled: False
         on_press:
             app.change_screen('pregame')
