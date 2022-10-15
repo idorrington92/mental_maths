@@ -48,6 +48,23 @@
                     "ZZZ"
                 ]
             }
+        },
+        "Accuracy": {
+            "completed_challenges": {
+                "bronze": true,
+                "silver": true,
+                "gold": true
+            },
+            "records": {
+                "scores": [
+                    17,
+                    0
+                ],
+                "names": [
+                    "iain",
+                    "iain"
+                ]
+            }
         }
     },
     "Two Digit Addition": {
@@ -96,6 +113,17 @@
                     "iain"
                 ]
             }
+        },
+        "Accuracy": {
+            "completed_challenges": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
+            }
         }
     },
     "Two By One Digit Multiplication": {
@@ -132,6 +160,17 @@
                     "a"
                 ]
             }
+        },
+        "Accuracy": {
+            "completed_challenges": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
+            }
         }
     },
     "Square Two Digit Numbers": {
@@ -151,6 +190,17 @@
             }
         },
         "Marathon": {
+            "completed_challenges": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
+            }
+        },
+        "Accuracy": {
             "completed_challenges": {
                 "bronze": false,
                 "silver": false,
@@ -192,6 +242,17 @@
                 "scores": [],
                 "names": []
             }
+        },
+        "Accuracy": {
+            "completed_challenges": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
+            }
         }
     },
     "Two Digit Multiplication": {
@@ -207,6 +268,17 @@
             }
         },
         "Marathon": {
+            "completed_challenges": {
+                "bronze": false,
+                "silver": false,
+                "gold": false
+            },
+            "records": {
+                "scores": [],
+                "names": []
+            }
+        },
+        "Accuracy": {
             "completed_challenges": {
                 "bronze": false,
                 "silver": false,

@@ -378,11 +378,12 @@ MDBoxLayout:
 
 <GameLobbyScreen>
     on_pre_enter:
+        self.ids["Accuracy"].completed = app.completed_game("Accuracy")
         self.ids["Timed Quiz button"].completed = app.completed_game("Timed Quiz")
         self.ids["Marathon button"].completed = app.completed_game("Marathon")
 
     MDBoxLayout:
-        pos_hint: {"center_x": 0.5, "center_y": 0.9}
+        pos_hint: {"center_x": 0.5, "center_y": 0.7}
         size_hint: (1, 0.8)
         bar_width: 0
         MDBoxLayout:
@@ -401,6 +402,11 @@ MDBoxLayout:
                 spacing: "10dp"
                 orientation: "vertical"
                 pos_hint: {"center_x": 0.5}
+
+                GameLobbyButton:
+                    id: Accuracy
+                    game_name: "Accuracy"
+                    description: "No time limit, but make one mistake and it's game over"
 
                 MenuButtonLayout:
                     MenuCard:
@@ -425,6 +431,7 @@ MDBoxLayout:
                             app.change_screen('pregame')
                             app.set_game("Marathon")
                             app.launch_game()
+
         MDBoxLayout:
             size_hint_x: 0.3
 
@@ -435,3 +442,16 @@ MDBoxLayout:
     spacing: "10dp"
     pos_hint: {"center_x": 0.5}
 
+<GameLobbyButton@MenuButtonLayout>
+    game_name: ""
+    description: ""
+    MenuCard:
+        id: Marathon button
+        text: root.game_name
+        description: root.description
+        completed: app.completed_game(root.game_name)
+        disabled: False
+        on_press:
+            app.change_screen('pregame')
+            app.set_game(root.game_name)
+            app.launch_game()

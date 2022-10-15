@@ -25,10 +25,12 @@ from ThreeByOneDigitMultiplication import ThreeByOneDigitMultiplication
 from TwoDigitMultiplication import TwoDigitMultiplication
 from TimedQuiz import TimedQuiz
 from Marathon import Marathon
+from Accuracy import Accuracy
 
 
 class GameName(Enum):
     MATHS_DOJO = None
+    ACCURACY = "Accuracy"
     TIMED_QUIZ = "Timed Quiz"
     MARATHON = "Marathon"
 
@@ -84,11 +86,15 @@ class MentalMathsApp(MDApp):
                                 QuizName.TWO_DIGIT_MULTIPLICATION.value: "Multiplication 4",
                                 }
         self.game_dict = {GameName.MATHS_DOJO.value: None,
+                          GameName.ACCURACY.value: Accuracy,
                           GameName.MARATHON.value: Marathon,
                           GameName.TIMED_QUIZ.value: TimedQuiz,
                           }
         self.challenges = {
             QuizName.MULTIPLY_BY_11.value: {
+                GameName.ACCURACY.value: Medals(Challenge("Answer 5 questions correctly", lambda score: score >= 5),
+                                                Challenge("Answer 7 quations correctly", lambda score: score >= 7),
+                                                Challenge("Answer 10 questions correctly", lambda score: score >= 10)),
                 GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
@@ -97,6 +103,9 @@ class MentalMathsApp(MDApp):
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
             QuizName.TWO_DIGIT_ADDITION.value: {
+                GameName.ACCURACY.value: Medals(Challenge("Answer 5 questions correctly", lambda score: score >= 5),
+                                                Challenge("Answer 7 quations correctly", lambda score: score >= 7),
+                                                Challenge("Answer 10 questions correctly", lambda score: score >= 10)),
                 GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
@@ -105,6 +114,9 @@ class MentalMathsApp(MDApp):
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
             QuizName.TWO_BY_ONE_MULTIPLICATION.value: {
+                GameName.ACCURACY.value: Medals(Challenge("Answer 5 questions correctly", lambda score: score >= 5),
+                                                Challenge("Answer 7 quations correctly", lambda score: score >= 7),
+                                                Challenge("Answer 10 questions correctly", lambda score: score >= 10)),
                 GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                                   Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                                   Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
@@ -113,6 +125,9 @@ class MentalMathsApp(MDApp):
                                                 Challenge("Score 10 points", lambda score: score >= 10)),
             },
             QuizName.SQUARE_TWO_DIGIT.value: {
+                GameName.ACCURACY.value: Medals(Challenge("Answer 5 questions correctly", lambda score: score >= 5),
+                                                Challenge("Answer 7 quations correctly", lambda score: score >= 7),
+                                                Challenge("Answer 10 questions correctly", lambda score: score >= 10)),
                 GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                                   Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                                   Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
@@ -121,6 +136,9 @@ class MentalMathsApp(MDApp):
                                                 Challenge("Score 10 points", lambda score: score >= 10)),
             },
             QuizName.THREE_BY_ONE_MULTIPLICATION.value: {
+                GameName.ACCURACY.value: Medals(Challenge("Answer 5 questions correctly", lambda score: score >= 5),
+                                                Challenge("Answer 7 quations correctly", lambda score: score >= 7),
+                                                Challenge("Answer 10 questions correctly", lambda score: score >= 10)),
                 GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
@@ -129,6 +147,9 @@ class MentalMathsApp(MDApp):
                                       Challenge("Score 10 points", lambda score: score >= 10)),
             },
             QuizName.TWO_DIGIT_MULTIPLICATION.value: {
+                GameName.ACCURACY.value: Medals(Challenge("Answer 5 questions correctly", lambda score: score >= 5),
+                                                Challenge("Answer 7 quations correctly", lambda score: score >= 7),
+                                                Challenge("Answer 10 questions correctly", lambda score: score >= 10)),
                 GameName.TIMED_QUIZ.value: Medals(Challenge(f"Finish in 30 seconds", lambda score: score <= 30),
                                      Challenge(f"Finish in  10 seconds", lambda score: score <= 10),
                                      Challenge(f"Finish in 5 seconds", lambda score: score <= 5)),
