@@ -65,6 +65,11 @@
                     "iain"
                 ]
             }
+        },
+        "Tutorial": {
+            "completed_challenges": {
+                "gold": false
+            }
         }
     },
     "Two Digit Addition": {
@@ -124,6 +129,11 @@
                 "scores": [],
                 "names": []
             }
+        },
+        "Tutorial": {
+            "completed_challenges": {
+            "gold": false
+            }
         }
     },
     "Two By One Digit Multiplication": {
@@ -171,6 +181,11 @@
                 "scores": [],
                 "names": []
             }
+        },
+        "Tutorial": {
+            "completed_challenges": {
+            "gold": false
+            }
         }
     },
     "Square Two Digit Numbers": {
@@ -209,6 +224,11 @@
             "records": {
                 "scores": [],
                 "names": []
+            }
+        },
+        "Tutorial": {
+            "completed_challenges": {
+            "gold": false
             }
         }
     },
@@ -253,6 +273,11 @@
                 "scores": [],
                 "names": []
             }
+        },
+        "Tutorial": {
+            "completed_challenges": {
+            "gold": false
+            }
         }
     },
     "Two Digit Multiplication": {
@@ -287,6 +312,11 @@
             "records": {
                 "scores": [],
                 "names": []
+            }
+        },
+        "Tutorial": {
+            "completed_challenges": {
+            "gold": false
             }
         }
     }

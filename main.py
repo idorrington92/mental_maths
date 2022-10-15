@@ -26,10 +26,12 @@ from TwoDigitMultiplication import TwoDigitMultiplication
 from TimedQuiz import TimedQuiz
 from Marathon import Marathon
 from Accuracy import Accuracy
+from Tutorial import Tutorial
 
 
 class GameName(Enum):
     MATHS_DOJO = None
+    TUTORIAL = "Tutorial"
     ACCURACY = "Accuracy"
     TIMED_QUIZ = "Timed Quiz"
     MARATHON = "Marathon"
@@ -86,6 +88,7 @@ class MentalMathsApp(MDApp):
                                 QuizName.TWO_DIGIT_MULTIPLICATION.value: "Multiplication 4",
                                 }
         self.game_dict = {GameName.MATHS_DOJO.value: None,
+                          GameName.TUTORIAL.value: Tutorial,
                           GameName.ACCURACY.value: Accuracy,
                           GameName.MARATHON.value: Marathon,
                           GameName.TIMED_QUIZ.value: TimedQuiz,
@@ -191,7 +194,8 @@ class MentalMathsApp(MDApp):
             return False
         previous_level = list(self.level_order.keys())[self.level_order[level_name] - 2]
         return not all([self.data[previous_level][game_name]["completed_challenges"]["bronze"]
-                       for game_name in self.game_dict.keys() if game_name != GameName.MATHS_DOJO.value])
+                        for game_name in self.game_dict.keys()
+                        if game_name not in {GameName.MATHS_DOJO.value, GameName.TUTORIAL.value}])
 
     def check_and_unlock_level(self):
         level_name = self.quiz_name
@@ -227,10 +231,23 @@ class MentalMathsApp(MDApp):
             self.set_challenge_text(self.quiz_name, self.game_name)
 
     def set_challenge_text(self, quiz_name, game_name):
+        # Tutorial challenges are a special case
+        if game_name == GameName.TUTORIAL.value:
+            self.set_tutorial_challenge_text(game_name, quiz_name)
+            return
+
         for medal, challenge in self.challenges[quiz_name][game_name]._asdict().items():
             self.root.ids[medal + "_challenge_label"].text = challenge.text
             self.root.ids[medal + "_challenge_label"].disabled = \
                 not self.data[quiz_name][game_name]["completed_challenges"][medal]
+
+    def set_tutorial_challenge_text(self, game_name, quiz_name):
+        medal = "gold"
+        self.root.ids[medal + "_challenge_label"].text = "Complete the tutorial"
+        self.root.ids[medal + "_challenge_label"].disabled = \
+            not self.data[quiz_name][game_name]["completed_challenges"][medal]
+        for medal in ("silver", "bronze"):
+            self.root.ids[medal + "_challenge_label"].text = ChallengeLabel.default_text
 
     def launch_game(self):
         self.game = self.game(self.quiz())
@@ -352,6 +369,7 @@ class AnswerBoxHighlight(MDWidget):
 
 
 class ChallengeLabel(MDRoundFlatIconButton):
+    default_text = " " * 62
     def on_touch_down(self, touch):
         pass
 

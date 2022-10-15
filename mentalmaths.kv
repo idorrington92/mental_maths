@@ -137,13 +137,13 @@ MDBoxLayout:
                         id: silver_challenge_label
                         icon: "medal-outline"
                         pos_hint: {"center_x": 0.5}
-                        icon_color: (150,116,68, 1)
+                        icon_color: (150,116,68, 1 if self.text != self.default_text else 0)
 
                     ChallengeLabel:
                         id: bronze_challenge_label
                         icon: "medal"
                         pos_hint: {"center_x": 0.5}
-                        icon_color: (100,116,150, 1)
+                        icon_color: (100,116,150, 1 if self.text != self.default_text else 0)
 
         BasicScreen:
             id: settings
@@ -324,7 +324,7 @@ MDBoxLayout:
         text: "3"
 
 <ChallengeLabel>
-    text: "---------------------------------------------------"
+    text: self.default_text
     halign: "left"
     text_color: app.theme_cls.text_color
     line_color_disabled: (0, 0, 0, 0)
@@ -405,6 +405,11 @@ MDBoxLayout:
                 spacing: "10dp"
                 orientation: "vertical"
                 pos_hint: {"center_x": 0.5}
+
+                GameLobbyButton:
+                    id: Tutorial
+                    game_name: "Tutorial"
+                    description: "Time to learn a new skill"
 
                 GameLobbyButton:
                     id: Accuracy

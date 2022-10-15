@@ -3,8 +3,14 @@ from kivymd.app import MDApp
 from Game import GameLogic
 
 
-class Accuracy(GameLogic):
-    short_description = "No time limit, but make one mistake and it's game over"
+class Tutorial(GameLogic):
+    short_description = "Learn how to solve the problem"
+
+    def get_records(self):
+        return
+
+    def open_pop_ups(self, score=None):
+        print("TODO custom pop up for tutorials")
 
     def play_game(self):
         self.app.root.ids["game_screen"].ids.score.text = f"Score: {self.score}"

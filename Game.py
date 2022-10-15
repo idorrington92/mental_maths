@@ -51,7 +51,10 @@ class GameLogic:
         self.app.root.ids["game_screen"].ids['life1'].text_color = (100, 0, 0, 0)
         self.app.root.ids["game_screen"].ids['life2'].text_color = (100, 0, 0, 0)
         self.app.root.ids["game_screen"].ids['life3'].text_color = (100, 0, 0, 0)
-        self.records = self.app.data[self.app.quiz_name][self.app.game_name]["records"]
+        self.records = self.get_records()
+
+    def get_records(self):
+        return self.app.data[self.app.quiz_name][self.app.game_name]["records"]
 
     def generate_end_game_pop_up(self):
         self.end_game_pop_up = MDDialog(title=self.end_game_pop_up_title,
