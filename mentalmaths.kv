@@ -295,6 +295,18 @@ MDBoxLayout:
     on_release:
         app.game.help_pop_up.dismiss()
 
+<TutorialCloseButton>
+    text: "Close"
+    on_release:
+        app.game.tutorial_pop_up.dismiss()
+        app.game.play_game()
+
+<TutorialNextButton>
+    text: "Next"
+    pos_hint: {"center_x": 0}
+    on_release:
+        app.game.update_tutorial()
+
 <ChallengeCloseButton>
     text: "Close"
     on_release:
